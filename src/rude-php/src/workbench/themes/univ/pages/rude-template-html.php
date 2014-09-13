@@ -290,7 +290,7 @@ class template_html
 		?>
 		<div id="sidebar">
 			<div class="ui vertical menu square-corners">
-				<div class="item header" onclick="rude.animate('#globals'); rude.cookie.toggle('show_globals')">
+				<div class="item header" onclick="rude.animate('#navigation'); rude.cookie.toggle('show_navigation')">
 					Навигация
 				</div>
 
@@ -319,6 +319,36 @@ class template_html
 					<i class="icon sign out"></i> Выход
 				</a>
 				<? } ?>
+
+
+
+				<div class="item header" onclick="rude.animate('#management'); rude.cookie.toggle('show_management')">
+					Управление
+				</div>
+
+				<a class="item subcategory" href="/?page=departments">
+					<i class="icon"></i> Кафедры
+				</a>
+
+				<a class="item subcategory" href="/?page=faculties">
+					<i class="icon"></i> Факультеты
+				</a>
+
+				<a class="item subcategory" href="/?page=qualifications">
+					<i class="icon"></i> Квалификации
+				</a>
+
+				<a class="item subcategory" href="/?page=specializations">
+					<i class="icon"></i> Специализации
+				</a>
+
+				<a class="item subcategory" href="/?page=specialties">
+					<i class="icon"></i> Специальности
+				</a>
+
+				<a class="item subcategory" href="/?page=users">
+					<i class="icon"></i> Пользователи
+				</a>
 			</div>
 		</div>
 	<?

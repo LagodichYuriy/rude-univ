@@ -2,7 +2,7 @@
 
 namespace rude;
 
-class template_add
+class template_specialties
 {
 	public function html()
 	{
@@ -41,10 +41,12 @@ class template_add
 	{
 		?>
 		<div id="main">
-			<p></p>
+			<?
+				$specialties = specialties::get();
 
-
+				debug($specialties);
+			?>
 		</div>
-	<?
+		<?
 	}
 }
