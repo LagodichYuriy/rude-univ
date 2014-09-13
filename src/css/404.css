@@ -1,0 +1,43 @@
+html
+{
+	height: 100%;
+}
+
+body
+{
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+#container
+{
+	display: table;
+	height: 100%;
+	margin: 0 auto;
+}
+
+#container #box
+{
+	display: table-cell;
+	vertical-align: middle;
+
+	text-align: center;
+	font-weight: bold;
+}
+
+#container #box #content
+{
+	color: #FFFFFF;
+	background-color: #D95C5C!important;
+
+	padding: 24px;
+
+	width: 400px;
+}
+
+#container #box #content h1
+{
+	color: #FFFFFF;
+	font-size: 72pt;
+}
