@@ -298,10 +298,6 @@ class template_html
 					<i class="icon home"></i> Вернуться на главную
 				</a>
 
-				<a class="item subcategory" href="/?page=add">
-					<i class="icon add sign box"></i> Создать список покупок
-				</a>
-
 				<? if (!template_session::is_authorized()) { ?>
 				<a class="item subcategory" href="#" onclick="$('#authorization').modal('show'); return false;">
 					<i class="icon sign in"></i> Авторизация
@@ -326,27 +322,27 @@ class template_html
 					Управление
 				</div>
 
-				<a class="item subcategory" href="/?page=departments">
+				<a class="item subcategory <? if (get('page') == 'departments') { ?>active<? } ?>" href="/?page=departments">
 					<i class="icon"></i> Кафедры
 				</a>
 
-				<a class="item subcategory" href="/?page=faculties">
+				<a class="item subcategory <? if (get('page') == 'faculties') { ?>active<? } ?>" href="/?page=faculties">
 					<i class="icon"></i> Факультеты
 				</a>
 
-				<a class="item subcategory" href="/?page=qualifications">
+				<a class="item subcategory <? if (get('page') == 'qualifications') { ?>active<? } ?>" href="/?page=qualifications">
 					<i class="icon"></i> Квалификации
 				</a>
 
-				<a class="item subcategory" href="/?page=specializations">
+				<a class="item subcategory <? if (get('page') == 'specializations') { ?>active<? } ?>" href="/?page=specializations">
 					<i class="icon"></i> Специализации
 				</a>
 
-				<a class="item subcategory" href="/?page=specialties">
+				<a class="item subcategory <? if (get('page') == 'specialties') { ?>active<? } ?>" href="/?page=specialties">
 					<i class="icon"></i> Специальности
 				</a>
 
-				<a class="item subcategory" href="/?page=users">
+				<a class="item subcategory <? if (get('page') == 'users') { ?>active<? } ?>" href="/?page=users">
 					<i class="icon"></i> Пользователи
 				</a>
 			</div>
