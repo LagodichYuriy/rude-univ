@@ -5,17 +5,17 @@
 #                            main section                          #
 ####################################################################
 
-define('RUDE_URL_SITE',        'http://rude-list.me');
+define('RUDE_URL_SITE',        'http://rude-univ.me');
 
 define('RUDE_DATABASE_USER',   'root');
 define('RUDE_DATABASE_PASS',   '1234');
 define('RUDE_DATABASE_HOST',   'localhost');
 define('RUDE_DATABASE_PREFIX', '');
-define('RUDE_DATABASE_NAME',   'list');
+define('RUDE_DATABASE_NAME',   'univ');
 
 define('RUDE_DEBUG',           true);
 
-define('RUDE_THEME',           'lib');
+define('RUDE_THEME',           'univ');
 
 
 ####################################################################

@@ -4,7 +4,7 @@ namespace rude;
 
 require_once 'rude-config.php';
 
-require_once 'src/rude-univ.com/include.php';
+require_once 'src/rude-php/include.php';
 
 
 site::init();
