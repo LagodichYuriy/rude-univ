@@ -24,10 +24,8 @@ class template_qualifications
 				<div id="container">
 					<? template_html::sidebar() ?>
 
-					<div id="content" class="ui segment raised square-corners">
-						<div id="homepage" >
-							<? $this->main() ?>
-						</div>
+					<div id="content" class="ui segment raised square-corners no-shadow">
+						<? $this->main() ?>
 					</div>
 				</div>
 
@@ -43,9 +41,32 @@ class template_qualifications
 		<div id="main">
 			<?
 				$qualifications = qualifications::get();
-
-				debug($qualifications);
 			?>
+			<table class="ui table segment square-corners celled">
+				<thead>
+					<tr class="header">
+						<th class="numeric">#</th>
+						<th>Наименование</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?
+					foreach ($qualifications as $qualification)
+					{
+						?>
+						<tr>
+							<td class="small numeric"><?= $qualification->id ?></td>
+							<td><?= $qualification->name ?></td>
+							<td class="icon"><?= template_image::edit() ?></td>
+							<td class="icon"><?= template_image::remove() ?></td>
+						</tr>
+						<?
+					}
+				?>
+				</tbody>
+			</table>
 		</div>
 		<?
 	}

@@ -74,40 +74,38 @@ h2
 	box-shadow: 0 0 0 1px rgba(0,0,0,.1);
 }
 
-
-/* #################### */
-/* # homepage section # */
-/* #################### */
-
-#homepage
+#content table .header
 {
-	padding: 12px 14px;
+	height: 42px;
 }
 
-#homepage #main
+#content table .small
 {
-	/*font-size: 12px;*/
-	/*text-align: justify;*/
+	width: 30px;
 }
 
-#homepage #main p
+#content table .numeric
 {
-	line-height: 1.6;
+	text-align: center;
+
+	font-size: 10px;
 }
 
-#homepage #main .section
+#content table .icon
 {
-	padding-bottom: 32px;
+	width: 16px;
+	height: 16px;
+	padding: 3px;
 }
 
-#homepage #main i
+#content table.celled td
 {
-	margin: 0;
+	border: 1px solid rgba(0, 0, 0, 0.03)!important;
 }
 
-#homepage #main table td:first-child
+#content table.celled th
 {
-	width: 165px;
+	border: none!important;
 }
 
 
@@ -236,10 +234,10 @@ pre code.hljs.php .ui.label
 
 .middle
 {
-	text-align: center;
+	text-align: center!important;
 }
 
-.font-mono
+.monospace
 {
 	font-family: monospace;
 }

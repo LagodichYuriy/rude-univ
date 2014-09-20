@@ -24,10 +24,8 @@ class template_users_roles
 				<div id="container">
 					<? template_html::sidebar() ?>
 
-					<div id="content" class="ui segment raised square-corners">
-						<div id="homepage" >
-							<? $this->main() ?>
-						</div>
+					<div id="content" class="ui segment raised square-corners no-shadow">
+						<? $this->main() ?>
 					</div>
 				</div>
 

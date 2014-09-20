@@ -24,10 +24,8 @@ class template_faculties
 				<div id="container">
 					<? template_html::sidebar() ?>
 
-					<div id="content" class="ui segment raised square-corners">
-						<div id="homepage" >
-							<? $this->main() ?>
-						</div>
+					<div id="content" class="ui segment raised square-corners no-shadow">
+						<? $this->main() ?>
 					</div>
 				</div>
 
@@ -43,9 +41,34 @@ class template_faculties
 		<div id="main">
 			<?
 				$faculties = faculties::get();
-
-				debug($faculties);
 			?>
+			<table class="ui table segment square-corners celled">
+				<thead>
+					<tr class="header">
+						<th class="numeric">#</th>
+						<th>Полное наименование</th>
+						<th>Краткое</th>
+						<th></th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				<?
+					foreach ($faculties as $faculty)
+					{
+						?>
+						<tr>
+							<td class="small numeric"><?= $faculty->id ?></td>
+							<td><?= $faculty->name ?></td>
+							<td><?= $faculty->shortname ?></td>
+							<td class="icon"><?= template_image::edit() ?></td>
+							<td class="icon"><?= template_image::remove() ?></td>
+						</tr>
+						<?
+					}
+				?>
+				</tbody>
+			</table>
 		</div>
 		<?
 	}

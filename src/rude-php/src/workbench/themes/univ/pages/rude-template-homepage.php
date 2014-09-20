@@ -25,9 +25,7 @@ class template_homepage
 					<? template_html::sidebar() ?>
 
 					<div id="content" class="ui segment raised square-corners">
-						<div id="homepage" >
-							<? $this->main() ?>
-						</div>
+						<? $this->main() ?>
 					</div>
 				</div>
 
@@ -41,7 +39,7 @@ class template_homepage
 	{
 		?>
 		<div id="main">
-			<p></p>
+			Главная страница
 		</div>
 		<?
 	}

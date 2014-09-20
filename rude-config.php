@@ -80,14 +80,24 @@ define('RUDE_FILE_SITEMAP', __DIR__ . RUDE_FILE_PART_SITEMAP);
 define('RUDE_DIR_PART_SRC',    DIRECTORY_SEPARATOR . 'src');
 define('RUDE_DIR_PART_THEME',  DIRECTORY_SEPARATOR . RUDE_THEME);
 define('RUDE_DIR_PART_THEMES', DIRECTORY_SEPARATOR . 'themes');
+define('RUDE_DIR_PART_IMAGES', DIRECTORY_SEPARATOR . 'img');
+
 
 
 ####################################################################
 #                           directories                            #
 ####################################################################
 
-define('RUDE_DIR_SRC',   RUDE_DIR_ROOT . RUDE_DIR_PART_SRC);
-define('RUDE_DIR_THEME', RUDE_DIR_SRC  . RUDE_DIR_PART_THEMES . DIRECTORY_SEPARATOR . RUDE_THEME);
+define('RUDE_DIR_SRC',    RUDE_DIR_ROOT . RUDE_DIR_PART_SRC);
+define('RUDE_DIR_IMAGES', RUDE_DIR_ROOT . RUDE_DIR_PART_IMAGES);
+define('RUDE_DIR_THEME',  RUDE_DIR_SRC  . RUDE_DIR_PART_THEMES . DIRECTORY_SEPARATOR . RUDE_THEME);
+
+
+####################################################################
+#                           URL section                            #
+####################################################################
+
+define('RUDE_URL_IMAGES', RUDE_URL_SITE . RUDE_DIR_PART_SRC . '/' . RUDE_DIR_PART_IMAGES);
 
 
 ####################################################################
@@ -120,8 +130,11 @@ define('RUDE_DATABASE_TABLE_SPECIALIZATIONS', RUDE_DATABASE_PREFIX . 'specializa
 define('RUDE_DATABASE_TABLE_USERS',           RUDE_DATABASE_PREFIX . 'users');
 
 
-define('RUDE_DATABASE_FIELD_ID',      'id');
-define('RUDE_DATABASE_FIELD_NAME',    'name');
-define('RUDE_DATABASE_FIELD_HASH',    'hash');
-define('RUDE_DATABASE_FIELD_SALT',    'salt');
-define('RUDE_DATABASE_FIELD_ROLE_ID', 'role_id');
+define('RUDE_DATABASE_FIELD_ID',               'id');
+define('RUDE_DATABASE_FIELD_NAME',             'name');
+define('RUDE_DATABASE_FIELD_SHORTNAME',        'shortname');
+define('RUDE_DATABASE_FIELD_HASH',             'hash');
+define('RUDE_DATABASE_FIELD_SALT',             'salt');
+define('RUDE_DATABASE_FIELD_ROLE_ID',          'role_id');
+define('RUDE_DATABASE_FIELD_FACULTY_ID',       'faculty_id');
+define('RUDE_DATABASE_FIELD_QUALIFICATION_ID', 'qualification_id');

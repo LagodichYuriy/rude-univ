@@ -20,19 +20,38 @@ class users
 
 	public static function get($id = null)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_USERS);
+		$database = new database();
+
+		$q = '
+			SELECT
+				' . RUDE_DATABASE_TABLE_USERS       . '.*,
+				' . RUDE_DATABASE_TABLE_USERS_ROLES . '.' . RUDE_DATABASE_FIELD_NAME . ' AS role
+			FROM
+				' . RUDE_DATABASE_TABLE_USERS       . '
+			LEFT JOIN
+				' . RUDE_DATABASE_TABLE_USERS_ROLES . ' ON ' . RUDE_DATABASE_TABLE_USERS . '.' . RUDE_DATABASE_FIELD_ROLE_ID . ' = ' . RUDE_DATABASE_TABLE_USERS_ROLES . '.' . RUDE_DATABASE_FIELD_ID . '
+		';
 
 		if ($id !== null)
 		{
-			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
-			$q->query();
-
-			return $q->get_object();
+			$q .= PHP_EOL . 'WHERE ' . RUDE_DATABASE_TABLE_USERS   . '.' . RUDE_DATABASE_FIELD_ID . ' = ' . (int) $id;
 		}
 
-		$q->query();
+		$q .= '
+			GROUP BY
+				' . RUDE_DATABASE_TABLE_USERS . '.' . RUDE_DATABASE_FIELD_ID . '
+		';
 
-		return $q->get_object_list();
+
+		$database->query($q);
+
+
+		if ($id !== null)
+		{
+			return $database->get_object();
+		}
+
+		return $database->get_object_list();
 	}
 
 	public static function get_by_name($name)
