@@ -16,25 +16,28 @@ class site
 
 			case 'logout':        ajax_logout::init();        break;
 
-			case 'departments':     $template = new template_departments();     $template->html(); break;
-			case 'faculties':       $template = new template_faculties();       $template->html(); break;
-			case 'qualifications':  $template = new template_qualifications();  $template->html(); break;
-			case 'specializations': $template = new template_specializations(); $template->html(); break;
-			case 'specialties':     $template = new template_specialties();     $template->html(); break;
-			case 'users':           $template = new template_users();           $template->html(); break;
-			case 'users_roles':     $template = new template_users_roles();     $template->html(); break;
+			case 'departments':     $template = new template_departments();     break;
+			case 'faculties':       $template = new template_faculties();       break;
+			case 'qualifications':  $template = new template_qualifications();  break;
+			case 'specializations': $template = new template_specializations(); break;
+			case 'specialties':     $template = new template_specialties();     break;
+			case 'users':           $template = new template_users();           break;
+			case 'users_roles':     $template = new template_users_roles();     break;
 
 			default:
 				if (!url::is_homepage())
 				{
 					$template = new template_404();
-					$template->html();
-
-					die;
 				}
+				else
+				{
+					$template = new template_homepage();
+				}
+		}
 
-				$template = new template_homepage();
-				$template->html();
+		if (isset($template) and !get('ajax'))
+		{
+			$template->html();
 		}
 	}
 }

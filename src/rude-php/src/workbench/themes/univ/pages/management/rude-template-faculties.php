@@ -61,8 +61,8 @@ class template_faculties
 							<td class="small numeric"><?= $faculty->id ?></td>
 							<td><?= $faculty->name ?></td>
 							<td><?= $faculty->shortname ?></td>
-							<td class="icon"><?= template_image::edit() ?></td>
-							<td class="icon"><?= template_image::remove() ?></td>
+							<td class="icon first no-border"><?= template_image::edit() ?></td>
+							<td class="icon last no-border"><?= template_image::remove() ?></td>
 						</tr>
 						<?
 					}

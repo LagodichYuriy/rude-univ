@@ -98,9 +98,19 @@ h2
 	padding: 3px;
 }
 
+#content table .icon.first
+{
+	padding-left: 7px;
+}
+
+#content table .icon.last
+{
+	padding-right: 5px;
+}
+
 #content table.celled td
 {
-	border: 1px solid rgba(0, 0, 0, 0.03)!important;
+	border: 1px solid rgba(0, 0, 0, 0.03);
 }
 
 #content table.celled th
@@ -288,4 +298,19 @@ pre code.hljs.php .ui.label
 	-webkit-box-shadow: none!important;
 	-moz-box-shadow:    none!important;
 	box-shadow:         none!important;
+}
+
+.no-border
+{
+	border: none!important;
+}
+
+.no-border-right
+{
+	border-right: none!important;
+}
+
+.justify
+{
+	text-align: justify;
 }

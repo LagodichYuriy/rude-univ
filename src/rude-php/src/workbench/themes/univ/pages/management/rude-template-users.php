@@ -61,8 +61,8 @@ class template_users
 							<td class="small numeric"><?= $user->id ?></td>
 							<td><?= $user->name ?></td>
 							<td><?= $user->role ?></td>
-							<td class="icon"><?= template_image::edit() ?></td>
-							<td class="icon"><?= template_image::remove() ?></td>
+							<td class="icon first no-border"><?= template_image::edit() ?></td>
+							<td class="icon last no-border"><?= template_image::remove() ?></td>
 						</tr>
 						<?
 					}

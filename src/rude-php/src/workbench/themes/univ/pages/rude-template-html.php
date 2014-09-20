@@ -282,10 +282,32 @@ class template_html
 		<?
 	}
 
+	public static function access_violation()
+	{
+		?>
+		<div id="access-violation" class="ui small modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Нарушение прав доступа
+			</div>
+			<div class="content">
+				<p class="justify">Данное действие недоступно для вашего пользователя. Скорее всего вы не являетесь администратором или редактором данного раздела. Обратитесь за помощью к администратору ресурса за выяснением дальнейших действий.</p>
+			</div>
+			<div class="actions">
+				<div class="ui positive right labeled icon button">
+					Ок
+					<i class="checkmark icon"></i>
+				</div>
+			</div>
+		</div>
+	<?
+	}
+
 	public static function sidebar()
 	{
 		template_html::registration();
 		template_html::authorization();
+		template_html::access_violation();
 
 		?>
 		<div id="sidebar">
@@ -299,52 +321,63 @@ class template_html
 				</a>
 
 				<? if (!template_session::is_authorized()) { ?>
-				<a class="item subcategory" href="#" onclick="$('#authorization').modal('show'); return false;">
-					<i class="icon sign in"></i> Авторизация
-				</a>
+					<a class="item subcategory" href="#" onclick="$('#authorization').modal('show'); return false;">
+						<i class="icon sign in"></i> Авторизация
+					</a>
 				<? } ?>
 
 				<? if (!template_session::is_authorized()) { ?>
-				<a class="item subcategory" href="#" onclick="$('#registration').modal('show'); return false;">
-					<i class="icon edit"></i> Регистрация
-				</a>
+					<a class="item subcategory" href="#" onclick="$('#registration').modal('show'); return false;">
+						<i class="icon edit"></i> Регистрация
+					</a>
 				<? } ?>
 
 				<? if (template_session::is_authorized()) { ?>
-				<a class="item subcategory" href="#" onclick="$.post('/?page=logout', function() { rude.redirect('/'); }); return false;">
-					<i class="icon sign out"></i> Выход
-				</a>
+					<a class="item subcategory" href="#" onclick="$.post('/?page=logout', function() { rude.redirect('/'); }); return false;">
+						<i class="icon sign out"></i> Выход
+					</a>
 				<? } ?>
 
 
+				<? if (template_session::is_authorized()) { ?>
+					<div class="item header" onclick="rude.animate('#management'); rude.cookie.toggle('show_management')">
+						Управление
+					</div>
 
-				<div class="item header" onclick="rude.animate('#management'); rude.cookie.toggle('show_management')">
-					Управление
-				</div>
+					<a class="item subcategory <? if (get('page') == 'departments') { ?>active<? } ?>" href="/?page=departments">
+						<i class="icon"></i> Кафедры
+					</a>
 
-				<a class="item subcategory <? if (get('page') == 'departments') { ?>active<? } ?>" href="/?page=departments">
-					<i class="icon"></i> Кафедры
-				</a>
+					<a class="item subcategory <? if (get('page') == 'faculties') { ?>active<? } ?>" href="/?page=faculties">
+						<i class="icon"></i> Факультеты
+					</a>
 
-				<a class="item subcategory <? if (get('page') == 'faculties') { ?>active<? } ?>" href="/?page=faculties">
-					<i class="icon"></i> Факультеты
-				</a>
+					<a class="item subcategory <? if (get('page') == 'qualifications') { ?>active<? } ?>" href="/?page=qualifications">
+						<i class="icon"></i> Квалификации
+					</a>
 
-				<a class="item subcategory <? if (get('page') == 'qualifications') { ?>active<? } ?>" href="/?page=qualifications">
-					<i class="icon"></i> Квалификации
-				</a>
+					<a class="item subcategory <? if (get('page') == 'specializations') { ?>active<? } ?>" href="/?page=specializations">
+						<i class="icon"></i> Специализации
+					</a>
 
-				<a class="item subcategory <? if (get('page') == 'specializations') { ?>active<? } ?>" href="/?page=specializations">
-					<i class="icon"></i> Специализации
-				</a>
+					<a class="item subcategory <? if (get('page') == 'specialties') { ?>active<? } ?>" href="/?page=specialties">
+						<i class="icon"></i> Специальности
+					</a>
 
-				<a class="item subcategory <? if (get('page') == 'specialties') { ?>active<? } ?>" href="/?page=specialties">
-					<i class="icon"></i> Специальности
-				</a>
+					<a class="item subcategory <? if (get('page') == 'users') { ?>active<? } ?>" href="/?page=users">
+						<i class="icon"></i> Пользователи
+					</a>
 
-				<a class="item subcategory <? if (get('page') == 'users') { ?>active<? } ?>" href="/?page=users">
-					<i class="icon"></i> Пользователи
-				</a>
+
+
+					<div class="item header" onclick="rude.animate('#reports'); rude.cookie.toggle('reports')">
+						Учебные планы
+					</div>
+
+					<a class="item subcategory <? if (get('page') == 'reports') { ?>active<? } ?>" href="/?page=reports">
+						<i class="icon"></i> Добавить новый
+					</a>
+				<? } ?>
 			</div>
 		</div>
 	<?

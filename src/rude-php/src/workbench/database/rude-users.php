@@ -76,4 +76,18 @@ class users
 
 		return false;
 	}
+
+	public static function remove($id)
+	{
+		if (static::is_exists($id))
+		{
+			$q = new dquery(RUDE_DATABASE_TABLE_USERS);
+			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
+			$q->query();
+
+			return true;
+		}
+
+		return false;
+	}
 }
