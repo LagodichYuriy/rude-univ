@@ -25,7 +25,7 @@ class specialties
 
 		if ($id !== null)
 		{
-			$q .= PHP_EOL . 'WHERE ' . RUDE_DATABASE_TABLE_FACULTIES . '.' . RUDE_DATABASE_FIELD_ID . ' = ' . (int) $id;
+			$q .= PHP_EOL . 'WHERE ' . RUDE_DATABASE_TABLE_SPECIALTIES . '.' . RUDE_DATABASE_FIELD_ID . ' = ' . (int) $id;
 		}
 
 
@@ -33,7 +33,6 @@ class specialties
 			GROUP BY
 				' . RUDE_DATABASE_TABLE_SPECIALTIES . '.' . RUDE_DATABASE_FIELD_ID . '
 		';
-
 
 		$database->query($q);
 

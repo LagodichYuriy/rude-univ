@@ -4,6 +4,38 @@ namespace rude;
 
 class template_qualifications
 {
+	public function __construct()
+	{
+		if (!template_session::is_admin() and !template_session::is_editor())
+		{
+			if (get('ajax'))
+			{
+				exit(RUDE_AJAX_ACCESS_VIOLATION);
+			}
+
+			return false;
+		}
+
+
+		switch (get('task'))
+		{
+			case 'remove': $status = qualifications::remove(get('id')); break;
+
+			default:
+				$status = false;
+				break;
+		}
+
+
+		if (get('ajax'))
+		{
+			if ($status) { exit(RUDE_AJAX_OK);    }
+			else              { exit(RUDE_AJAX_ERROR); }
+		}
+
+		return true;
+	}
+
 	public function html()
 	{
 		template_html::doctype();
@@ -56,11 +88,15 @@ class template_qualifications
 					foreach ($qualifications as $qualification)
 					{
 						?>
-						<tr>
+						<tr id="qualification-<?= $qualification->id ?>">
 							<td class="small numeric"><?= $qualification->id ?></td>
 							<td><?= $qualification->name ?></td>
 							<td class="icon first no-border"><?= template_image::edit() ?></td>
-							<td class="icon last no-border"><?= template_image::remove() ?></td>
+							<td class="icon last no-border">
+								<a href="#" onclick="$.post('<?= template_url::ajax('qualifications', 'remove', $qualification->id) ?>').done(function(answer) { answer_removed(answer, <?= $qualification->id ?>); }); return false;">
+									<?= template_image::remove() ?>
+								</a>
+							</td>
 						</tr>
 						<?
 					}
@@ -68,6 +104,36 @@ class template_qualifications
 				</tbody>
 			</table>
 		</div>
+
+		<script>
+			function answer_removed(answer, qualification_id)
+			{
+				console.log(answer);
+
+
+				switch(answer)
+				{
+					case '<?= RUDE_AJAX_ERROR            ?>':
+
+						break;
+
+					case '<?= RUDE_AJAX_OK               ?>':
+						console.log(this);
+
+						$('#qualification-' + qualification_id).fadeOut('slow');
+						break;
+
+					case '<?= RUDE_AJAX_ACCESS_VIOLATION ?>':
+						$('#access-violation').modal('show');
+						break;
+
+					default:
+						break;
+				}
+
+				return false;
+			}
+		</script>
 		<?
 	}
 }

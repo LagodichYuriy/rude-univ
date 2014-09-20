@@ -17,6 +17,7 @@ class template_404
 		<html>
 		<head>
 			<link href='<?= RUDE_URL_SRC  . '/css/404.css' ?>' rel='stylesheet' type='text/css'>
+			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		</head>
 		<body>
 			<div id="container">

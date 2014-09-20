@@ -63,10 +63,10 @@ class users
 		return $q->get_object();
 	}
 
-	public static function is_exists($name)
+	public static function is_exists($id)
 	{
 		$q = new query(RUDE_DATABASE_TABLE_USERS);
-		$q->where(RUDE_DATABASE_FIELD_NAME, $name);
+		$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 		$q->query();
 
 		if ($q->get_object())
