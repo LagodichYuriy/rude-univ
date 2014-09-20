@@ -123,6 +123,7 @@ define('RUDE_TIME_YEAR',   946080000); # 1 year   = 946080000 seconds
 define('RUDE_DATABASE_TABLE_DEPARTMENTS',     RUDE_DATABASE_PREFIX . 'departments');
 define('RUDE_DATABASE_TABLE_FACULTIES',       RUDE_DATABASE_PREFIX . 'faculties');
 define('RUDE_DATABASE_TABLE_QUALIFICATIONS',  RUDE_DATABASE_PREFIX . 'qualifications');
+define('RUDE_DATABASE_TABLE_REPORTS',         RUDE_DATABASE_PREFIX . 'reports');
 define('RUDE_DATABASE_TABLE_USERS_ROLES',     RUDE_DATABASE_PREFIX . 'users_roles');
 define('RUDE_DATABASE_TABLE_SPECIALTIES',     RUDE_DATABASE_PREFIX . 'specialties');
 define('RUDE_DATABASE_TABLE_TRAINING_FORM',   RUDE_DATABASE_PREFIX . 'training_forms');
@@ -130,14 +131,17 @@ define('RUDE_DATABASE_TABLE_SPECIALIZATIONS', RUDE_DATABASE_PREFIX . 'specializa
 define('RUDE_DATABASE_TABLE_USERS',           RUDE_DATABASE_PREFIX . 'users');
 
 
-define('RUDE_DATABASE_FIELD_ID',               'id');
-define('RUDE_DATABASE_FIELD_NAME',             'name');
-define('RUDE_DATABASE_FIELD_SHORTNAME',        'shortname');
-define('RUDE_DATABASE_FIELD_HASH',             'hash');
-define('RUDE_DATABASE_FIELD_SALT',             'salt');
-define('RUDE_DATABASE_FIELD_ROLE_ID',          'role_id');
-define('RUDE_DATABASE_FIELD_FACULTY_ID',       'faculty_id');
-define('RUDE_DATABASE_FIELD_QUALIFICATION_ID', 'qualification_id');
+define('RUDE_DATABASE_FIELD_ID',                'id');
+define('RUDE_DATABASE_FIELD_NAME',              'name');
+define('RUDE_DATABASE_FIELD_SHORTNAME',         'shortname');
+define('RUDE_DATABASE_FIELD_HASH',              'hash');
+define('RUDE_DATABASE_FIELD_SALT',              'salt');
+define('RUDE_DATABASE_FIELD_ROLE_ID',           'role_id');
+define('RUDE_DATABASE_FIELD_FACULTY_ID',        'faculty_id');
+define('RUDE_DATABASE_FIELD_TRAINING_FORM_ID',  'training_form_id');
+define('RUDE_DATABASE_FIELD_SPECIALTY_ID',      'specialty_id');
+define('RUDE_DATABASE_FIELD_SPECIALIZATION_ID', 'specialization_id');
+define('RUDE_DATABASE_FIELD_QUALIFICATION_ID',  'qualification_id');
 
 
 ####################################################################

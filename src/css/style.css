@@ -181,11 +181,42 @@ h2
 /* # comments section # */
 /* #################### */
 
-
 #comments
 {
 	margin: 0;
 }
+
+
+/* #################### */
+/* # comments section # */
+/* #################### */
+
+#reports-new
+{
+
+}
+
+#reports-new .ui.menu
+{
+	width: 100%;
+}
+
+#reports-new .ui.menu
+{
+	width: 100%;
+}
+
+#reports-new .ui.menu .item
+{
+	font-size: 12px;
+}
+
+#reports-new .text
+{
+	display: inline!important;
+	font-size: 12px;
+}
+
 
 
 /* ######################## */

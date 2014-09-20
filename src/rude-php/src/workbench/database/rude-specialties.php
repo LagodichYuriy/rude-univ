@@ -31,8 +31,7 @@ class specialties
 
 		$q .= '
 			GROUP BY
-				' . RUDE_DATABASE_TABLE_SPECIALTIES . '.' . RUDE_DATABASE_FIELD_ID . '
-		';
+				' . RUDE_DATABASE_TABLE_SPECIALTIES . '.' . RUDE_DATABASE_FIELD_ID;
 
 
 		$database->query($q);

@@ -11,10 +11,10 @@ class site
 
 		switch (get('page'))
 		{
-			case 'registration':  ajax_registration::init();  break;
-			case 'authorization': ajax_authorization::init(); break;
+			case 'registration':    ajax_registration::init();                  break;
+			case 'authorization':   ajax_authorization::init();                 break;
 
-			case 'logout':        ajax_logout::init();        break;
+			case 'logout':          ajax_logout::init();                        break;
 
 			case 'departments':     $template = new template_departments();     break;
 			case 'faculties':       $template = new template_faculties();       break;
@@ -24,15 +24,12 @@ class site
 			case 'users':           $template = new template_users();           break;
 			case 'users_roles':     $template = new template_users_roles();     break;
 
+			case 'reports':         $template = new template_reports();         break;
+			case 'reports-new':     $template = new template_reports_new();     break;
+
 			default:
-				if (!url::is_homepage())
-				{
-					$template = new template_404();
-				}
-				else
-				{
-					$template = new template_homepage();
-				}
+				     if (!url::is_homepage()) { $template = new template_404();      }
+				else                          { $template = new template_homepage(); }
 		}
 
 		if (isset($template) and !get('ajax'))

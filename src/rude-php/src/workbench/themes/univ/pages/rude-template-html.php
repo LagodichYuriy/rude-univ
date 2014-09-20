@@ -375,6 +375,10 @@ class template_html
 					</div>
 
 					<a class="item subcategory <? if (get('page') == 'reports') { ?>active<? } ?>" href="/?page=reports">
+						<i class="icon"></i> Все планы
+					</a>
+
+					<a class="item subcategory <? if (get('page') == 'reports-new') { ?>active<? } ?>" href="/?page=reports-new">
 						<i class="icon"></i> Добавить новый
 					</a>
 				<? } ?>
