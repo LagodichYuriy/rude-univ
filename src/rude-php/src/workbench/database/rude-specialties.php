@@ -45,4 +45,28 @@ class specialties
 
 		return $database->get_object_list();
 	}
+
+	public static function remove($id)
+	{
+		if (static::is_exists($id))
+		{
+			$q = new dquery(RUDE_DATABASE_TABLE_SPECIALTIES);
+			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
+			$q->query();
+
+			return true;
+		}
+
+		return false;
+	}
+
+	public static function is_exists($id)
+	{
+		if (static::get($id))
+		{
+			return true;
+		}
+
+		return false;
+	}
 }

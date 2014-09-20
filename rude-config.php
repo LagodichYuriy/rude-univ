@@ -138,3 +138,13 @@ define('RUDE_DATABASE_FIELD_SALT',             'salt');
 define('RUDE_DATABASE_FIELD_ROLE_ID',          'role_id');
 define('RUDE_DATABASE_FIELD_FACULTY_ID',       'faculty_id');
 define('RUDE_DATABASE_FIELD_QUALIFICATION_ID', 'qualification_id');
+
+
+####################################################################
+####################################################################
+#                         database section                         #
+####################################################################
+
+define('RUDE_AJAX_ERROR',            "0");
+define('RUDE_AJAX_OK',               "1");
+define('RUDE_AJAX_ACCESS_VIOLATION', "2");

@@ -61,8 +61,8 @@ class template_specializations
 							<td class="small numeric"><?= $specialization->id ?></td>
 							<td><?= $specialization->name ?></td>
 							<td class="monospace numeric"><?= $specialization->code ?></td>
-							<td class="icon"><?= template_image::edit() ?></td>
-							<td class="icon"><?= template_image::remove() ?></td>
+							<td class="icon first no-border"><?= template_image::edit() ?></td>
+							<td class="icon last no-border"><?= template_image::remove() ?></td>
 						</tr>
 						<?
 					}

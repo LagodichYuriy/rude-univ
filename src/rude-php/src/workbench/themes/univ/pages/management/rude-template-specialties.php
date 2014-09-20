@@ -63,8 +63,8 @@ class template_specialties
 							<td><?= $specialty->name ?></td>
 							<td class="middle"><?= $specialty->faculty_shortname ?></td>
 							<td><?= $specialty->qualification_name ?></td>
-							<td class="icon"><?= template_image::edit() ?></td>
-							<td class="icon"><?= template_image::remove() ?></td>
+							<td class="icon first no-border"><?= template_image::edit() ?></td>
+							<td class="icon last no-border"><?= template_image::remove() ?></td>
 						</tr>
 						<?
 					}

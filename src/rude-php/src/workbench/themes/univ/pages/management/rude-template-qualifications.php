@@ -59,8 +59,8 @@ class template_qualifications
 						<tr>
 							<td class="small numeric"><?= $qualification->id ?></td>
 							<td><?= $qualification->name ?></td>
-							<td class="icon"><?= template_image::edit() ?></td>
-							<td class="icon"><?= template_image::remove() ?></td>
+							<td class="icon first no-border"><?= template_image::edit() ?></td>
+							<td class="icon last no-border"><?= template_image::remove() ?></td>
 						</tr>
 						<?
 					}
