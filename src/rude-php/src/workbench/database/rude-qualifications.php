@@ -44,4 +44,13 @@ class qualifications
 
 		return false;
 	}
+
+	public static function add($name)
+	{
+		$q = new cquery(RUDE_DATABASE_TABLE_QUALIFICATIONS);
+		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
+		$q->query();
+
+		return true;
+	}
 }

@@ -20,6 +20,8 @@ class template_faculties
 		switch (get('task'))
 		{
 			case 'remove': $status = faculties::remove(get('id')); break;
+			case 'add': $status = faculties::add(get('name'),get('shortname'));  break;
+
 
 			default:
 				$status = false;
@@ -75,6 +77,9 @@ class template_faculties
 			<?
 				$faculties = faculties::get();
 			?>
+			<a href="#" onclick="$('#add_modal').modal('show');">
+				<?= template_image::add() ?>	Добавить факультет
+			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
@@ -138,6 +143,75 @@ class template_faculties
 			}
 		</script>
 
+
+		<div id="add_modal" class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Добавить факультет
+			</div>
+			<div class="content">
+				<div class="ui form segment">
+					<div class="field">
+						<label for="name">Полное наименование факультета</label>
+						<div class="ui left labeled icon input">
+							<input class="name" name="name" type="text" placeholder="Полное наименование факультета">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="field">
+						<label for="shortname">Краткое наименование факультета</label>
+						<div class="ui left labeled icon input">
+							<input class="shortname" name="shortname" type="text" placeholder="Краткое наименование факультета">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<div class="ui error message">
+						<div class="header">Найдены ошибки при заполнении формы</div>
+					</div>
+					<div class="ui blue submit button" value="add">Добавить</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			$('#add_modal .ui.form')
+				.form({
+					name: {
+						identifier : 'name',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите полное наименование факультета.'
+							}
+						]
+					},
+					shortname: {
+						identifier : 'shortname',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите краткое наименование факультета.'
+							}
+						]
+					}
+				},
+				{
+					onSuccess: function()
+					{
+						var name = $('.name').val();
+						var shortname = $('.shortname').val();
+						$.post('/?page=faculties&task=add&name='+name+'&shortname='+shortname+'&ajax=true')
+							.done(function() { $('#add_modal').modal('hide'); rude.redirect('/?page=faculties'); }); return false;
+					}
+				})
+			;
+		</script>
 		<?
 	}
 }

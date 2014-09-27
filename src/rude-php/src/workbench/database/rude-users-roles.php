@@ -21,6 +21,7 @@ class users_roles
 		return $q->get_object_list();
 	}
 
+
 	public static function remove($id)
 	{
 		if (static::is_exists($id))

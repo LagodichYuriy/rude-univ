@@ -21,6 +21,8 @@ class template_specialties
 		switch (get('task'))
 		{
 			case 'remove': $status = specialties::remove(get('id')); break;
+			case 'add': $status = specialties::add(get('name'),get('faculti_id'),get('qualif_id'));  break;
+
 
 			default:
 				$status = false;
@@ -75,6 +77,9 @@ class template_specialties
 			<?
 				$specialties = specialties::get();
 			?>
+			<a href="#" onclick="$('#add_modal').modal('show');">
+				<?= template_image::add() ?>	Добавить специальность
+			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
@@ -138,6 +143,110 @@ class template_specialties
 
 				return false;
 			}
+		</script>
+
+		<div id="add_modal" class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Добавить специальность
+			</div>
+			<div class="content">
+				<div class="ui form segment">
+					<div class="field">
+						<label for="name">Наименование специальности</label>
+						<div class="ui left labeled icon input">
+							<input class="name" name="name" type="text" placeholder="Наименование специальности">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<label>Факультет</label>
+						<div class="ui fluid selection dropdown">
+							<div class="text">Выберите факультет</div>
+
+							<input type="hidden" id="faculties_name">
+							<div style="max-height: 100px;" class="menu">
+								<?	$faculty_list = faculties::get();
+								foreach ($faculty_list as $faculty)
+								{
+									?>
+									<div class="item" data-value="<?= $faculty->id  ?>"><?= $faculty->shortname  ?></div>
+								<?
+								}?>
+							</div>
+						</div>
+					</div>
+					<div class="field">
+						<label>Квалификация</label>
+						<div maxlength="50" style="max-height: 16px;" class="ui fluid selection dropdown">
+							<div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width: 413px;" class="text">Выберите квалификацию</div>
+
+							<input type="hidden" id="qualificatio_name">
+							<div style="max-height: 50px; max-width:418px;" class="menu">
+								<?	$qualification_list = qualifications::get();
+								foreach ($qualification_list as $qualification)
+								{
+									?>
+									<div class="item" data-value="<?= $qualification->id  ?>"><?= $qualification->name  ?></div>
+								<?
+								}?>
+							</div>
+						</div>
+					</div>
+					<div class="ui error message">
+						<div class="header">Найдены ошибки при заполнении формы</div>
+					</div>
+					<div class="ui blue submit button" value="add">Добавить</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			$('#add_modal .ui.form')
+				.form({
+					name: {
+						identifier : 'name',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите наименование кафедры.'
+							}
+						]
+					},
+					qualificatio_name:{
+						identifier : 'qualificatio_name',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите квалификацию.'
+							}
+						]
+					},
+					faculties_name: {
+						identifier : 'faculties_name',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите факультет.'
+							}
+						]
+					}
+
+				},
+				{
+					onSuccess: function()
+					{
+						var name = $('.name').val();
+						var faculti_id = $('#faculties_name').val();
+						var qualif_id = $('#qualificatio_name').val();
+						$.post('/?page=specialties&task=add&name='+name+'&faculti_id='+faculti_id+'&qualif_id='+qualif_id+'&ajax=true')
+							.done(function() { $('#add_modal').modal('hide');  rude.redirect('/?page=specialties');}); return false;
+					}
+				})
+			;
 		</script>
 		<?
 	}

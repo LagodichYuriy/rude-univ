@@ -44,4 +44,14 @@ class faculties
 
 		return false;
 	}
+
+	public static function add($name,$shortname)
+	{
+		$q = new cquery(RUDE_DATABASE_TABLE_FACULTIES);
+		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
+		$q->add(RUDE_DATABASE_FIELD_SHORTNAME,$shortname);
+		$q->query();
+
+		return true;
+	}
 }

@@ -4,7 +4,7 @@ namespace rude;
 
 class users
 {
-	public static function add($name, $password, $role_id = RUDE_ROLE_USER)
+	public static function add($name, $password, $role_id)
 	{
 		list($hash, $salt) = crypt::password($password);
 
@@ -13,6 +13,7 @@ class users
 		$q->add(RUDE_DATABASE_FIELD_HASH,    $hash);
 		$q->add(RUDE_DATABASE_FIELD_SALT,    $salt);
 		$q->add(RUDE_DATABASE_FIELD_ROLE_ID, $role_id);
+
 		$q->query();
 
 		return $q->get_id();
@@ -55,13 +56,13 @@ class users
 	}
 
 	public static function get_by_name($name)
-	{
-		$q = new query(RUDE_DATABASE_TABLE_USERS);
-		$q->where(RUDE_DATABASE_FIELD_NAME, $name);
-		$q->query();
+{
+	$q = new query(RUDE_DATABASE_TABLE_USERS);
+	$q->where(RUDE_DATABASE_FIELD_NAME, $name);
+	$q->query();
 
-		return $q->get_object();
-	}
+	return $q->get_object();
+}
 
 	public static function is_exists($id)
 	{

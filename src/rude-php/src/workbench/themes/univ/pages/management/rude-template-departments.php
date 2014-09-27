@@ -19,7 +19,9 @@ class template_departments
 
 		switch (get('task'))
 		{
-			case 'remove': $status = departments::remove(get('id')); break;
+			case 'remove': $status = departments::remove(get('id'));  break;
+			case 'add': $status = departments::add(get('name'));  break;
+
 
 			default:
 				$status = false;
@@ -35,6 +37,7 @@ class template_departments
 
 		return true;
 	}
+
 
 	public function html()
 	{
@@ -74,6 +77,9 @@ class template_departments
 			<?
 				$departments = departments::get();
 			?>
+			<a href="#" onclick="$('#add_modal').modal('show');">
+				<?= template_image::add() ?>	Добавить кафедру
+			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
@@ -134,6 +140,56 @@ class template_departments
 				return false;
 			}
 		</script>
-		<?
+
+
+		<div id="add_modal" class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Добавить кафедру
+			</div>
+			<div class="content">
+				<div class="ui form segment">
+					<div class="field">
+						<label for="name">Наименование кафедры</label>
+						<div class="ui left labeled icon input">
+							<input class="name" name="name" type="text" placeholder="Наименование кафедры">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<div class="ui error message">
+						<div class="header">Найдены ошибки при заполнении формы</div>
+					</div>
+					<div class="ui blue submit button" value="add">Добавить</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			$('#add_modal .ui.form')
+				.form({
+					name: {
+						identifier : 'name',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите наименование кафедры.'
+							}
+						]
+					}
+				},
+				{
+					onSuccess: function()
+					{
+						var name = $('.name').val();
+						$.post('/?page=departments&task=add&name='+name+'&ajax=true')
+						.done(function() { $('#add_modal').modal('hide');  rude.redirect('/?page=departments');}); return false;
+					}
+				})
+			;
+		</script>
+	<?
 	}
 }

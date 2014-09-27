@@ -20,6 +20,7 @@ class template_specializations
 		switch (get('task'))
 		{
 			case 'remove': $status = specializations::remove(get('id')); break;
+			case 'add': $status = specializations::add(get('name'),get('code'));  break;
 
 			default:
 				$status = false;
@@ -74,6 +75,9 @@ class template_specializations
 			<?
 				$specializations = specializations::get();
 			?>
+			<a href="#" onclick="$('#add_modal').modal('show');">
+				<?= template_image::add() ?>	Добавить специализацию
+			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
@@ -135,6 +139,76 @@ class template_specializations
 
 				return false;
 			}
+		</script>
+
+
+		<div id="add_modal" class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Добавить специализацию
+			</div>
+			<div class="content">
+				<div class="ui form segment">
+					<div class="field">
+						<label for="name">Наименование специализации</label>
+						<div class="ui left labeled icon input">
+							<input class="name" name="name" type="text" placeholder="Наименование специализации">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="field">
+						<label for="code">Код специализации</label>
+						<div class="ui left labeled icon input">
+							<input class="code" name="code" type="text" placeholder="Код специализации">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<div class="ui error message">
+						<div class="header">Найдены ошибки при заполнении формы</div>
+					</div>
+					<div class="ui blue submit button" value="add">Добавить</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			$('#add_modal .ui.form')
+				.form({
+					name: {
+						identifier : 'name',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите наименование специализации.'
+							}
+						]
+					},
+					code: {
+						identifier : 'code',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите код специализации.'
+							}
+						]
+					}
+				},
+				{
+					onSuccess: function()
+					{
+						var name = $('.name').val();
+						var code = $('.code').val();
+						$.post('/?page=specializations&task=add&name='+name+'&code='+code+'&ajax=true')
+							.done(function() { $('#add_modal').modal('hide'); rude.redirect('/?page=specializations'); }); return false;
+					}
+				})
+			;
 		</script>
 		<?
 	}

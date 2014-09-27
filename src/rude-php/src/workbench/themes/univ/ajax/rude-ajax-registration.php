@@ -8,6 +8,11 @@ class ajax_registration
 	{
 		$username = get('username');
 		$password = get('password');
+		$role_id = get('role_id');
+
+
+
+
 
 
 		if (!$username)
@@ -31,7 +36,7 @@ class ajax_registration
 		}
 
 
-		$user_id = users::add($username, $password);
+		$user_id = users::add($username, $password,$role_id);
 
 		if (!$user_id)
 		{

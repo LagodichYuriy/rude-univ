@@ -44,4 +44,14 @@ class specializations
 
 		return false;
 	}
+
+	public static function add($name,$code)
+	{
+		$q = new cquery(RUDE_DATABASE_TABLE_SPECIALIZATIONS);
+		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
+		$q->add('code',$code);
+		$q->query();
+
+		return true;
+	}
 }

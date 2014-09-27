@@ -21,6 +21,7 @@ class template_users
 		{
 			case 'remove': $status = users::remove(get('id')); break;
 
+
 			default:
 				$status = false;
 				break;
@@ -73,6 +74,9 @@ class template_users
 			<?
 				$users = users::get();
 			?>
+			<a href="#" onclick="$('#add_modal').modal('show');">
+				<?= template_image::add() ?>	Добавить пользователя
+			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
@@ -134,6 +138,143 @@ class template_users
 
 				return false;
 			}
+		</script>
+
+		<div id="add_modal" class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Добавить пользователя
+			</div>
+
+			<div class="content">
+				<div class="ui form segment">
+					<div class="field">
+						<label for="username">Имя пользователя</label>
+						<div class="ui left labeled icon input">
+							<input class="username" name="username" type="text" placeholder="Имя вашего нового пользователя...">
+							<i class="user icon"></i>
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="field">
+						<label for="password">Пароль</label>
+						<div class="ui left labeled icon input">
+							<input class="password" name="password" type="password">
+							<i class="lock icon"></i>
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+
+					<div class="field">
+						<label>Роль</label>
+						<div class="ui fluid selection dropdown">
+							<div class="text">Выберите роль пользователя</div>
+
+							<input type="hidden" id="role_name">
+							<div style="max-height: 100px;" class="menu">
+								<?	$users_roles = users_roles::get();
+								foreach ($users_roles as $role)
+								{
+									?>
+									<div class="item"  data-value="<?= $role->id  ?>"><?= $role->name  ?></div>
+								<?
+								}?>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui error message">
+						<div class="header">Найдены ошибки при заполнении формы</div>
+					</div>
+
+					<div class="ui blue submit button">Добавить</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<script>
+			$('#add_modal .ui.form')
+				.form({
+					username: {
+						identifier : 'username',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите имя для пользователя.'
+							}
+						]
+					},
+					role_name: {
+						identifier : 'role_name',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите роль для пользователя.'
+							}
+						]
+					},
+					password: {
+						identifier : 'password',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите пароль для пользователя.'
+							},
+							{
+								type   : 'length[6]',
+								prompt : 'Ваш пароль должен быть хотя бы 6 символов в длину.'
+							}
+						]
+					}
+				},
+				{
+					onSuccess: function()
+					{
+						var username = $('#add_modal .username').val();
+						var password = $('#add_modal .password').val();
+						var role_id = $('#role_name').val();
+
+
+
+
+
+
+						$.ajax({
+							url : '/?page=registration',
+
+							type: 'POST',
+
+							data :
+							{
+								username: username,
+								password: password,
+								role_id : role_id
+							},
+
+							success: function(answer)
+							{
+								console.log(answer);
+
+								if (answer)
+								{
+									$('#add_modal .ui.error.message').html('<ul class="list"><li>' + answer + '</li></ul>').show('slow');
+								}
+								else
+								{
+									rude.redirect('/?page=users');
+								}
+							}
+						});
+					}
+				})
+			;
 		</script>
 		<?
 	}
