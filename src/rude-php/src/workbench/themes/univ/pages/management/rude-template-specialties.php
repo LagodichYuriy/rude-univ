@@ -172,7 +172,7 @@ class template_specialties
 					<div class="field">
 						<label>Факультет</label>
 						<div class="ui fluid selection dropdown">
-							<div class="text" >Выберите факультет</div>
+							<div class="default text" >Выберите факультет</div>
 
 							<input type="hidden" id="faculties_name">
 							<div style="max-height: 150px;" class="menu">
@@ -189,7 +189,7 @@ class template_specialties
 					<div class="field">
 						<label>Квалификация</label>
 						<div maxlength="50" style="max-height: 16px;" class="ui fluid selection dropdown">
-							<div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width: 413px;" class="text">Выберите квалификацию</div>
+							<div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;width: 413px;" class="default text">Выберите квалификацию</div>
 
 							<input type="hidden" id="qualificatio_name">
 							<div style="max-height: 150px; max-width:418px;" class="menu">

@@ -182,7 +182,7 @@ class template_users
 					<div class="field">
 						<label>Роль</label>
 						<div class="ui fluid selection dropdown">
-							<div class="text">Выберите роль пользователя</div>
+							<div class="default text">Выберите роль пользователя</div>
 
 							<input type="hidden" id="role_name">
 							<div style="max-height: 150px;" class="menu">
