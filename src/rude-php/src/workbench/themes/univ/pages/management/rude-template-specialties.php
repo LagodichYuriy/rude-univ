@@ -78,9 +78,6 @@ class template_specialties
 			<?
 				$specialties = specialties::get();
 			?>
-			<a href="#" onclick="$('#add_modal').modal('show');">
-				<?= template_image::add() ?>	Добавить специальность
-			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
@@ -88,8 +85,7 @@ class template_specialties
 						<th>Наименование</th>
 						<th class="middle">Факультет</th>
 						<th>Квалификация</th>
-						<th></th>
-						<th></th>
+						<th colspan="2" class="right icon-add"><i class="icon add sign pointer" title="Добавить" onclick="$('#add_modal').modal('show');"></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -111,12 +107,12 @@ class template_specialties
 									$('#faculty_dd').dropdown('set selected',<?= $faculty_id->id?>);
 									$('#editqualificatio_name').val('<?= $qualificatio_id->id?>');
 									$('#qualificatio_dd').dropdown('set selected',<?= $qualificatio_id->id?>);">
-									<?= template_image::edit() ?>
+									<i class="icon edit" title="Редактировать"></i>
 								</a>
 							</td>
 							<td class="icon last no-border">
 								<a href="#" onclick="$.post('<?= template_url::ajax('specialties', 'remove', $specialty->id) ?>').done(function(answer) { answer_removed(answer, <?= $specialty->id ?>); }); return false;">
-									<?= template_image::remove() ?>
+									<i class="icon remove circle" title="Удалить"></i>
 								</a>
 							</td>
 						</tr>
@@ -166,7 +162,7 @@ class template_specialties
 				<div class="ui form segment">
 					<div class="field">
 						<label for="name">Наименование специальности</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="name" name="name" type="text" placeholder="Наименование специальности">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -271,7 +267,7 @@ class template_specialties
 				<div class="ui form segment">
 					<div class="field">
 						<label for="editname">Наименование специальности</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="editname" name="editname" type="text" placeholder="Наименование специальности">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>

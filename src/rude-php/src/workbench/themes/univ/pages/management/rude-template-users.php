@@ -75,17 +75,13 @@ class template_users
 			<?
 				$users = users::get();
 			?>
-			<a href="#" onclick="$('#add_modal').modal('show');">
-				<?= template_image::add() ?>	Добавить пользователя
-			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
 						<th class="numeric">#</th>
 						<th>Имя</th>
 						<th>Статус</th>
-						<th></th>
-						<th></th>
+						<th colspan="2" class="right icon-add"><i class="icon add sign pointer" title="Добавить" onclick="$('#add_modal').modal('show');"></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -107,12 +103,12 @@ class template_users
 									$('#edit_role').val('<?= $role_id->id?>');
 									$('#user_role_dd').dropdown('set selected',<?= $role_id->id?>);
 									">
-									<?= template_image::edit() ?>
+									<i class="icon edit" title="Редактировать"></i>
 								</a>
 							</td>
 							<td class="icon last no-border">
 								<a href="#" onclick="$.post('<?= template_url::ajax('users', 'remove', $user->id) ?>').done(function(answer) { answer_removed(answer, <?= $user->id ?>); }); return false;">
-									<?= template_image::remove() ?>
+									<i class="icon remove circle" title="Удалить"></i>
 								</a>
 							</td>
 						</tr>
@@ -163,7 +159,7 @@ class template_users
 				<div class="ui form segment">
 					<div class="field">
 						<label for="username">Имя пользователя</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input icon">
 							<input class="username" name="username" type="text" placeholder="Имя вашего нового пользователя...">
 							<i class="user icon"></i>
 							<div class="ui corner label">
@@ -174,7 +170,7 @@ class template_users
 
 					<div class="field">
 						<label for="password">Пароль</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input icon">
 							<input class="password" name="password" type="password">
 							<i class="lock icon"></i>
 							<div class="ui corner label">
@@ -299,7 +295,7 @@ class template_users
 				<div class="ui form segment">
 					<div class="field">
 						<label for="editusername">Имя пользователя</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="editusername" name="editusername" type="text" placeholder="Имя пользователя">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -308,7 +304,7 @@ class template_users
 					</div>
 					<div class="field" hidden>
 						<label for="id">id</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="id" name="id" type="text" placeholder="id">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -317,7 +313,7 @@ class template_users
 					</div>
 					<!--<div class="field">
 						<label for="edit_password">Пароль</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="edit_password" name="edit_password" type="password">
 							<i class="lock icon"></i>
 							<div class="ui corner label">

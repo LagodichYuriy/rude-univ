@@ -48,6 +48,10 @@ class template_homepage
 			<table class="ui basic table">
 				<tbody>
 					<tr>
+						<td class="small"><i class="icon add sign" title="Добавить"></i></td>
+						<td>добавление нового элемента</td>
+					</tr>
+					<tr>
 						<td class="small"><i class="icon edit" title="Редактировать"></i></td>
 						<td>редактирование элемента</td>
 					</tr>

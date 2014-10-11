@@ -76,16 +76,12 @@ class template_qualifications
 			<?
 				$qualifications = qualifications::get();
 			?>
-			<a href="#" onclick="$('#add_modal').modal('show');">
-				<?= template_image::add() ?>	Добавить квалификацию
-			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
 						<th class="numeric">#</th>
 						<th>Наименование</th>
-						<th></th>
-						<th></th>
+						<th colspan="2" class="right icon-add"><i class="icon add sign pointer" title="Добавить" onclick="$('#add_modal').modal('show');"></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -98,12 +94,12 @@ class template_qualifications
 							<td><?= $qualification->name ?></td>
 							<td class="icon first no-border">
 								<a href="#" onclick="$('#edit_modal').modal('show'); $('.id').val('<?= $qualification->id?>');  $('.editname').val('<?= $qualification->name?>');">
-									<?= template_image::edit() ?>
+									<i class="icon edit" title="Редактировать"></i>
 								</a>
 							</td>
 							<td class="icon last no-border">
 								<a href="#" onclick="$.post('<?= template_url::ajax('qualifications', 'remove', $qualification->id) ?>').done(function(answer) { answer_removed(answer, <?= $qualification->id ?>); }); return false;">
-									<?= template_image::remove() ?>
+									<i class="icon remove circle" title="Удалить"></i>
 								</a>
 							</td>
 						</tr>
@@ -154,7 +150,7 @@ class template_qualifications
 				<div class="ui form segment">
 					<div class="field">
 						<label for="name">Наименование квалификации</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="name" name="name" type="text" placeholder="Наименование квалификации">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -203,7 +199,7 @@ class template_qualifications
 				<div class="ui form segment">
 					<div class="field">
 						<label for="editname">Наименование квалификации</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="editname" name="editname" type="text" placeholder="Наименование квалификации">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -212,7 +208,7 @@ class template_qualifications
 					</div>
 					<div class="field" hidden>
 						<label for="id">id</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="id" name="id" type="text" placeholder="id">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>

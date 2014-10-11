@@ -313,10 +313,8 @@ pre code.hljs.php .ui.label
 	width: 100%!important;
 }
 
-.middle
-{
-	text-align: center!important;
-}
+.middle { text-align: center!important; }
+.right  { text-align: right!important; }
 
 .monospace
 {
@@ -381,12 +379,21 @@ pre code.hljs.php .ui.label
 	border-right: none!important;
 }
 
+.icon-add
+{
+	padding: 5px!important;
+}
+
+.pointer
+{
+	cursor: pointer!important;
+}
+
 .justify
 {
 	text-align: justify;
 }
 
-<<<<<<< HEAD
 .underline
 {
 	text-decoration: underline;
@@ -402,8 +409,9 @@ pre code.hljs.php .ui.label
 	word-break: break-all;
 }
 
-.icon.edit   { color: #000; opacity: 1; font-size: 1.1em; }
-.icon.remove { color: #000; opacity: 1; font-size: 1.1em; }
+.icon.edit     { color: #000; opacity: 1; font-size: 1.1em; }
+.icon.remove   { color: #000; opacity: 1; font-size: 1.1em; }
+.icon.add.sign { color: #000; opacity: 1; font-size: 1.1em; }
 
 .item
 {

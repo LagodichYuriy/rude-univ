@@ -79,17 +79,13 @@ class template_faculties
 			<?
 				$faculties = faculties::get();
 			?>
-			<a href="#" onclick="$('#add_modal').modal('show');">
-				<?= template_image::add() ?>	Добавить факультет
-			</a>
 			<table class="ui table segment square-corners celled">
 				<thead>
 					<tr class="header">
 						<th class="numeric">#</th>
 						<th>Полное наименование</th>
 						<th>Краткое</th>
-						<th></th>
-						<th></th>
+						<th colspan="2" class="right icon-add"><i class="icon add sign pointer" title="Добавить" onclick="$('#add_modal').modal('show');"></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -103,12 +99,12 @@ class template_faculties
 							<td><?= $faculty->shortname ?></td>
 							<td class="icon first no-border">
 								<a href="#" onclick="$('#edit_modal').modal('show'); $('.id').val('<?= $faculty->id?>');  $('.editname').val('<?= $faculty->name?>'); $('.editshortname').val('<?= $faculty->shortname?>');">
-									<?= template_image::edit() ?>
+									<i class="icon edit" title="Редактировать"></i>
 								</a>
 							</td>
 							<td class="icon last no-border">
 								<a href="#" onclick="$.post('<?= template_url::ajax('faculties', 'remove', $faculty->id) ?>').done(function(answer) { answer_removed(answer, <?= $faculty->id ?>); }); return false;">
-									<?= template_image::remove() ?>
+									<i class="icon remove circle" title="Удалить"></i>
 								</a>
 							</td>
 						</tr>
@@ -159,7 +155,7 @@ class template_faculties
 				<div class="ui form segment">
 					<div class="field">
 						<label for="name">Полное наименование факультета</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="name" name="name" type="text" placeholder="Полное наименование факультета">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -169,7 +165,7 @@ class template_faculties
 
 					<div class="field">
 						<label for="shortname">Краткое наименование факультета</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="shortname" name="shortname" type="text" placeholder="Краткое наименование факультета">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -229,7 +225,7 @@ class template_faculties
 				<div class="ui form segment">
 					<div class="field">
 						<label for="editname">Полное наименование факультета</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="editname" name="editname" type="text" placeholder="Полное наименование факультета">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -239,7 +235,7 @@ class template_faculties
 
 					<div class="field">
 						<label for="editshortname">Краткое наименование факультета</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="editshortname" name="editshortname" type="text" placeholder="Краткое наименование факультета">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
@@ -248,7 +244,7 @@ class template_faculties
 					</div>
 					<div class="field" hidden>
 						<label for="id">id</label>
-						<div class="ui left labeled icon input">
+						<div class="ui left labeled input">
 							<input class="id" name="id" type="text" placeholder="id">
 							<div class="ui corner label">
 								<i class="icon asterisk"></i>
