@@ -168,6 +168,21 @@ class query
 		return $this->database->columns($table);
 	}
 
+	public function dummy()
+	{
+		$result = new \stdClass();
+
+
+		$columns = $this->columns();
+
+		foreach ($columns as $column)
+		{
+			$result->{$column} = null;
+		}
+
+		return $result;
+	}
+
 	/**
 	 * @en Select specify columns from the database
 	 * @ru Выбрать колонки для последующего запроса из базы данных
@@ -262,7 +277,16 @@ class query
 	{
 		$where = $this->escape($where);
 
-		if ($val === null)
+
+		if ($val === true)
+		{
+			$this->where_list[] = $where . " = 'TRUE'";
+		}
+		else if ($val === false)
+		{
+			$this->where_list[] = $where . " = 'FALSE'";
+		}
+		else if ($val === null)
 		{
 			$this->where_list[] = $where;
 		}

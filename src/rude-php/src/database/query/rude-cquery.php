@@ -31,8 +31,7 @@ class cquery
 
 	public function add($field_name, $field_value)
 	{
-		if ($field_value === null  or
-		    $field_value === false or
+		if ($field_value === null or
 		    $field_value === array())
 		{
 			return;
@@ -74,7 +73,15 @@ class cquery
 
 				if ($column == $field_name)
 				{
-					if (is_int($field_value) || is_float($field_value) || is_double($field_value))
+					if ($field_value === false)
+					{
+						$value = 'FALSE';
+					}
+					else if ($field_value === true)
+					{
+						$value = 'TRUE';
+					}
+					else if (is_int($field_value) || is_float($field_value) || is_double($field_value))
 					{
 						$value = $field_value;
 					}

@@ -30,9 +30,9 @@ class reports
 			FROM
 				' . RUDE_DATABASE_TABLE_REPORTS . '
 			LEFT JOIN
-				' . RUDE_DATABASE_TABLE_FACULTIES       . ' ON ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_FACULTY_ID        . ' = ' . RUDE_DATABASE_TABLE_FACULTIES       . '.' . RUDE_DATABASE_FIELD_ID . '
-			LEFT JOIN
 				' . RUDE_DATABASE_TABLE_SPECIALTIES     . ' ON ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_SPECIALTY_ID      . ' = ' . RUDE_DATABASE_TABLE_SPECIALTIES     . '.' . RUDE_DATABASE_FIELD_ID . '
+			LEFT JOIN
+				' . RUDE_DATABASE_TABLE_FACULTIES       . ' ON ' . RUDE_DATABASE_TABLE_SPECIALTIES . '.' . RUDE_DATABASE_FIELD_FACULTY_ID    . ' = ' . RUDE_DATABASE_TABLE_FACULTIES       . '.' . RUDE_DATABASE_FIELD_ID . '
 			LEFT JOIN
 				' . RUDE_DATABASE_TABLE_SPECIALIZATIONS . ' ON ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_SPECIALIZATION_ID . ' = ' . RUDE_DATABASE_TABLE_SPECIALIZATIONS . '.' . RUDE_DATABASE_FIELD_ID . '
 			LEFT JOIN
@@ -64,10 +64,10 @@ class reports
 		return $database->get_object_list();
 	}
 
-	public static function is_exists($name)
+	public static function is_exists($id)
 	{
 		$q = new query(RUDE_DATABASE_TABLE_REPORTS);
-		$q->where(RUDE_DATABASE_FIELD_NAME, $name);
+		$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 		$q->query();
 
 		if ($q->get_object())
@@ -90,5 +90,86 @@ class reports
 		}
 
 		return false;
+	}
+
+	public static function add($year                = null,
+							   $duration            = null,
+							   $rector              = null,
+							   $registration_number = null,
+							   $training_form_id    = null,
+							   $qualification_id    = null,
+							   $specialty_id        = null,
+							   $specialization_id   = null,
+	                           $is_tmp              = false)
+	{
+		$q = new cquery(RUDE_DATABASE_TABLE_REPORTS);
+		$q->add(RUDE_DATABASE_FIELD_YEAR,                (int) $year);
+		$q->add(RUDE_DATABASE_FIELD_DURATION,            (int) $duration);
+		$q->add(RUDE_DATABASE_FIELD_RECTOR,                    $rector);
+		$q->add(RUDE_DATABASE_FIELD_REGISTRATION_NUMBER,       $registration_number);
+		$q->add(RUDE_DATABASE_FIELD_TRAINING_FORM_ID,    (int) $training_form_id);
+		$q->add(RUDE_DATABASE_FIELD_QUALIFICATION_ID,    (int) $qualification_id);
+		$q->add(RUDE_DATABASE_FIELD_SPECIALTY_ID,        (int) $specialty_id);
+		$q->add(RUDE_DATABASE_FIELD_SPECIALIZATION_ID,   (int) $specialization_id);
+		$q->add(RUDE_DATABASE_FIELD_IS_TMP,                    $is_tmp);
+
+		$q->query();
+
+		return $q->get_id();
+	}
+
+	public static function update($id,
+	                              $year                = null,
+	                              $duration            = null,
+	                              $rector              = null,
+	                              $registration_number = null,
+	                              $training_form_id    = null,
+	                              $qualification_id    = null,
+	                              $specialty_id        = null,
+	                              $specialization_id   = null)
+	{
+		$q = new uquery(RUDE_DATABASE_TABLE_REPORTS);
+
+		if ($year                !== null) { $q->update(RUDE_DATABASE_FIELD_YEAR,                (int) $year);                }
+		if ($duration            !== null) { $q->update(RUDE_DATABASE_FIELD_DURATION,            (int) $duration);            }
+		if ($rector              !== null) { $q->update(RUDE_DATABASE_FIELD_RECTOR,                    $rector);              }
+		if ($registration_number !== null) { $q->update(RUDE_DATABASE_FIELD_REGISTRATION_NUMBER,       $registration_number); }
+		if ($training_form_id    !== null) { $q->update(RUDE_DATABASE_FIELD_TRAINING_FORM_ID,    (int) $training_form_id);    }
+		if ($qualification_id    !== null) { $q->update(RUDE_DATABASE_FIELD_QUALIFICATION_ID,    (int) $qualification_id);    }
+		if ($specialty_id        !== null) { $q->update(RUDE_DATABASE_FIELD_SPECIALTY_ID,        (int) $specialty_id);        }
+		if ($specialization_id   !== null) { $q->update(RUDE_DATABASE_FIELD_SPECIALIZATION_ID,   (int) $specialization_id);   }
+
+		$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
+		$q->query();
+
+		return true;
+	}
+
+	public static function columns()
+	{
+		$q = new query(RUDE_DATABASE_TABLE_REPORTS);
+
+		return $q->columns();
+	}
+
+	public static function dummy()
+	{
+		$q = new query(RUDE_DATABASE_TABLE_REPORTS);
+
+		$dummy = $q->dummy();
+
+		$dummy->faculty_id          = null;
+		$dummy->faculty_name        = null;
+		$dummy->faculty_shortname   = null;
+		$dummy->specialty_id        = null;
+		$dummy->specialty_name      = null;
+		$dummy->specialization_id   = null;
+		$dummy->specialization_name = null;
+		$dummy->training_form_id    = null;
+		$dummy->training_form_name  = null;
+		$dummy->qualification_id    = null;
+		$dummy->qualification_name  = null;
+
+		return $dummy;
 	}
 }

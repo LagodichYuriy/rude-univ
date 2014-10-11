@@ -1,0 +1,218 @@
+*
+{
+
+}
+
+body
+{
+	/*height: 42cm;*/
+	/*min-height: 42cm;*/
+	/*max-height: 42cm;*/
+
+	/*width: 29.7cm;*/
+	/*min-width: 29.7cm;*/
+	/*max-width: 29.7cm;*/
+
+	height:      29.7cm;
+	min-height:  29.7cm;
+	max-height:  29.7cm;
+
+	width:       42cm;
+	min-width:   42cm;
+	max-width:   42cm;
+
+	font-family: 'Arial';
+
+	display: table;
+
+	padding: 0;
+	margin: 0 auto;
+}
+
+table
+{
+	font-size: 11pt;
+
+	/*border-collapse: collapse;*/
+	/*margin-bottom:   5px;*/
+
+	/*display:         table;*/
+	/*border-spacing:  2px;*/
+	/*border-color:    gray;*/
+
+	/*float:           left;*/
+	/*margin-right:    5px;*/
+}
+
+.underline
+{
+	text-decoration: underline;
+}
+
+.clear
+{
+	clear: both;
+}
+
+.middle
+{
+	text-align: center;
+}
+
+.rotate-90
+{
+	-moz-transform:    rotate(90deg); /* firefox            */
+	transform:         rotate(90deg); /* generic            */
+	-webkit-transform: rotate(90deg); /* safari, chrome etc */
+	-ms-transform:     rotate(90deg); /* ie8+               */
+	-o-transform:      rotate(90deg); /* opera              */
+}
+
+.rotate-270
+{
+	-moz-transform:    rotate(270deg); /* firefox            */
+	transform:         rotate(270deg); /* generic            */
+	-webkit-transform: rotate(270deg); /* safari, chrome etc */
+	-ms-transform:     rotate(270deg); /* ie8+               */
+	-o-transform:      rotate(270deg); /* opera              */
+}
+
+
+#header
+{
+	padding-bottom: 1cm;
+}
+
+#header td
+{
+	vertical-align: top;
+}
+
+#header .first
+{
+	width: 10cm;
+}
+
+#header .first .box
+{
+	padding-right: 1cm;
+}
+
+#header .second
+{
+	text-align: center;
+
+	width: 22cm;
+}
+
+#header .third
+{
+	width: 10cm;
+}
+
+#header .third .box
+{
+	padding-left: 1cm;
+}
+
+
+#calendar .left
+{
+	border-collapse: collapse;
+
+	font-size: 9pt;
+
+	width: 26cm;
+
+	float: left;
+}
+
+#calendar .left .empty,
+#calendar .right .empty
+{
+	border: none;
+
+	padding-bottom: 0.2cm;
+
+	font-weight: bold;
+}
+
+#calendar .left th,
+#calendar .left td,
+#calendar .right th,
+#calendar .right td
+{
+	border: 1px rgb(92, 92, 92) solid;
+
+	text-align: center;
+
+	width: 0.4cm;
+	height: 0.5cm;
+}
+
+#calendar .right
+{
+	border-collapse: collapse;
+
+	font-size: 9pt;
+
+	width: 16cm;
+
+	float: right;
+}
+
+#calendar .right th
+{
+	font-size: 8pt;
+
+	height: 2.2cm;
+	width: 14.27%;
+}
+
+#calendar .bottom
+{
+	width: 26cm;
+}
+
+#calendar .bottom table
+{
+	font-size: 8pt;
+
+	margin: 0 auto;
+	display: table;
+}
+
+#calendar .bottom table td
+{
+	padding-right: 0.3cm;
+}
+
+#calendar .bottom .box
+{
+	border: 1px rgba(0, 0, 0, 0.73) solid;
+	width: 14px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 3px;
+}
+
+
+
+#plan
+{
+	width: 100%;
+
+	margin-top: 1cm;
+
+	border-collapse: collapse;
+}
+
+#plan th,
+#plan td
+{
+	font-size: 8pt;
+
+	border: 1px rgb(92, 92, 92) solid;
+
+	text-align: center;
+}

@@ -12,6 +12,11 @@ var rude =
 		window.open(url, '_self', false);
 	},
 
+	open: function(url)
+	{
+		window.open(url, '_blank');
+	},
+
 	form:
 	{
 		submit: function(selector)

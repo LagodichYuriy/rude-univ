@@ -4,6 +4,47 @@ namespace rude;
 
 class template_reports_new
 {
+	public function __construct()
+	{
+		if (!template_session::is_admin() and !template_session::is_editor())
+		{
+			if (get('ajax'))
+			{
+				exit(RUDE_AJAX_ACCESS_VIOLATION);
+			}
+
+			return false;
+		}
+
+
+		switch (get('task'))
+		{
+			case 'add': exit((string) reports::add(get('year'),
+			                                       get('duration'),
+			                                       get('rector'),
+			                                       get('registration_number'),
+			                                       get('training_form_id'),
+			                                       get('qualification_id'),
+			                                       get('specialty_id'),
+			                                       get('specialization_id'),
+			                                       false));
+				break;
+
+			default:
+				$status = false;
+				break;
+		}
+
+
+		if (get('ajax'))
+		{
+			     if ($status) { exit(RUDE_AJAX_OK);    }
+			else              { exit(RUDE_AJAX_ERROR); }
+		}
+
+		return true;
+	}
+
 	public function html()
 	{
 		template_html::doctype();
@@ -54,7 +95,7 @@ class template_reports_new
 
 						<div class="field">
 							<label>ФИО ректора</label>
-							<input id="year" name="year" placeholder="М.П. Батура" type="text">
+							<input id="rector" name="rector" placeholder="М.П. Батура" type="text">
 						</div>
 					</div>
 
@@ -67,7 +108,7 @@ class template_reports_new
 						<div class="ui fluid selection dropdown">
 							<div class="default text">Форма обучения</div>
 							<i class="dropdown icon"></i>
-							<input type="hidden" name="training_form">
+							<input type="hidden" id="training_form_id" name="training_form_id">
 							<div class="menu">
 								<?
 									$training_forms = training_forms::get();
@@ -90,7 +131,7 @@ class template_reports_new
 						<div class="ui fluid selection dropdown">
 							<div class="default text">Квалификация специалиста</div>
 							<i class="dropdown icon"></i>
-							<input type="hidden" name="qualification">
+							<input type="hidden" id="qualification_id" name="qualification_id">
 							<div class="menu">
 								<?
 									$qualifications = qualifications::get();
@@ -113,7 +154,7 @@ class template_reports_new
 						<div class="ui fluid selection dropdown">
 							<div class="default text">Специальность</div>
 							<i class="dropdown icon"></i>
-							<input type="hidden" name="specialty">
+							<input type="hidden" id="specialty_id" name="specialty_id">
 							<div class="menu">
 								<?
 									$specialties = specialties::get();
@@ -124,7 +165,7 @@ class template_reports_new
 										{
 											?>
 											<div class="item" data-value="<?= $specialty->id ?>"><?= html::escape($specialty->name) ?></div>
-										<?
+											<?
 										}
 									}
 								?>
@@ -136,7 +177,7 @@ class template_reports_new
 						<div class="ui fluid selection dropdown">
 							<div class="default text">Специализация</div>
 							<i class="dropdown icon"></i>
-							<input type="hidden" name="specialization">
+							<input type="hidden" id="specialization_id" name="specialization_id">
 							<div class="menu">
 								<?
 									$specializations = specializations::get();
@@ -155,9 +196,89 @@ class template_reports_new
 						</div>
 					</div>
 
-<!--					--><?// $this->html_calendar() ?>
+					<?
+//						$calendar = new ajax_calendar();
+//						$calendar->html();
+					?>
 
-					<div class="ui green submit button small">Сохранить</div>
+					<div class="ui green submit button small" onclick="save();">Сохранить</div>
+					<div id="button-preview" class="ui blue submit button small" onclick="preview();">Предпросмотр</div>
+
+					<script>
+						function save()
+						{
+							var report = new Report();
+
+
+							$.ajax(
+							{
+								url: '/?page=reports-new&task=add&ajax=true',
+
+								data:
+								{
+									year:                report.year,
+									duration:            report.duration,
+									rector:              report.rector,
+									registration_number: report.registration_number,
+									training_form_id:    report.training_form_id,
+									qualification_id:    report.qualification_id,
+									specialty_id:        report.specialty_id,
+									specialization_id:   report.specialization_id
+								},
+							
+								success: function (data)
+								{
+									console.log(data);
+
+									if (data)
+									{
+										rude.redirect('/?page=reports-edit&report_id=' + data);
+									}
+								}
+							});
+						}
+
+						function preview()
+						{
+							var report = new Report();
+
+							$.ajax(
+							{
+								url: '/?page=reports-preview&tmp=true',
+
+								data:
+								{
+									year:                report.year,
+									duration:            report.duration,
+									rector:              report.rector,
+									registration_number: report.registration_number,
+									training_form_id:    report.training_form_id,
+									qualification_id:    report.qualification_id,
+									specialty_id:        report.specialty_id,
+									specialization_id:   report.specialization_id
+								},
+
+								success: function (data)
+								{
+									console.log(data);
+
+									window.open('/?page=reports-preview', '_blank');
+								}
+							});
+						}
+
+						function Report()
+						{
+							this.year                = $('#year').val();
+							this.duration            = $('#duration').val();
+							this.rector              = $('#rector').val();
+							this.registration_number = $('#registration_number').val();
+							this.training_form_id    = $('#training_form_id').val();
+							this.qualification_id    = $('#qualification_id').val();
+							this.specialty_id        = $('#specialty_id').val();
+							this.specialization_id   = $('#specialization_id').val();
+						}
+					</script>
 				</div>
 			</div>
 		</div>

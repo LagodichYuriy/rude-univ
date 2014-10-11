@@ -38,11 +38,19 @@ class uquery
 		$this->update_fields[] = array($this->escape($key), $this->escape($val));
 	}
 
-	public function where($where, $val = false)
+	public function where($where, $val = null)
 	{
 		$where = $this->escape($where);
 
-		if ($val === false)
+		if ($val === true)
+		{
+			$this->where_list[] = $where . " = 'TRUE'";
+		}
+		else if ($val === false)
+		{
+			$this->where_list[] = $where . " = 'FALSE'";
+		}
+		else if ($val === null)
 		{
 			$this->where_list[] = $where;
 		}

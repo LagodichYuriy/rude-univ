@@ -313,75 +313,80 @@ class template_html
 		?>
 		<div id="sidebar">
 			<div class="ui vertical menu square-corners">
-				<div class="item header" onclick="rude.animate('#navigation'); rude.cookie.toggle('show_navigation')">
+				<div class="item header" onclick="rude.animate('#navigation'); rude.cookie.toggle('hide_navigation')">
 					Навигация
 				</div>
 
-				<a class="item subcategory" href="/">
-					<i class="icon home"></i> Вернуться на главную
-				</a>
-
-				<? if (!template_session::is_authorized()) { ?>
-					<a class="item subcategory" href="#" onclick="$('#authorization').modal('show'); return false;">
-						<i class="icon sign in"></i> Авторизация
+				<div id="navigation" <? if (cookies::is_equals('hide_navigation', 1)) { ?>style="display: none;"<? } ?>>
+					<a class="item subcategory" href="/">
+						<i class="icon home"></i> Вернуться на главную
 					</a>
-				<? } ?>
 
-				<? if (!template_session::is_authorized()) { ?>
-					<a class="item subcategory" href="#" onclick="$('#registration').modal('show'); return false;">
-						<i class="icon edit"></i> Регистрация
-					</a>
-				<? } ?>
+					<? if (!template_session::is_authorized()) { ?>
+						<a class="item subcategory" href="#" onclick="$('#authorization').modal('show'); return false;">
+							<i class="icon sign in"></i> Авторизация
+						</a>
+					<? } ?>
+
+					<? if (!template_session::is_authorized()) { ?>
+						<a class="item subcategory" href="#" onclick="$('#registration').modal('show'); return false;">
+							<i class="icon edit"></i> Регистрация
+						</a>
+					<? } ?>
+
+					<? if (template_session::is_authorized()) { ?>
+						<a class="item subcategory" href="#" onclick="$.post('/?page=logout', function() { rude.redirect('/'); }); return false;">
+							<i class="icon sign out"></i> Выход
+						</a>
+					<? } ?>
+				</div>
+
 
 				<? if (template_session::is_authorized()) { ?>
-					<a class="item subcategory" href="#" onclick="$.post('/?page=logout', function() { rude.redirect('/'); }); return false;">
-						<i class="icon sign out"></i> Выход
-					</a>
-				<? } ?>
-
-
-				<? if (template_session::is_authorized()) { ?>
-					<div class="item header" onclick="rude.animate('#management'); rude.cookie.toggle('show_management')">
+					<div class="item header" onclick="rude.animate('#management'); rude.cookie.toggle('hide_management')">
 						Управление
 					</div>
 
-					<a class="item subcategory <? if (get('page') == 'departments') { ?>active<? } ?>" href="/?page=departments">
-						<i class="icon"></i> Кафедры
-					</a>
+					<div id="management" <? if (cookies::is_equals('hide_management', 1)) { ?>style="display: none;"<? } ?>>
+						<a class="item subcategory <? if (get('page') == 'departments') { ?>active<? } ?>" href="/?page=departments">
+							<i class="icon"></i> Кафедры
+						</a>
 
-					<a class="item subcategory <? if (get('page') == 'faculties') { ?>active<? } ?>" href="/?page=faculties">
-						<i class="icon"></i> Факультеты
-					</a>
+						<a class="item subcategory <? if (get('page') == 'faculties') { ?>active<? } ?>" href="/?page=faculties">
+							<i class="icon"></i> Факультеты
+						</a>
 
-					<a class="item subcategory <? if (get('page') == 'qualifications') { ?>active<? } ?>" href="/?page=qualifications">
-						<i class="icon"></i> Квалификации
-					</a>
+						<a class="item subcategory <? if (get('page') == 'qualifications') { ?>active<? } ?>" href="/?page=qualifications">
+							<i class="icon"></i> Квалификации
+						</a>
 
-					<a class="item subcategory <? if (get('page') == 'specializations') { ?>active<? } ?>" href="/?page=specializations">
-						<i class="icon"></i> Специализации
-					</a>
+						<a class="item subcategory <? if (get('page') == 'specializations') { ?>active<? } ?>" href="/?page=specializations">
+							<i class="icon"></i> Специализации
+						</a>
 
-					<a class="item subcategory <? if (get('page') == 'specialties') { ?>active<? } ?>" href="/?page=specialties">
-						<i class="icon"></i> Специальности
-					</a>
+						<a class="item subcategory <? if (get('page') == 'specialties') { ?>active<? } ?>" href="/?page=specialties">
+							<i class="icon"></i> Специальности
+						</a>
 
-					<a class="item subcategory <? if (get('page') == 'users') { ?>active<? } ?>" href="/?page=users">
-						<i class="icon"></i> Пользователи
-					</a>
+						<a class="item subcategory <? if (get('page') == 'users') { ?>active<? } ?>" href="/?page=users">
+							<i class="icon"></i> Пользователи
+						</a>
+					</div>
 
 
-
-					<div class="item header" onclick="rude.animate('#reports'); rude.cookie.toggle('reports')">
+					<div class="item header" onclick="rude.animate('#reports'); rude.cookie.toggle('hide_reports')">
 						Учебные планы
 					</div>
 
-					<a class="item subcategory <? if (get('page') == 'reports') { ?>active<? } ?>" href="/?page=reports">
-						<i class="icon"></i> Все планы
-					</a>
+					<div id="reports" <? if (cookies::is_equals('hide_reports', 1)) { ?>style="display: none;"<? } ?>>
+						<a class="item subcategory <? if (get('page') == 'reports') { ?>active<? } ?>" href="/?page=reports">
+							<i class="icon"></i> Все планы
+						</a>
 
-					<a class="item subcategory <? if (get('page') == 'reports-new') { ?>active<? } ?>" href="/?page=reports-new">
-						<i class="icon"></i> Добавить новый
-					</a>
+						<a class="item subcategory <? if (get('page') == 'reports-new') { ?>active<? } ?>" href="/?page=reports-new">
+							<i class="icon"></i> Добавить новый
+						</a>
+					</div>
 				<? } ?>
 			</div>
 		</div>

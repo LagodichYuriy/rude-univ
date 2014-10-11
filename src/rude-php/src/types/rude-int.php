@@ -86,4 +86,31 @@ class int
 	{
 		return dechex($int);
 	}
+
+	public static function to_roman($int)
+	{
+		$table = array('M' => 1000, 'CM' => 900, 'D' => 500, 'CD' => 400, 'C' => 100, 'XC' => 90, 'L' => 50, 'XL' => 40, 'X' => 10, 'IX' => 9, 'V' => 5, 'IV' => 4, 'I' => 1);
+
+		$return = '';
+
+		while ($int > 0)
+		{
+			foreach ($table as $rom => $arb)
+			{
+				if ($int >= $arb)
+				{
+					$int -= $arb;
+					$return .= $rom;
+					break;
+				}
+			}
+		}
+
+		return $return;
+	}
+
+	public static function pad($int, $length = 2, $char = '0', $type = STR_PAD_LEFT)
+	{
+		return str_pad($int, $length, $char, $type);
+	}
 }

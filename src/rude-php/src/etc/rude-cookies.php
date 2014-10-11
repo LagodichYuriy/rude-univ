@@ -18,7 +18,12 @@ class cookies
 	{
 		if ($value === false)
 		{
-			return get($name, $_COOKIE) === null;
+			if (isset($_COOKIE[$name]))
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		return cookies::is_equals($name, $value);
@@ -33,6 +38,4 @@ class cookies
 
 		return false;
 	}
-
-
 }

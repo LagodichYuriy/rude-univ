@@ -22,10 +22,13 @@ class site
 			case 'specializations': $template = new template_specializations(); break;
 			case 'specialties':     $template = new template_specialties();     break;
 			case 'users':           $template = new template_users();           break;
-			case 'users_roles':     $template = new template_users_roles();     break;
+			case 'users-roles':     $template = new template_users_roles();     break;
 
 			case 'reports':         $template = new template_reports();         break;
 			case 'reports-new':     $template = new template_reports_new();     break;
+			case 'reports-edit':    $template = new template_reports_edit();    break;
+			case 'reports-preview': $template = new template_reports_preview(); break;
+
 
 			default:
 				     if (!url::is_homepage()) { $template = new template_404();      }

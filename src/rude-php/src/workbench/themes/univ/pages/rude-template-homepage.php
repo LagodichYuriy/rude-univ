@@ -24,8 +24,10 @@ class template_homepage
 				<div id="container">
 					<? template_html::sidebar() ?>
 
-					<div id="content" class="ui segment raised square-corners">
-						<? $this->main() ?>
+					<div id="homepage">
+						<div id="content" class="ui segment raised square-corners">
+							<? $this->main() ?>
+						</div>
 					</div>
 				</div>
 
@@ -39,7 +41,22 @@ class template_homepage
 	{
 		?>
 		<div id="main">
-			Главная страница
+			<h4 class="ui header dividing">Программный комплекс расчёта нагрузки и формирования расписаний</h4>
+			<p>Для взаимодействия с программным комплексом необходима регистрация.</p>
+
+			<h4 class="ui header dividing">Базовые обозначения</h4>
+			<table class="ui basic table">
+				<tbody>
+					<tr>
+						<td class="small"><i class="icon edit" title="Редактировать"></i></td>
+						<td>редактирование элемента</td>
+					</tr>
+					<tr>
+						<td class="small"><i class="icon remove circle" title="Удалить"></i></td>
+						<td>удаление элемента из общей базы</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 		<?
 	}
