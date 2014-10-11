@@ -20,6 +20,7 @@ class template_users
 		switch (get('task'))
 		{
 			case 'remove': $status = users::remove(get('id')); break;
+			case 'edit': $status = users::edit(get('id'),get('name'),get('role_id')); break;
 
 
 			default:
@@ -96,7 +97,19 @@ class template_users
 							<td class="small numeric"><?= $user->id ?></td>
 							<td><?= $user->name ?></td>
 							<td><?= $user->role ?></td>
-							<td class="icon first no-border"><?= template_image::edit() ?></td>
+							<?
+								$role_id=users_roles::get_by_name($user->role);
+							?>
+							
+								<td class="icon first no-border">
+								<a href="#" onclick="$('#edit_modal').modal('show'); $('.id').val('<?= $user->id?>');
+									$('.editusername').val('<?= $user->name?>');
+									$('#edit_role').val('<?= $role_id->id?>');
+									$('#user_role_dd').dropdown('set selected',<?= $role_id->id?>);
+									">
+									<?= template_image::edit() ?>
+								</a>
+							</td>
 							<td class="icon last no-border">
 								<a href="#" onclick="$.post('<?= template_url::ajax('users', 'remove', $user->id) ?>').done(function(answer) { answer_removed(answer, <?= $user->id ?>); }); return false;">
 									<?= template_image::remove() ?>
@@ -176,7 +189,7 @@ class template_users
 							<div class="text">Выберите роль пользователя</div>
 
 							<input type="hidden" id="role_name">
-							<div style="max-height: 100px;" class="menu">
+							<div style="max-height: 150px;" class="menu">
 								<?	$users_roles = users_roles::get();
 								foreach ($users_roles as $role)
 								{
@@ -272,6 +285,105 @@ class template_users
 								}
 							}
 						});
+					}
+				})
+			;
+		</script>
+
+		<div id="edit_modal" class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Редактировать пользователя
+			</div>
+			<div class="content">
+				<div class="ui form segment">
+					<div class="field">
+						<label for="editusername">Имя пользователя</label>
+						<div class="ui left labeled icon input">
+							<input class="editusername" name="editusername" type="text" placeholder="Имя пользователя">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<div class="field" hidden>
+						<label for="id">id</label>
+						<div class="ui left labeled icon input">
+							<input class="id" name="id" type="text" placeholder="id">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<!--<div class="field">
+						<label for="edit_password">Пароль</label>
+						<div class="ui left labeled icon input">
+							<input class="edit_password" name="edit_password" type="password">
+							<i class="lock icon"></i>
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>-->
+					<div class="field">
+						<label>Роль пользователя</label>
+						<div class="ui fluid selection dropdown" id="user_role_dd">
+							<div class="text">Выберите роль</div>
+
+							<input type="hidden" id="edit_role">
+							<div style="max-height: 150px;" class="menu">
+								<?	$roles_list = users_roles::get();
+								foreach ($roles_list as $role)
+								{
+									?>
+									<div class="item" data-value="<?= $role->id  ?>"><?= $role->name  ?></div>
+								<?
+								}?>
+							</div>
+						</div>
+					</div>
+
+					<div class="ui error message">
+						<div class="header">Найдены ошибки при заполнении формы</div>
+					</div>
+					<div class="ui blue submit button" value="edit">Изменить</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			$('#edit_modal .ui.form')
+				.form({
+					editusername: {
+						identifier : 'editusername',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите имя пользователя.'
+							}
+						]
+					},
+					edit_role: {
+						identifier : 'edit_role',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите роль пользователя.'
+							}
+						]
+					}
+
+				},
+				{
+					onSuccess: function()
+					{
+						var name = $('.editusername').val();
+						var id = $('.id').val();
+						var role_id = $('#edit_role').val();
+
+						$.post('/?page=users&task=edit&id='+id+'&name='+name+'&role_id='+role_id+'&ajax=true')
+							.done(function() { $('#edit_modal').modal('hide');  rude.redirect('/?page=users');}); return false;
 					}
 				})
 			;

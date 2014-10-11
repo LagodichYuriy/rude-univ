@@ -45,4 +45,12 @@ class users_roles
 
 		return false;
 	}
+
+	public static function get_by_name($name)
+	{
+		$q = new query(RUDE_DATABASE_TABLE_USERS_ROLES);
+		$q->where(RUDE_DATABASE_FIELD_NAME, $name);
+		$q->query();
+		return $q->get_object();
+	}
 }

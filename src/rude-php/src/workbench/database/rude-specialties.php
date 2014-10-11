@@ -76,5 +76,20 @@ class specialties
 		$q->add(RUDE_DATABASE_FIELD_FACULTY_ID, $faculti_id);
 		$q->add(RUDE_DATABASE_FIELD_QUALIFICATION_ID,$qualif_id);
 		$q->query();
+
+		return true;
+	}
+
+
+	public static function edit($id,$name,$faculti_id,$qualif_id)
+	{
+		$q = new uquery(RUDE_DATABASE_TABLE_SPECIALTIES);
+		$q->update(RUDE_DATABASE_FIELD_NAME,$name);
+		$q->update(RUDE_DATABASE_FIELD_FACULTY_ID, $faculti_id);
+		$q->update(RUDE_DATABASE_FIELD_QUALIFICATION_ID,$qualif_id);
+		$q->where(RUDE_DATABASE_FIELD_ID,$id);
+		$q->query();
+
+		return true;
 	}
 }

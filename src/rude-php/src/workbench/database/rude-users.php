@@ -91,4 +91,21 @@ class users
 
 		return false;
 	}
+
+
+	public static function edit($id,$name,$role_id)
+	{
+		if (static::is_exists($id))
+		{
+			$q = new uquery(RUDE_DATABASE_TABLE_USERS);
+			$q->update(RUDE_DATABASE_FIELD_NAME, $name);
+			$q->update(RUDE_DATABASE_FIELD_ROLE_ID, (int) $role_id);
+			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
+			$q->query();
+
+			return true;
+		}
+
+		return false;
+	}
 }

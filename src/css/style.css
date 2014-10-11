@@ -314,3 +314,7 @@ pre code.hljs.php .ui.label
 {
 	text-align: justify;
 }
+
+.item {
+	font-size: 11px!important;
+}

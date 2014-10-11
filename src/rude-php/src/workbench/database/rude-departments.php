@@ -50,9 +50,16 @@ class departments
 		$q = new cquery(RUDE_DATABASE_TABLE_DEPARTMENTS);
 		$q->add(RUDE_DATABASE_FIELD_NAME, $name);
 		$q->query();
+		return true;
+	}
 
-
-
+	public static function edit($id,$name)
+	{
+		$q = new uquery(RUDE_DATABASE_TABLE_DEPARTMENTS);
+		$q->update(RUDE_DATABASE_FIELD_NAME, $name);
+		$q->where(RUDE_DATABASE_FIELD_ID,$id);
+		$q->limit(1);
+		$q->query();
 		return true;
 	}
 }

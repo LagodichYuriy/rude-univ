@@ -21,6 +21,7 @@ class template_qualifications
 		{
 			case 'remove': $status = qualifications::remove(get('id')); break;
 			case 'add': $status = qualifications::add(get('name'));  break;
+			case 'edit': $status = qualifications::edit(get('id'),get('name'));  break;
 
 			default:
 				$status = false;
@@ -95,7 +96,11 @@ class template_qualifications
 						<tr id="qualification-<?= $qualification->id ?>">
 							<td class="small numeric"><?= $qualification->id ?></td>
 							<td><?= $qualification->name ?></td>
-							<td class="icon first no-border"><?= template_image::edit() ?></td>
+							<td class="icon first no-border">
+								<a href="#" onclick="$('#edit_modal').modal('show'); $('.id').val('<?= $qualification->id?>');  $('.editname').val('<?= $qualification->name?>');">
+									<?= template_image::edit() ?>
+								</a>
+							</td>
 							<td class="icon last no-border">
 								<a href="#" onclick="$.post('<?= template_url::ajax('qualifications', 'remove', $qualification->id) ?>').done(function(answer) { answer_removed(answer, <?= $qualification->id ?>); }); return false;">
 									<?= template_image::remove() ?>
@@ -184,6 +189,65 @@ class template_qualifications
 						var name = $('.name').val();
 						$.post('/?page=qualifications&task=add&name='+name+'&ajax=true')
 							.done(function() { $('#add_modal').modal('hide'); rude.redirect('/?page=qualifications'); }); return false;
+					}
+				})
+			;
+		</script>
+
+		<div id="edit_modal" class="ui modal">
+			<i class="close icon"></i>
+			<div class="header">
+				Редактировать квалификацию
+			</div>
+			<div class="content">
+				<div class="ui form segment">
+					<div class="field">
+						<label for="editname">Наименование квалификации</label>
+						<div class="ui left labeled icon input">
+							<input class="editname" name="editname" type="text" placeholder="Наименование квалификации">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<div class="field" hidden>
+						<label for="id">id</label>
+						<div class="ui left labeled icon input">
+							<input class="id" name="id" type="text" placeholder="id">
+							<div class="ui corner label">
+								<i class="icon asterisk"></i>
+							</div>
+						</div>
+					</div>
+					<div class="ui error message">
+						<div class="header">Найдены ошибки при заполнении формы</div>
+					</div>
+					<div class="ui blue submit button" value="edit">Изменить</div>
+				</div>
+			</div>
+		</div>
+
+		<script>
+
+			$('#edit_modal .ui.form')
+				.form({
+					editname: {
+						identifier : 'editname',
+						rules: [
+							{
+								type   : 'empty',
+								prompt : 'Пожалуйста, укажите наименование кафедры.'
+							}
+						]
+					}
+				},
+				{
+					onSuccess: function()
+					{
+						var name = $('.editname').val();
+						var id = $('.id').val();
+						$.post('/?page=qualifications&task=edit&id='+id+'&name='+name+'&ajax=true')
+							.done(function() { $('#edit_modal').modal('hide');  rude.redirect('/?page=qualifications');}); return false;
 					}
 				})
 			;
