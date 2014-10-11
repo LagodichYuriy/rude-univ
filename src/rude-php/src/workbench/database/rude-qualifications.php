@@ -44,4 +44,33 @@ class qualifications
 
 		return false;
 	}
+
+	public static function add($name)
+	{
+		$q = new cquery(RUDE_DATABASE_TABLE_QUALIFICATIONS);
+		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
+		$q->query();
+
+		return true;
+	}
+
+
+	public static function edit($id,$name)
+	{
+		$q = new uquery(RUDE_DATABASE_TABLE_QUALIFICATIONS);
+		$q->update(RUDE_DATABASE_FIELD_NAME,$name);
+		$q->where(RUDE_DATABASE_FIELD_ID,$id);
+		$q->query();
+
+		return true;
+	}
+
+	public static function get_by_name($name)
+	{
+		$q = new query(RUDE_DATABASE_TABLE_QUALIFICATIONS);
+		$q->where(RUDE_DATABASE_FIELD_NAME, $name);
+		$q->query();
+		return $q->get_object();
+
+	}
 }

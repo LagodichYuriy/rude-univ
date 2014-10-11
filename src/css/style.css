@@ -386,6 +386,7 @@ pre code.hljs.php .ui.label
 	text-align: justify;
 }
 
+<<<<<<< HEAD
 .underline
 {
 	text-decoration: underline;
@@ -403,3 +404,8 @@ pre code.hljs.php .ui.label
 
 .icon.edit   { color: #000; opacity: 1; font-size: 1.1em; }
 .icon.remove { color: #000; opacity: 1; font-size: 1.1em; }
+
+.item
+{
+	font-size: 11px!important;
+}
