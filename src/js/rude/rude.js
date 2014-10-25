@@ -148,6 +148,45 @@ var rude =
 				$(function() {
 					$('.ui.dropdown').dropdown();
 				});
+			},
+
+			buttons: function()
+			{
+				$(function ()
+				{
+					var
+						$buttons = $('.ui.buttons .button'),
+						$toggle = $('.main .ui.toggle.button'),
+						$button = $('.ui.button').not($buttons).not($toggle),
+					// alias
+						handler = {
+
+							activate: function ()
+							{
+								$(this)
+									.addClass('active')
+									.siblings()
+									.removeClass('active')
+								;
+							}
+
+						}
+						;
+
+					$buttons
+						.on('click', handler.activate)
+					;
+
+
+					$toggle
+						.state({
+							text: {
+								inactive: 'Vote',
+								active: 'Voted'
+							}
+						})
+					;
+				});
 			}
 		}
 	},

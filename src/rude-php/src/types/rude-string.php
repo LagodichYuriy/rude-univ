@@ -1351,6 +1351,11 @@ class string
 		return strtolower($string);
 	}
 
+	public static function to_capital($string)
+	{
+		return string::to_uppercase(char::first($string)) . string::read($string, string::length($string) - 1, 1);
+	}
+
 	/***
 	 * @en Remove duplicates from the string
 	 * @ru Удаляет дубликаты из строки

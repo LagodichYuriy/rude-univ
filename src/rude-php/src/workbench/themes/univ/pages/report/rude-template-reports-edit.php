@@ -478,6 +478,62 @@ class template_reports_edit
 
 								<br />
 
+								<div class="ui icon buttons constructor">
+									<div class="ui button" onclick="calendar_char = ''"><i class="align icon eraser"></i></div>
+
+									<?
+										$legend = calendar_legend::get();
+
+										if ($legend)
+										{
+											foreach ($legend as $item)
+											{
+												?>
+												<div class="ui button constructor" title="<?= $item->description ?>" onclick="calendar_char = '<?= $item->legend_letter ?>'"><?= $item->legend_letter ?></div>
+												<?
+											}
+										}
+									?>
+								</div>
+
+								<script>
+									rude.semantic.init.buttons();
+
+
+									var calendar_char = '';
+
+
+									$(function () {
+										mouse_selection();
+									});
+
+									function mouse_selection()
+									{
+										var isMouseDown = false;
+
+										$('#calendar .content table.ui.basic td')
+											.mousedown(function () {
+												isMouseDown = true;
+
+												$(this).addClass('highlighted');
+												$(this).find('input').val(calendar_char);
+
+												return false; // prevent text selection
+											})
+											.mouseover(function () {
+												if (isMouseDown) {
+													$(this).addClass('highlighted');
+													$(this).find('input').val(calendar_char);
+												}
+											});
+
+										$(document)
+											.mouseup(function () {
+												isMouseDown = false;
+											});
+									}
+								</script>
+
 								<a href="#" target="_blank" id="button-save" class="ui blue submit button small" onclick="calendar.save(0); $('#calendar .icon.close').click(); return false;">Сохранить</a>
 							</div>
 						</div>
@@ -617,6 +673,8 @@ class template_reports_edit
 								}
 
 								calendar.duration = duration;
+
+								mouse_selection();
 							},
 
 							popup: function()
@@ -637,7 +695,7 @@ class template_reports_edit
 							{
 								var result = [];
 
-								for (var i = 1; i <= calendar.duration; i++)
+								for (var i = 1; i <= $('#duration').val(); i++)
 								{
 									var selector = '#generated-' + i;
 
@@ -677,6 +735,8 @@ class template_reports_edit
 								$.ajax(
 								{
 									url: '/?page=calendar&task=save&ajax=true',
+
+									type: 'POST',
 
 									data:
 									{

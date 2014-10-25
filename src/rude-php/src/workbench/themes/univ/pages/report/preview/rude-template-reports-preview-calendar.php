@@ -6,7 +6,8 @@ class template_reports_preview_calendar
 {
 	public static function html($report)
 	{
-		debug($report);
+		$legend = calendar_legend::get();
+		$legend_count = count($legend);
 
 		?>
 		<div id="calendar">
@@ -15,24 +16,24 @@ class template_reports_preview_calendar
 					<td class="empty" colspan="53">
 						I. График учебного процесса
 					</td>
+
+					<td class="empty" colspan="<?= $legend_count + 1 ?>">
+						II. Сводные данные по бюджету времени (в неделях)
+					</td>
 				</tr>
 
 				<? static::head() ?>
 
 				<?
-					$total = new \stdClass();
-					$total->theoretical = 0;
-					$total->symbols = null;
-					$total->all = 0;
+					$total = null;
 
 					if ($report->duration)
 					{
-
-
-
-
 						for ($i = 1; $i <= $report->duration; $i++)
 						{
+							$total[$i] = null;
+
+
 							$calendar_items = calendar_items_preview::get($report->id, $i);
 
 							?>
@@ -51,11 +52,6 @@ class template_reports_preview_calendar
 													{
 														if ($item->column == $j)
 														{
-															if ($total->symbols and !in_array($item->value, $total->symbols))
-															{
-																$item->symbols[] = $item->value;
-															}
-
 															echo $item->value; break;
 														}
 													}
@@ -64,78 +60,117 @@ class template_reports_preview_calendar
 										</td>
 										<?
 									}
+
+
+
+									$total_row = 0;
+
+									for ($j = 0; $j < $legend_count; $j++)
+									{
+										?>
+										<td>
+											<?
+												if ($calendar_items)
+												{
+													$count = 0;
+
+													foreach ($calendar_items as $calendar_item)
+													{
+														if ($calendar_item->value == $legend[$j]->legend_letter)
+														{
+															$count++;
+														}
+													}
+
+													$total_row += $count;
+													$total[$i][$j] = $count; # i - year (1..n), j - total col (0..m)
+
+													echo $count;
+												}
+												else
+												{
+													$total[$i][$j] = 0; # i - year (1..n), j - total col (0..m)
+
+													echo 0;
+												}
+											?>
+										</td>
+										<?
+									}
+
+									?><td><?= $total_row ?></td><?
 								?>
 							</tr>
 							<?
 						}
-					}
-				?>
-			</table>
 
-			<table class="right">
-				<tr>
-					<td class="empty" colspan="7">
-						II. Сводные данные по бюджету времени (в неделях)
-					</td>
-				</tr>
+						?>
+						<tr>
+							<td colspan="53" class="empty"></td>
 
-				<tr>
-					<th>Теоретическое обучение</th>
-					<th>Экзаменационные сессии</th>
-					<th>Практики</th>
-					<th>Дипломное проектирование</th>
-					<th>Итоговая аттестация</th>
-					<th>Каникулы</th>
-					<th>Всего</th>
-				</tr>
-
-				<?
-					if ($report->duration)
-					{
-						for ($i = 1; $i <= $report->duration; $i++)
-						{
-//							if (get('is_tmp'))
-//							{
-//
-//							}
-//							else
-//							{
-//								$calendar_items = calendar_items::get($report->id, $i);
-//							}
-//
-//
-//							debug($calendar_items);
-
-
-							?>
-							<tr><? for ($j = 0; $j < 7; $j++) { ?><td></td><? } ?></tr>
 							<?
-						}
+								for ($j = 0; $j < $legend_count; $j++)
+								{
+									$sum = 0;
 
-						?><tr><? for ($j = 0; $j < 7; $j++) { ?><td></td><? } ?></tr><?
+									foreach ($total as $line)
+									{
+										$sum += $line[$j];
+									}
+
+									?><td><?= $sum ?></td><?
+								}
+							?>
+						</tr>
+						<?
 					}
 				?>
 			</table>
+
 
 			<div class="clear"></div>
 
 			<div class="bottom">
 				<table>
-					<tr>
-						<td><div class="box">&nbsp;</div> - теоретическое обучение</td>
-						<td><div class="box">o</div> - учебная практика</td>
-						<td><div class="box">/</div> - дипломное проектирование</td>
-						<td><div class="box">=</div> - каникулы</td>
-					</tr>
+					<?
+						if ($legend)
+						{
+							$array = $legend;
 
-					<tr class="empty"></tr>
+							$rows = ceil($legend_count / 4);
 
-					<tr>
-						<td><div class="box">:</div> - экзаменационная сессия</td>
-						<td><div class="box">x</div> - производственная практика</td>
-						<td><div class="box">//</div> - государственные экзамены</td>
-						<td></td>
-					</tr>
+							for ($i = 0; $i < $rows; $i++)
+							{
+								?>
+								<tr>
+									<?
+										for ($j = 0; $j < 4; $j++)
+										{
+											$item = array_shift($array);
+
+											if (!$item->legend_letter)
+											{
+												$item->legend_letter = '&nbsp;';
+											}
+
+											?>
+											<td><div class="box"><?= $item->legend_letter ?></div> - <?= $item->description ?></td>
+											<?
+
+											if (!$array)
+											{
+												break;
+											}
+										}
+
+									?>
+								</tr>
+
+								<tr class="empty"></tr>
+								<?
+							}
+						}
+					?>
 				</table>
 			</div>
 		</div>
@@ -168,6 +203,22 @@ class template_reports_preview_calendar
 			<th colspan="3">Июль</th>
 			<th></th>
 			<th colspan="4">Август</th>
+
+			<?
+				$legend = calendar_legend::get();
+
+				if ($legend)
+				{
+					foreach ($legend as $item)
+					{
+						?>
+						<th rowspan="3" class="total"><?= string::to_capital($item->description) ?></th>
+						<?
+					}
+				}
+			?>
+
+			<th rowspan="3" class="total">Всего</th>
 		</tr>
 		<tr>
 			<td>1</td>

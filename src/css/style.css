@@ -336,6 +336,22 @@ h2
 	height: 18px;
 }
 
+#calendar .ui.buttons.constructor
+{
+	float: right;
+}
+
+#calendar .ui.button.constructor
+{
+	width: 45px;
+	height: 42px;
+}
+
+#calendar .highlighted input
+{
+	background-color: #E4E4E4;
+	height: 19px;
+}
 
 /* ######################## */
 /* # highlight js section # */
