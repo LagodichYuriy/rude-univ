@@ -4,6 +4,41 @@ namespace rude;
 
 class template_reports
 {
+	public function __construct()
+	{
+		if (!template_session::is_admin() and !template_session::is_editor())
+		{
+			if (get('ajax'))
+			{
+				exit(RUDE_AJAX_ACCESS_VIOLATION);
+			}
+
+			return false;
+		}
+
+
+		switch (get('task'))
+		{
+			case 'remove': $status = reports::remove(get('id')); break;
+
+
+			default:
+				$status = false;
+				break;
+		}
+
+
+		if (get('ajax'))
+		{
+			if ($status) { exit(RUDE_AJAX_OK);    }
+			else              { exit(RUDE_AJAX_ERROR); }
+		}
+
+		return true;
+	}
+
+
+
 	public function html()
 	{
 		template_html::doctype();
@@ -78,7 +113,7 @@ class template_reports
 									</a>
 								</td>
 								<td class="icon last no-border">
-									<a href="#">
+									<a href="#" onclick="$.post('<?= template_url::ajax('reports', 'remove', $report->id) ?>').done(function(answer) { answer_removed(answer, <?= $report->id ?>); }); return false;">
 										<i class="icon remove circle" title="Удалить"></i>
 									</a>
 								</td>
@@ -90,6 +125,36 @@ class template_reports
 				</tbody>
 			</table>
 		</div>
+
+		<script>
+			function answer_removed(answer, id)
+			{
+				console.log(answer);
+
+
+				switch(answer)
+				{
+					case '<?= RUDE_AJAX_ERROR            ?>':
+
+						break;
+
+					case '<?= RUDE_AJAX_OK               ?>':
+						console.log(this);
+
+						$('#report-' + id).fadeOut('slow');
+						break;
+
+					case '<?= RUDE_AJAX_ACCESS_VIOLATION ?>':
+						$('#access-violation').modal('show');
+						break;
+
+					default:
+						break;
+				}
+
+				return false;
+			}
+		</script>
 		<?
 	}
 }
