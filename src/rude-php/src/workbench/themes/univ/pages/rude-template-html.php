@@ -371,6 +371,10 @@ class template_html
 						<a class="item subcategory <? if (get('page') == 'users') { ?>active<? } ?>" href="/?page=users">
 							<i class="icon"></i> Пользователи
 						</a>
+
+						<a class="item subcategory <? if (get('page') == 'calendar_legend') { ?>active<? } ?>" href="/?page=calendar_legend">
+							<i class="icon"></i> Условные обозначения
+						</a>
 					</div>
 
 

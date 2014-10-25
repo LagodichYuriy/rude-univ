@@ -130,6 +130,7 @@ define('RUDE_DATABASE_TABLE_SPECIALTIES',     RUDE_DATABASE_PREFIX . 'specialtie
 define('RUDE_DATABASE_TABLE_TRAINING_FORM',   RUDE_DATABASE_PREFIX . 'training_forms');
 define('RUDE_DATABASE_TABLE_SPECIALIZATIONS', RUDE_DATABASE_PREFIX . 'specializations');
 define('RUDE_DATABASE_TABLE_USERS',           RUDE_DATABASE_PREFIX . 'users');
+define('RUDE_DATABASE_TABLE_CALENDAR_LEGEND', RUDE_DATABASE_PREFIX . 'calendar_legend');
 
 
 define('RUDE_DATABASE_FIELD_ID',                  'id');
@@ -151,6 +152,8 @@ define('RUDE_DATABASE_FIELD_IS_TMP',              'is_tmp');
 define('RUDE_DATABASE_FIELD_VALUE',               'value');
 define('RUDE_DATABASE_FIELD_COLUMN',              'column');
 define('RUDE_DATABASE_FIELD_REPORT_ID',           'report_id');
+define('RUDE_DATABASE_FIELD_LEGEND_LETTER',       'legend_letter');
+define('RUDE_DATABASE_FIELD_LEGEND_DESCRIPTION',  'description');
 
 ####################################################################
 ####################################################################
