@@ -2,7 +2,7 @@
 
 namespace rude;
 
-class reports
+class reports_preview
 {
 	public static function get($id = null)
 	{
@@ -10,7 +10,7 @@ class reports
 
 		$q = '
 			SELECT
-				' . RUDE_DATABASE_TABLE_REPORTS         . '.*,
+				' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '.*,
 
 				' . RUDE_DATABASE_TABLE_FACULTIES       . '.' . RUDE_DATABASE_FIELD_ID        . ' AS faculty_id,
 				' . RUDE_DATABASE_TABLE_FACULTIES       . '.' . RUDE_DATABASE_FIELD_NAME      . ' AS faculty_name,
@@ -28,17 +28,17 @@ class reports
 				' . RUDE_DATABASE_TABLE_QUALIFICATIONS  . '.' . RUDE_DATABASE_FIELD_ID        . ' AS qualification_id,
 				' . RUDE_DATABASE_TABLE_QUALIFICATIONS  . '.' . RUDE_DATABASE_FIELD_NAME      . ' AS qualification_name
 			FROM
-				' . RUDE_DATABASE_TABLE_REPORTS . '
+				' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '
 			LEFT JOIN
-				' . RUDE_DATABASE_TABLE_SPECIALTIES     . ' ON ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_SPECIALTY_ID      . ' = ' . RUDE_DATABASE_TABLE_SPECIALTIES     . '.' . RUDE_DATABASE_FIELD_ID . '
+				' . RUDE_DATABASE_TABLE_SPECIALTIES     . ' ON ' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '.' . RUDE_DATABASE_FIELD_SPECIALTY_ID      . ' = ' . RUDE_DATABASE_TABLE_SPECIALTIES     . '.' . RUDE_DATABASE_FIELD_ID . '
 			LEFT JOIN
 				' . RUDE_DATABASE_TABLE_FACULTIES       . ' ON ' . RUDE_DATABASE_TABLE_SPECIALTIES . '.' . RUDE_DATABASE_FIELD_FACULTY_ID    . ' = ' . RUDE_DATABASE_TABLE_FACULTIES       . '.' . RUDE_DATABASE_FIELD_ID . '
 			LEFT JOIN
-				' . RUDE_DATABASE_TABLE_SPECIALIZATIONS . ' ON ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_SPECIALIZATION_ID . ' = ' . RUDE_DATABASE_TABLE_SPECIALIZATIONS . '.' . RUDE_DATABASE_FIELD_ID . '
+				' . RUDE_DATABASE_TABLE_SPECIALIZATIONS . ' ON ' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '.' . RUDE_DATABASE_FIELD_SPECIALIZATION_ID . ' = ' . RUDE_DATABASE_TABLE_SPECIALIZATIONS . '.' . RUDE_DATABASE_FIELD_ID . '
 			LEFT JOIN
-				' . RUDE_DATABASE_TABLE_TRAINING_FORM   . ' ON ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_TRAINING_FORM_ID  . ' = ' . RUDE_DATABASE_TABLE_TRAINING_FORM   . '.' . RUDE_DATABASE_FIELD_ID . '
+				' . RUDE_DATABASE_TABLE_TRAINING_FORM   . ' ON ' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '.' . RUDE_DATABASE_FIELD_TRAINING_FORM_ID  . ' = ' . RUDE_DATABASE_TABLE_TRAINING_FORM   . '.' . RUDE_DATABASE_FIELD_ID . '
 			LEFT JOIN
-				' . RUDE_DATABASE_TABLE_QUALIFICATIONS  . ' ON ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_QUALIFICATION_ID  . ' = ' . RUDE_DATABASE_TABLE_QUALIFICATIONS  . '.' . RUDE_DATABASE_FIELD_ID . '
+				' . RUDE_DATABASE_TABLE_QUALIFICATIONS  . ' ON ' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '.' . RUDE_DATABASE_FIELD_QUALIFICATION_ID  . ' = ' . RUDE_DATABASE_TABLE_QUALIFICATIONS  . '.' . RUDE_DATABASE_FIELD_ID . '
 			WHERE 1 = 1
 
 		';
@@ -46,12 +46,12 @@ class reports
 
 		if ($id !== null)
 		{
-			$q .= PHP_EOL . 'AND ' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_ID . ' = ' . (int) $id;
+			$q .= PHP_EOL . 'AND ' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '.' . RUDE_DATABASE_FIELD_ID . ' = ' . (int) $id;
 		}
 
 		$q .= '
 			GROUP BY
-				' . RUDE_DATABASE_TABLE_REPORTS . '.' . RUDE_DATABASE_FIELD_ID;
+				' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . '.' . RUDE_DATABASE_FIELD_ID;
 
 
 		$database->query($q);
@@ -67,7 +67,7 @@ class reports
 
 	public static function is_exists($id)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_REPORTS);
+		$q = new query(RUDE_DATABASE_TABLE_REPORTS_PREVIEW);
 		$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 		$q->query();
 
@@ -83,7 +83,7 @@ class reports
 	{
 		if (static::is_exists($id))
 		{
-			$q = new dquery(RUDE_DATABASE_TABLE_REPORTS);
+			$q = new dquery(RUDE_DATABASE_TABLE_REPORTS_PREVIEW);
 			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 			$q->query();
 
@@ -102,7 +102,7 @@ class reports
 							   $specialty_id        = null,
 							   $specialization_id   = null)
 	{
-		$q = new cquery(RUDE_DATABASE_TABLE_REPORTS);
+		$q = new cquery(RUDE_DATABASE_TABLE_REPORTS_PREVIEW);
 		$q->add(RUDE_DATABASE_FIELD_YEAR,                (int) $year);
 		$q->add(RUDE_DATABASE_FIELD_DURATION,            (int) $duration);
 		$q->add(RUDE_DATABASE_FIELD_RECTOR,                    $rector);
@@ -127,7 +127,7 @@ class reports
 	                              $specialty_id        = null,
 	                              $specialization_id   = null)
 	{
-		$q = new uquery(RUDE_DATABASE_TABLE_REPORTS);
+		$q = new uquery(RUDE_DATABASE_TABLE_REPORTS_PREVIEW);
 
 		if ($year                !== null) { $q->update(RUDE_DATABASE_FIELD_YEAR,                (int) $year);                }
 		if ($duration            !== null) { $q->update(RUDE_DATABASE_FIELD_DURATION,            (int) $duration);            }

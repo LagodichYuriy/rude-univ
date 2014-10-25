@@ -2,11 +2,11 @@
 
 namespace rude;
 
-class calendar_items
+class calendar_items_preview
 {
 	public static function get($report_id = null, $year = null)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_CALENDAR_ITEMS);
+		$q = new query(RUDE_DATABASE_TABLE_CALENDAR_ITEMS_PREVIEW);
 
 		if ($year !== null)
 		{
@@ -25,7 +25,7 @@ class calendar_items
 
 	public static function add($report_id, $year, $column, $value)
 	{
-		$q = new cquery(RUDE_DATABASE_TABLE_CALENDAR_ITEMS);
+		$q = new cquery(RUDE_DATABASE_TABLE_CALENDAR_ITEMS_PREVIEW);
 		$q->add(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
 		$q->add(RUDE_DATABASE_FIELD_YEAR, $year);
 		$q->add(RUDE_DATABASE_FIELD_COLUMN, (int) $column);
@@ -37,7 +37,7 @@ class calendar_items
 
 	public static function remove($report_id)
 	{
-		$q = new dquery(RUDE_DATABASE_TABLE_CALENDAR_ITEMS);
+		$q = new dquery(RUDE_DATABASE_TABLE_CALENDAR_ITEMS_PREVIEW);
 		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
 		$q->query();
 	}

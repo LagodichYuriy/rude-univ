@@ -4,8 +4,10 @@ namespace rude;
 
 class template_reports_preview_calendar
 {
-	public static function html()
+	public static function html($report)
 	{
+		debug($report);
+
 		?>
 		<div id="calendar">
 			<table class="left">
@@ -17,45 +19,57 @@ class template_reports_preview_calendar
 
 				<? static::head() ?>
 
-				<tr>
-					<td>I</td>
-					<?
-						for ($i = 0; $i < 52; $i++)
-						{
-							?><td></td><?
-						}
-					?>
-				</tr>
+				<?
+					$total = new \stdClass();
+					$total->theoretical = 0;
+					$total->symbols = null;
+					$total->all = 0;
 
-				<tr>
-					<td>II</td>
-					<?
-						for ($i = 0; $i < 52; $i++)
-						{
-							?><td></td><?
-						}
-					?>
-				</tr>
+					if ($report->duration)
+					{
 
-				<tr>
-					<td>III</td>
-					<?
-						for ($i = 0; $i < 52; $i++)
-						{
-							?><td></td><?
-						}
-					?>
-				</tr>
 
-				<tr>
-					<td>IV</td>
-					<?
-						for ($i = 0; $i < 52; $i++)
+
+
+						for ($i = 1; $i <= $report->duration; $i++)
 						{
-							?><td></td><?
+							$calendar_items = calendar_items_preview::get($report->id, $i);
+
+							?>
+							<tr>
+								<td><?= int::to_roman($i) ?></td>
+
+								<?
+									for ($j = 1; $j < 53; $j++)
+									{
+										?>
+										<td>
+											<?
+												if ($calendar_items)
+												{
+													foreach ($calendar_items as $item)
+													{
+														if ($item->column == $j)
+														{
+															if ($total->symbols and !in_array($item->value, $total->symbols))
+															{
+																$item->symbols[] = $item->value;
+															}
+
+															echo $item->value; break;
+														}
+													}
+												}
+											?>
+										</td>
+										<?
+									}
+								?>
+							</tr>
+							<?
 						}
-					?>
-				</tr>
+					}
+				?>
 			</table>
 
 			<table class="right">
@@ -75,11 +89,32 @@ class template_reports_preview_calendar
 					<th>Всего</th>
 				</tr>
 
-				<tr><? for ($i = 0; $i < 7; $i++) { ?><td>&nbsp;</td><? } ?></tr>
-				<tr><? for ($i = 0; $i < 7; $i++) { ?><td>&nbsp;</td><? } ?></tr>
-				<tr><? for ($i = 0; $i < 7; $i++) { ?><td>&nbsp;</td><? } ?></tr>
-				<tr><? for ($i = 0; $i < 7; $i++) { ?><td>&nbsp;</td><? } ?></tr>
-				<tr><? for ($i = 0; $i < 7; $i++) { ?><td>&nbsp;</td><? } ?></tr>
+				<?
+					if ($report->duration)
+					{
+						for ($i = 1; $i <= $report->duration; $i++)
+						{
+//							if (get('is_tmp'))
+//							{
+//
+//							}
+//							else
+//							{
+//								$calendar_items = calendar_items::get($report->id, $i);
+//							}
+//
+//
+//							debug($calendar_items);
+
+
+							?>
+							<tr><? for ($j = 0; $j < 7; $j++) { ?><td></td><? } ?></tr>
+							<?
+						}
+
+						?><tr><? for ($j = 0; $j < 7; $j++) { ?><td></td><? } ?></tr><?
+					}
+				?>
 			</table>
 
 			<div class="clear"></div>

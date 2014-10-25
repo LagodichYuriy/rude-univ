@@ -39,15 +39,24 @@ class ajax_calendar_items
 			return false;
 		}
 
-		if (calendar_items::is_exists($report_id))
+		if (get('is_tmp'))
 		{
-			calendar_items::remove($report_id);
+			$calendar_items = new calendar_items_preview();
+		}
+		else
+		{
+			$calendar_items = new calendar_items();
+		}
+
+		if ($calendar_items::is_exists($report_id))
+		{
+			$calendar_items::remove($report_id);
 		}
 
 
 		foreach ($data as $item)
 		{
-			calendar_items::add($report_id, get(0, $item), get(1, $item), get(2, $item));
+			$calendar_items::add($report_id, get(0, $item), get(1, $item), get(2, $item));
 		}
 
 		debug($data);

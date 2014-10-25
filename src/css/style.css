@@ -269,6 +269,10 @@ h2
 	position:absolute;
 }
 
+#calendar.ui.large.modal
+{
+	width: auto!important;
+}
 
 #calendar table
 {

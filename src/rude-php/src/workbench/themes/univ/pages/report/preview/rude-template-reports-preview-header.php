@@ -32,7 +32,7 @@ class template_reports_preview_header
 						<p>
 							<b>Для получения высшего образования</b>
 						</p>
-						<p>(<?= string::to_lowercase($report->training_form) ?>)</p>
+						<p>(<?= string::to_lowercase($report->training_form_name) ?>)</p>
 						<p>Специальность: <b><?= $report->specialty_name ?></b></p>
 						<p>Специализация: <b><?= $report->specialization_name ?></b></p>
 						<p>Для студентов набора <?= $report->year ?> года</p>

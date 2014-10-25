@@ -4,9 +4,14 @@ namespace rude;
 
 class template_404
 {
-	public function __construct()
+	public function __construct($html = false)
 	{
 		headers::not_found(); # send 404
+
+		if ($html === true)
+		{
+			$this->html();
+		}
 	}
 
 	public function html()

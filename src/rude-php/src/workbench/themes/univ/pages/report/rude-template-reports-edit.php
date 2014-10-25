@@ -9,18 +9,6 @@ class template_reports_edit
 
 	public function __construct()
 	{
-		$report_id = (int) get('report_id');
-
-		if (!$report_id or !reports::is_exists($report_id))
-		{
-			$template = new template_404();
-			$template->html();
-		}
-
-
-		$this->report = reports::get($report_id);
-
-
 		if (!template_session::is_admin() and !template_session::is_editor())
 		{
 			if (get('ajax'))
@@ -32,9 +20,41 @@ class template_reports_edit
 		}
 
 
+		$report_id = (int) get('report_id');
+
+		if (!$report_id)
+		{
+			new template_404(true);
+		}
+
+		if (get('is_tmp'))
+		{
+			$reports = new reports_preview();
+		}
+		else
+		{
+			$reports = new reports();
+		}
+
+
+		if (!$reports::is_exists($report_id))
+		{
+			new template_404(true);
+		}
+
+		$this->report = $reports::get($report_id);
+
+
+		if (!$this->report)
+		{
+			new template_404(true);
+		}
+
+
+
 		switch (get('task'))
 		{
-			case 'update': exit((string) reports::update(get('report_id'),
+			case 'update': exit((string) $reports::update(get('report_id'),
 			                                             get('year'),
 				                                         get('duration'),
 				                                         get('rector'),
@@ -217,7 +237,7 @@ class template_reports_edit
 					?>
 
 					<div class="ui green submit button small" onclick="update();">Сохранить</div>
-					<a href="/?page=reports-preview" target="_blank" id="button-preview" class="ui blue submit button small" onclick="preview();">Предпросмотр</a>
+					<a href="#" target="_blank" id="button-preview" class="ui blue submit button small" onclick="save(1); return false;">Предпросмотр</a>
 					<a href="#" target="_blank" id="button-popup" class="ui blue submit button small" onclick="calendar.popup(); return false;">Календарь</a>
 
 					<div class="ui dimmer page hidden">
@@ -458,7 +478,7 @@ class template_reports_edit
 
 								<br />
 
-								<a href="#" target="_blank" id="button-save" class="ui blue submit button small" onclick="calendar.save(); return false;">Сохранить</a>
+								<a href="#" target="_blank" id="button-save" class="ui blue submit button small" onclick="calendar.save(0); $('#calendar .icon.close').click(); return false;">Сохранить</a>
 							</div>
 						</div>
 					</div>
@@ -467,7 +487,7 @@ class template_reports_edit
 						<table>
 							<tr id="calendar-hidden">
 							<?
-								for ($i = 1; $i <= 53; $i++)
+								for ($i = 1; $i < 53; $i++)
 								{
 									?>
 									<td>
@@ -486,12 +506,53 @@ class template_reports_edit
 
 
 					<script>
+						function save(is_tmp)
+						{
+							var report = new Report();
+
+
+							$.ajax(
+							{
+								url: '/?page=reports-new&task=add&ajax=true&is_tmp=' + is_tmp,
+
+								data:
+								{
+									is_tmp:              is_tmp,
+
+									year:                report.year,
+									duration:            report.duration,
+									rector:              report.rector,
+									registration_number: report.registration_number,
+									training_form_id:    report.training_form_id,
+									qualification_id:    report.qualification_id,
+									specialty_id:        report.specialty_id,
+									specialization_id:   report.specialization_id
+								},
+
+								success: function (report_id)
+								{
+									console.log(report_id);
+
+									if (report_id)
+									{
+										if (is_tmp)
+										{
+											calendar.save(1, report_id, true);
+										}
+										else
+										{
+											rude.open('/?page=reports-edit&report_id=' + report_id);
+										}
+									}
+								}
+							});
+						}
+
 						function update()
 						{
 							var report_id = '<?= $this->report->id ?>';
 
 							var report = new Report();
-
 
 							$.ajax(
 							{
@@ -514,37 +575,6 @@ class template_reports_edit
 								success: function (data)
 								{
 									console.log(data);
-								}
-							});
-						}
-
-						function preview()
-						{
-							var report = new Report();
-
-							$.ajax(
-							{
-								url: '/?page=reports-preview&tmp=true',
-
-								data:
-								{
-									year:                report.year,
-									duration:            report.duration,
-									rector:              report.rector,
-									registration_number: report.registration_number,
-									training_form_id:    report.training_form_id,
-									qualification_id:    report.qualification_id,
-									specialty_id:        report.specialty_id,
-									specialization_id:   report.specialization_id
-								},
-
-								success: function (data)
-								{
-									console.log(data);
-
-//									rude.open('/?page=reports-preview');
-
-//									window.open('/?page=reports-preview', '_blank');
 								}
 							});
 						}
@@ -628,9 +658,21 @@ class template_reports_edit
 								return result;
 							},
 
-							save: function()
+							save: function(is_tmp, report_id, prewiew)
 							{
 								var data = calendar.get();
+
+								if (is_tmp)
+								{
+									var report_id = report_id;
+								}
+								else
+								{
+									var report_id = <?= $this->report->id ?>;
+								}
+
+
+
 
 								$.ajax(
 								{
@@ -638,13 +680,21 @@ class template_reports_edit
 
 									data:
 									{
+										is_tmp: is_tmp,
+
 										data: data,
-										report_id: <?= $this->report->id ?>
+										report_id: report_id
 									},
 
 									success: function (data)
 									{
 										console.log(data);
+
+
+										if (prewiew)
+										{
+											rude.open('/?page=reports-preview&is_tmp=1&report_id=' + report_id, true);
+										}
 									}
 								});
 							}

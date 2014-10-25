@@ -12,9 +12,22 @@ var rude =
 		window.open(url, '_self', false);
 	},
 
-	open: function(url)
+	open: function(url, fullscreen)
 	{
-		window.open(url, '_blank');
+		if (fullscreen)
+		{
+			var params = [
+				'height='+screen.height,
+				'width='+screen.width,
+				'fullscreen=yes' // only works in IE, but here for completeness
+			].join(',');
+
+			window.open(url, '_blank', params);
+		}
+		else
+		{
+			window.open(url, '_blank');
+		}
 	},
 
 	form:

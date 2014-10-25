@@ -17,17 +17,26 @@ class template_reports_new
 		}
 
 
+		if (get('is_tmp'))
+		{
+			$reports = new reports_preview();
+		}
+		else
+		{
+			$reports = new reports();
+		}
+
+
 		switch (get('task'))
 		{
-			case 'add': exit((string) reports::add(get('year'),
+			case 'add': exit((string) $reports::add(get('year'),
 			                                       get('duration'),
 			                                       get('rector'),
 			                                       get('registration_number'),
 			                                       get('training_form_id'),
 			                                       get('qualification_id'),
 			                                       get('specialty_id'),
-			                                       get('specialization_id'),
-			                                       false));
+			                                       get('specialization_id')));
 				break;
 
 			default:
