@@ -65,7 +65,7 @@ class template_reports_edit
 		template_html::doctype();
 
 		?>
-		<html>
+		<html xmlns="http://www.w3.org/1999/html">
 		<? template_html::header() ?>
 
 		<body>
@@ -105,7 +105,7 @@ class template_reports_edit
 
 						<div class="field">
 							<label>Срок обучения (лет)</label>
-							<input id="duration" name="duration" placeholder="4" type="text" value="<?= $this->report->duration ?>">
+							<input id="duration" name="duration" placeholder="4" type="text" value="<?= $this->report->duration ?>" onchange="calendar.update();">
 						</div>
 
 						<div class="field">
@@ -218,6 +218,272 @@ class template_reports_edit
 
 					<div class="ui green submit button small" onclick="update();">Сохранить</div>
 					<a href="/?page=reports-preview" target="_blank" id="button-preview" class="ui blue submit button small" onclick="preview();">Предпросмотр</a>
+					<a href="#" target="_blank" id="button-popup" class="ui blue submit button small" onclick="calendar.popup(); return false;">Календарь</a>
+
+					<div class="ui dimmer page hidden">
+						<div id="calendar" class="ui modal large transition hidden">
+							<i class="close icon"></i>
+
+							<div class="header">
+								Календарь
+							</div>
+
+							<div class="content">
+								<table class="ui basic table">
+									<tr>
+										<th rowspan="3">к<br/>у<br/>р<br/>с<br/>ы</th>
+										<th colspan="4">Сентябрь</th>
+										<th></th>
+										<th colspan="3">Октябрь</th>
+										<th></th>
+										<th colspan="4">Ноябрь</th>
+										<th colspan="4">Декабрь</th>
+										<th></th>
+										<th colspan="3">Январь</th>
+										<th></th>
+										<th colspan="3">Февраль</th>
+										<th></th>
+										<th colspan="4">Март</th>
+										<th></th>
+										<th colspan="3">Апрель</th>
+										<th></th>
+										<th colspan="4">Май</th>
+										<th colspan="4">Июнь</th>
+										<th></th>
+										<th colspan="3">Июль</th>
+										<th></th>
+										<th colspan="4">Август</th>
+									</tr>
+									<tr>
+										<td>1</td>
+										<td>8</td>
+										<td>15</td>
+										<td>22</td>
+										<td>
+											<div class="underline">29</div>
+											09
+										</td>
+										<td>6</td>
+										<td>13</td>
+										<td>20</td>
+										<td>
+											<div class="underline">27</div>
+											10
+										</td>
+										<td>3</td>
+										<td>10</td>
+										<td>17</td>
+										<td>24</td>
+										<td>1</td>
+										<td>8</td>
+										<td>15</td>
+										<td>22</td>
+										<td>
+											<div class="underline">29</div>
+											12
+										</td>
+										<td>5</td>
+										<td>12</td>
+										<td>19</td>
+										<td>
+											<div class="underline">26</div>
+											01
+										</td>
+										<td>2</td>
+										<td>9</td>
+										<td>16</td>
+										<td>
+											<div class="underline">23</div>
+											02
+										</td>
+										<td>2</td>
+										<td>9</td>
+										<td>16</td>
+										<td>23</td>
+										<td>
+											<div class="underline">30</div>
+											03
+										</td>
+										<td>6</td>
+										<td>13</td>
+										<td>20</td>
+										<td>
+											<div class="underline">27</div>
+											04
+										</td>
+										<td>4</td>
+										<td>11</td>
+										<td>18</td>
+										<td>25</td>
+										<td>1</td>
+										<td>8</td>
+										<td>15</td>
+										<td>22</td>
+										<td>
+											<div class="underline">29</div>
+											06
+										</td>
+										<td>6</td>
+										<td>13</td>
+										<td>20</td>
+										<td>
+											<div class="underline">27</div>
+											07
+										</td>
+										<td>3</td>
+										<td>10</td>
+										<td>17</td>
+										<td>24</td>
+									</tr>
+									<tr>
+										<td>7</td>
+										<td>14</td>
+										<td>21</td>
+										<td>28</td>
+										<td>
+											<div class="underline">05</div>
+											10
+										</td>
+										<td>12</td>
+										<td>19</td>
+										<td>26</td>
+										<td>
+											<div class="underline">02</div>
+											11
+										</td>
+										<td>7</td>
+										<td>16</td>
+										<td>23</td>
+										<td>30</td>
+										<td>7</td>
+										<td>14</td>
+										<td>21</td>
+										<td>28</td>
+										<td>
+											<div class="underline">04</div>
+											01
+										</td>
+										<td>11</td>
+										<td>18</td>
+										<td>25</td>
+										<td>
+											<div class="underline">01</div>
+											02
+										</td>
+										<td>8</td>
+										<td>15</td>
+										<td>22</td>
+										<td>
+											<div class="underline">01</div>
+											03
+										</td>
+										<td>8</td>
+										<td>15</td>
+										<td>22</td>
+										<td>29</td>
+										<td>
+											<div class="underline">05</div>
+											04
+										</td>
+										<td>12</td>
+										<td>19</td>
+										<td>26</td>
+										<td>
+											<div class="underline">03</div>
+											05
+										</td>
+										<td>10</td>
+										<td>17</td>
+										<td>24</td>
+										<td>31</td>
+										<td>7</td>
+										<td>14</td>
+										<td>21</td>
+										<td>28</td>
+										<td>
+											<div class="underline">05</div>
+											07
+										</td>
+										<td>12</td>
+										<td>19</td>
+										<td>26</td>
+										<td>
+											<div class="underline">02</div>
+											08
+										</td>
+										<td>9</td>
+										<td>16</td>
+										<td>23</td>
+										<td>31</td>
+									</tr>
+
+									<?
+										if (calendar_items::is_exists($this->report->id))
+										{
+											$items = calendar_items::get($this->report->id);
+
+											for ($i = 1; $i <= $this->report->duration; $i++)
+											{
+												?><tr id="generated-<?= $i ?>" class="generated"><td><?= int::to_roman($i) ?></td><?
+
+												for ($j = 1; $j < 53; $j++)
+												{
+													$val = '';
+
+													foreach ($items as $item)
+													{
+														if ($item->year == $i and $item->column == $j)
+														{
+															$val = $item->value;
+														}
+													}
+
+
+													?>
+													<td>
+														<div class="ui form">
+															<div class="inline field">
+																<input class="<?= $j ?>" type="text" maxlength="2" value="<?= $val ?>">
+															</div>
+														</div>
+													</td>
+													<?
+												}
+
+												?></tr><?
+											}
+										}
+									?>
+								</table>
+
+								<br />
+
+								<a href="#" target="_blank" id="button-save" class="ui blue submit button small" onclick="calendar.save(); return false;">Сохранить</a>
+							</div>
+						</div>
+					</div>
+
+					<div style="display: none">
+						<table>
+							<tr id="calendar-hidden">
+							<?
+								for ($i = 1; $i <= 53; $i++)
+								{
+									?>
+									<td>
+										<div class="ui form">
+											<div class="inline field">
+												<input class="<?= $i ?>" type="text" maxlength="2">
+											</div>
+										</div>
+									</td>
+									<?
+								}
+							?>
+							</tr>
+						</table>
+					</div>
+
 
 					<script>
 						function update()
@@ -293,6 +559,95 @@ class template_reports_edit
 							this.qualification_id    = $('#qualification_id').val();
 							this.specialty_id        = $('#specialty_id').val();
 							this.specialization_id   = $('#specialization_id').val();
+						}
+
+						var calendar =
+						{
+							duration: <? if ($this->report->id and calendar_items::is_exists($this->report->id)) { echo $this->report->id; } else { echo 'null'; } ?>,
+
+							reset: function()
+							{
+								$('#calendar .generated').remove();
+							},
+
+							update: function()
+							{
+								var duration = $('#duration').val();
+
+								if (calendar.duration === null || calendar.duration != duration)
+								{
+									calendar.reset();
+
+									var row = $('#calendar-hidden').html();
+
+									for (var i = 1; i <= duration; i++)
+									{
+										$('#calendar table').append('<tr id="generated-' + i + '" class="generated"><td>' + rude.romanize(i) + '</td>' + row + '</tr>');
+									}
+								}
+
+								calendar.duration = duration;
+							},
+
+							popup: function()
+							{
+								if (calendar.duration === null)
+								{
+									calendar.update();
+								}
+
+								$('#calendar').modal('show').modal('cache sizes');
+
+								setTimeout(function() {
+									$('#calendar').modal('refresh');
+								}, 750);
+							},
+
+							get: function()
+							{
+								var result = [];
+
+								for (var i = 1; i <= calendar.duration; i++)
+								{
+									var selector = '#generated-' + i;
+
+									if ($(selector).length)
+									{
+										var cols = $(selector + ' td').length;
+
+										for (var j = 1; j < cols; j++)
+										{
+											if ($(selector + ' .' + j).val() !== '')
+											{
+												result.push([i, j, $(selector + ' .' + j).val()]);
+											}
+										}
+									}
+								}
+
+								return result;
+							},
+
+							save: function()
+							{
+								var data = calendar.get();
+
+								$.ajax(
+								{
+									url: '/?page=calendar&task=save&ajax=true',
+
+									data:
+									{
+										data: data,
+										report_id: <?= $this->report->id ?>
+									},
+
+									success: function (data)
+									{
+										console.log(data);
+									}
+								});
+							}
 						}
 					</script>
 				</div>

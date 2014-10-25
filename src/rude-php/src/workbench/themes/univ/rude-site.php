@@ -13,8 +13,9 @@ class site
 		{
 			case 'registration':    ajax_registration::init();                  break;
 			case 'authorization':   ajax_authorization::init();                 break;
-
 			case 'logout':          ajax_logout::init();                        break;
+
+			case 'calendar':        ajax_calendar_items::init();                break;
 
 			case 'departments':     $template = new template_departments();     break;
 			case 'faculties':       $template = new template_faculties();       break;
@@ -28,6 +29,8 @@ class site
 			case 'reports-new':     $template = new template_reports_new();     break;
 			case 'reports-edit':    $template = new template_reports_edit();    break;
 			case 'reports-preview': $template = new template_reports_preview(); break;
+
+
 
 
 			default:

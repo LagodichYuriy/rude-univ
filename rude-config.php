@@ -120,6 +120,7 @@ define('RUDE_TIME_YEAR',   946080000); # 1 year   = 946080000 seconds
 #                         database section                         #
 ####################################################################
 
+define('RUDE_DATABASE_TABLE_CALENDAR_ITEMS',  RUDE_DATABASE_PREFIX . 'calendar_items');
 define('RUDE_DATABASE_TABLE_DEPARTMENTS',     RUDE_DATABASE_PREFIX . 'departments');
 define('RUDE_DATABASE_TABLE_FACULTIES',       RUDE_DATABASE_PREFIX . 'faculties');
 define('RUDE_DATABASE_TABLE_QUALIFICATIONS',  RUDE_DATABASE_PREFIX . 'qualifications');
@@ -147,7 +148,9 @@ define('RUDE_DATABASE_FIELD_DURATION',            'duration');
 define('RUDE_DATABASE_FIELD_RECTOR',              'rector');
 define('RUDE_DATABASE_FIELD_REGISTRATION_NUMBER', 'registration_number');
 define('RUDE_DATABASE_FIELD_IS_TMP',              'is_tmp');
-
+define('RUDE_DATABASE_FIELD_VALUE',               'value');
+define('RUDE_DATABASE_FIELD_COLUMN',              'column');
+define('RUDE_DATABASE_FIELD_REPORT_ID',           'report_id');
 
 ####################################################################
 ####################################################################

@@ -57,7 +57,7 @@ class departments
 	{
 		$q = new uquery(RUDE_DATABASE_TABLE_DEPARTMENTS);
 		$q->update(RUDE_DATABASE_FIELD_NAME, $name);
-		$q->where(RUDE_DATABASE_FIELD_ID,$id);
+		$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 		$q->limit(1);
 		$q->query();
 		return true;
