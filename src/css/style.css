@@ -339,6 +339,8 @@ h2
 #calendar .ui.buttons.constructor
 {
 	float: right;
+
+	padding-left: 10px;
 }
 
 #calendar .ui.button.constructor
@@ -351,6 +353,23 @@ h2
 {
 	background-color: #E4E4E4;
 	height: 19px;
+}
+
+#calendar .legend .empty,
+#calendar #generated-bottom .empty
+{
+	color: #C0C0C0;
+}
+
+#calendar .legend.total,
+#calendar #generated-bottom .total
+{
+	font-weight: bold;
+}
+
+#calendar #generated-bottom
+{
+	border: none!important;
 }
 
 /* ######################## */

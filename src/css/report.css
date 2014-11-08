@@ -202,6 +202,11 @@ table
 }
 
 
+#calendar input
+{
+	cursor: pointer!important;
+}
+
 
 #plan
 {
