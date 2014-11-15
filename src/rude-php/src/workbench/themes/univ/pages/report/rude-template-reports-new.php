@@ -105,7 +105,9 @@ class template_reports_new
 
 			<div class="field">
 				<label>ФИО ректора</label>
-				<input id="rector" name="rector" placeholder="М.П. Батура" type="text" >
+				<?$settings = settings::get_rector_value(template_session::get_user_id());
+				$rector = $settings->value;?>
+				<input id="rector" name="rector" value="<?if(!empty($rector)){echo $rector;}?>" placeholder="М.П. Батура" type="text" >
 			</div>
 		</div>
 

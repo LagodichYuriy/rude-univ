@@ -40,6 +40,7 @@ define('RUDE_SESSION_IS_AUTHORIZED', 'is_authorized');
 
 define('RUDE_SESSION_USER_ID',       'user_id');
 define('RUDE_SESSION_USER_NAME',     'user_name');
+define('RUDE_SESSION_USER_SETTING_POPUP',     'popup');
 
 
 ####################################################################
@@ -133,9 +134,12 @@ define('RUDE_DATABASE_TABLE_TRAINING_FORM',          RUDE_DATABASE_PREFIX . 'tra
 define('RUDE_DATABASE_TABLE_SPECIALIZATIONS',        RUDE_DATABASE_PREFIX . 'specializations');
 define('RUDE_DATABASE_TABLE_USERS',                  RUDE_DATABASE_PREFIX . 'users');
 define('RUDE_DATABASE_TABLE_CALENDAR_LEGEND',        RUDE_DATABASE_PREFIX . 'calendar_legend');
+define('RUDE_DATABASE_TABLE_SETTINGS',               RUDE_DATABASE_PREFIX . 'settings');
+define('RUDE_DATABASE_TABLE_DIRECTION',               RUDE_DATABASE_PREFIX . 'directions');
 
 
 define('RUDE_DATABASE_FIELD_ID',                  'id');
+define('RUDE_DATABASE_FIELD_USER_ID',                  'user_id');
 define('RUDE_DATABASE_FIELD_NAME',                'name');
 define('RUDE_DATABASE_FIELD_SHORTNAME',           'shortname');
 define('RUDE_DATABASE_FIELD_HASH',                'hash');
