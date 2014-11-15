@@ -25,6 +25,8 @@ class site
 			case 'users':           $template = new template_users();           break;
 			case 'users-roles':     $template = new template_users_roles();     break;
 			case 'calendar_legend': $template = new template_calendar_legend(); break;
+			case 'settings': 	    $template = new template_settings(); 		break;
+			case 'directions': 	    $template = new template_directions(); 		break;
 
 			case 'reports':         $template = new template_reports();         break;
 			case 'reports-new':     $template = new template_reports_new();     break;

@@ -375,6 +375,15 @@ class template_html
 						<a class="item subcategory <? if (get('page') == 'calendar_legend') { ?>active<? } ?>" href="/?page=calendar_legend">
 							<i class="icon"></i> Условные обозначения
 						</a>
+
+						<a class="item subcategory <? if (get('page') == 'settings') { ?>active<? } ?>" href="/?page=settings">
+							<i class="icon"></i> Настройки
+						</a>
+
+						<a class="item subcategory <? if (get('page') == 'directions') { ?>active<? } ?>" href="/?page=directions">
+							<i class="icon"></i> Направления
+						</a>
+
 					</div>
 
 
