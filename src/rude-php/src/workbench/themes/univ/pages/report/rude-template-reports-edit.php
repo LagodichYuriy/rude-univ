@@ -273,6 +273,27 @@ class template_reports_edit
 										<th colspan="3">Июль</th>
 										<th></th>
 										<th colspan="4">Август</th>
+
+										<?
+											$items = null;
+
+											if (calendar_items::is_exists($this->report->id))
+											{
+												$items = calendar_items::get($this->report->id);
+											}
+
+
+
+											$legend = calendar_legend::get();
+
+											if ($legend)
+											{
+												foreach ($legend as $symbol)
+												{
+													?><th rowspan="3"><?= $symbol->legend_letter ?></th><?
+												}
+											}
+										?>
 									</tr>
 									<tr>
 										<td>1</td>
@@ -438,52 +459,92 @@ class template_reports_edit
 									</tr>
 
 									<?
-										if (calendar_items::is_exists($this->report->id))
+										if ($this->report->duration > 0)
 										{
-											$items = calendar_items::get($this->report->id);
-
 											for ($i = 1; $i <= $this->report->duration; $i++)
 											{
-												?><tr id="generated-<?= $i ?>" class="generated"><td><?= int::to_roman($i) ?></td><?
+												?>
+												<tr id="generated-<?= $i ?>" class="generated">
+													<td><?= int::to_roman($i) ?></td>
 
-												for ($j = 1; $j < 53; $j++)
-												{
-													$val = '';
-
-													foreach ($items as $item)
-													{
-														if ($item->year == $i and $item->column == $j)
-														{
-															$val = $item->value;
-														}
-													}
-
-
-													?>
-													<td>
-														<div class="ui form">
-															<div class="inline field">
-																<input class="<?= $j ?>" type="text" maxlength="2" value="<?= $val ?>">
-															</div>
-														</div>
-													</td>
 													<?
-												}
+														for ($j = 1; $j < 53; $j++)
+														{
+															$val = '';
 
-												?></tr><?
+															if ($items)
+															{
+																foreach ($items as $item)
+																{
+																	if ($item->year == $i and $item->column == $j)
+																	{
+																		$val = $item->value; break;
+																	}
+																}
+															}
+
+															?>
+															<td>
+																<div class="ui form">
+																	<div class="inline field">
+																		<input class="<?= $j ?>" type="text" maxlength="2" value="<?= $val ?>">
+																	</div>
+																</div>
+															</td>
+															<?
+														}
+
+														if ($legend)
+														{
+															foreach ($legend as $symbol)
+															{
+																$pointer = urlencode($symbol->legend_letter);
+
+																if (!$pointer)
+																{
+																	$pointer = 'null';
+																}
+
+																?><td class="legend" id="legend-<?= $i ?>-<?= $pointer ?>"></td><?
+															}
+
+															?><td class="legend total" id="legend-<?= $i ?>-total"></td><?
+														}
+													?>
+												</tr>
+												<?
 											}
 										}
 									?>
+
+									<tr id="generated-bottom" class="no-bottom">
+										<td colspan="53" class="no-border"></td>
+
+										<?
+											if ($legend)
+											{
+												foreach ($legend as $symbol)
+												{
+													$character = urlencode($symbol->legend_letter);
+
+													if (!$character)
+													{
+														$character = 'null';
+													}
+
+													?><td class="total" id="total-<?= $character ?>"></td><?
+												}
+											}
+
+										?>
+
+									</tr>
 								</table>
 
 								<br />
 
 								<div class="ui icon buttons constructor">
-									<div class="ui button" onclick="calendar_char = ''"><i class="align icon eraser"></i></div>
-
 									<?
-										$legend = calendar_legend::get();
-
 										if ($legend)
 										{
 											foreach ($legend as $item)
@@ -494,6 +555,10 @@ class template_reports_edit
 											}
 										}
 									?>
+								</div>
+
+								<div class="ui icon buttons constructor">
+									<div class="ui button" onclick="calendar_char = ''"><i class="align icon eraser"></i></div>
 								</div>
 
 								<script>
@@ -507,6 +572,143 @@ class template_reports_edit
 										mouse_selection();
 									});
 
+									$(function () {
+										calendar_recount();
+									});
+
+
+									function symbols()
+									{
+										return [<?
+										if ($legend)
+										{
+											$array = null;
+
+											foreach ($legend as $symbol)
+											{
+												$character = urlencode($symbol->legend_letter);
+
+												if (!$character)
+												{
+													$character = 'null';
+												}
+
+												$array[] = "'" . $character . "'";
+											}
+
+											echo implode(',', $array);
+										}
+									?>];
+									}
+
+									function calendar_recount()
+									{
+										var items = calendar.get();
+
+
+										var duration = $('#duration').val();
+
+
+										var counts = {};
+
+										for (var i = 1; i <= duration; i++)
+										{
+											counts[i] = {};
+										}
+
+
+
+
+
+										for (i = 1; i <= duration; i++)
+										{
+											var characters = symbols();
+
+											for (var k = 0; k < characters.length; k++)
+											{
+												counts[i][characters[k]] = 0;
+											}
+
+											counts['total'] = {};
+
+											for (k = 0; k < characters.length; k++)
+											{
+												counts['total'][characters[k]] = 0;
+											}
+
+											counts['total']['null'] = 0;
+										}
+
+
+										for (var j = 0; j < items.length; j++)
+										{
+											var item = items[j];
+											var item_year = item[0];
+											var item_char = encodeURIComponent(item[2]);
+
+											if (typeof item[2] == 'undefined')
+											{
+												continue;
+											}
+
+
+											if (typeof counts[item_year][item_char] == 'undefined')
+											{
+												counts[item_year][item_char] = 0;
+											}
+
+											counts[item_year][item_char] += 1;
+
+											counts['total'][item_char] += 1;
+										}
+
+										if (counts)
+										{
+											for (i = 1; i <= duration; i++)
+											{
+												var year = counts[i];
+
+
+
+												var empty = 52;
+
+												for (var property in year) {
+													if (year.hasOwnProperty(property)) {
+
+														$('[id="legend-' + i + '-' + property + '"]').html(format(year[property]));
+
+														empty -= year[property];
+													}
+												}
+
+												$('[id="legend-' + i + '-null"]').html(format(empty));
+
+												$('[id="legend-' + i + '-total"]').html(format(52 - empty));
+
+												counts['total']['null'] += empty;
+											}
+
+											for (var char in counts['total']) {
+												if (counts['total'].hasOwnProperty(char)) {
+
+													$('[id="total-' + char + '"]').html(format(counts['total'][char]));
+												}
+											}
+
+//											$('[id="legend-' + i + '-null"]').html(format(empty));
+										}
+									}
+
+									function format(val)
+									{
+										if (val == 0)
+										{
+											return '<span class="empty">0</span>';
+										}
+
+										return val;
+									}
+
 									function mouse_selection()
 									{
 										var isMouseDown = false;
@@ -518,12 +720,16 @@ class template_reports_edit
 												$(this).addClass('highlighted');
 												$(this).find('input').val(calendar_char);
 
+												calendar_recount();
+
 												return false; // prevent text selection
 											})
 											.mouseover(function () {
 												if (isMouseDown) {
 													$(this).addClass('highlighted');
 													$(this).find('input').val(calendar_char);
+
+													calendar_recount();
 												}
 											});
 
@@ -542,20 +748,20 @@ class template_reports_edit
 					<div style="display: none">
 						<table>
 							<tr id="calendar-hidden">
-							<?
-								for ($i = 1; $i < 53; $i++)
-								{
-									?>
-									<td>
-										<div class="ui form">
-											<div class="inline field">
-												<input class="<?= $i ?>" type="text" maxlength="2">
+								<?
+									for ($i = 1; $i < 53; $i++)
+									{
+										?>
+										<td>
+											<div class="ui form">
+												<div class="inline field">
+													<input class="<?= $i ?>" type="text" maxlength="2">
+												</div>
 											</div>
-										</div>
-									</td>
-									<?
-								}
-							?>
+										</td>
+										<?
+									}
+								?>
 							</tr>
 						</table>
 					</div>
@@ -668,13 +874,38 @@ class template_reports_edit
 
 									for (var i = 1; i <= duration; i++)
 									{
-										$('#calendar table').append('<tr id="generated-' + i + '" class="generated"><td>' + rude.romanize(i) + '</td>' + row + '</tr>');
+										var advanced = '';
+
+
+										var characters = symbols();
+
+										for (var j = 0; j < characters.length; j++)
+										{
+											advanced += '<td class="legend" id="legend-' + i + '-' + characters[j] + '"></td>';
+										}
+
+										advanced += '<td class="legend total" id="legend-' + i + '-total"></td>';
+
+
+										$('#calendar table').append('<tr id="generated-' + i + '" class="generated"><td>' + rude.romanize(i) + '</td>' + row + advanced + '</tr>');
 									}
+
+
+									var advanced_row = '';
+
+									for (j = 0; j < symbols().length; j++)
+									{
+										advanced_row += '<td class="total" id="total-' + symbols()[j] + '"></td>';
+									}
+
+									$('#calendar table').append('<tr id="generated-bottom" class="no-bottom"><td colspan="53" class="no-border">' + advanced_row + '</td>');
 								}
 
 								calendar.duration = duration;
 
 								mouse_selection();
+
+								calendar_recount();
 							},
 
 							popup: function()
@@ -695,7 +926,10 @@ class template_reports_edit
 							{
 								var result = [];
 
-								for (var i = 1; i <= $('#duration').val(); i++)
+
+								var duration = $('#duration').val();
+
+								for (var i = 1; i <= duration; i++)
 								{
 									var selector = '#generated-' + i;
 

@@ -36,7 +36,11 @@ class ajax_registration
 		}
 
 
+<<<<<<< HEAD
 		$user_id = users::add($username, $password,RUDE_ROLE_USER);
+=======
+		$user_id = users::add($username, $password, $role_id);
+>>>>>>> 8ae2a1b2399f3d7e639e25d2734d4338f285f613
 
 		if (!$user_id)
 		{

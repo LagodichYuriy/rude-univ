@@ -1,3 +1,9 @@
+function debug(variable)
+{
+	console.log(variable);
+}
+
+
 //http://stackoverflow.com/questions/881515/javascript-namespace-declaration
 
 var rude =
