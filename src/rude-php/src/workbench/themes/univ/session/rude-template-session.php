@@ -32,6 +32,8 @@ class template_session
 
 		template_session::set_user_id($user->id);
 		template_session::set_user_name($user->name);
+		$setting_popup = settings::get_popup($user->id);
+		template_session::set_use_popup($setting_popup->value);
 
 
 		switch ($user->role_id)
@@ -74,6 +76,11 @@ class template_session
 	public static function set_user_name($username)
 	{
 		session::set(RUDE_SESSION_USER_NAME, $username);
+	}
+
+	public static function set_use_popup($setting_value)
+	{
+		session::set(RUDE_SESSION_USER_SETTING_POPUP, $setting_value);
 	}
 
 	public static function set_admin()      { session::set(RUDE_SESSION_IS_ADMIN,      true); }

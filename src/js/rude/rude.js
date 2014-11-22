@@ -156,6 +156,14 @@ var rude =
 				});
 			},
 
+			checkboxes: function()
+			{
+				$(function ()
+				{
+					$('.ui.checkbox').checkbox();
+				});
+			},
+
 			buttons: function()
 			{
 				$(function ()

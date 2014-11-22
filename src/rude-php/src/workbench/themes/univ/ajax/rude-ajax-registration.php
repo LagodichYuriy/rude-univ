@@ -8,7 +8,7 @@ class ajax_registration
 	{
 		$username = get('username');
 		$password = get('password');
-		$role_id = get('role_id');
+		//$role_id = get('role_id');
 
 
 
@@ -36,14 +36,18 @@ class ajax_registration
 		}
 
 
-		$user_id = users::add($username, $password, $role_id);
+
+		
+
+		$user_id = users::add($username, $password, RUDE_ROLE_USER);
+
 
 		if (!$user_id)
 		{
 			exit('Произошла непредвиденная ошибка. Пожалуйста, обратитесь к администратору сайта и расскажите после каких действий вы увидели данное сообщение.');
 		}
 
-
+		settings::add($user_id);
 		template_session::login($user_id);
 	}
 }
