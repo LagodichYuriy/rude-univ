@@ -9,27 +9,69 @@ class items
 {
 	/**
 	 * @en Get the first element of an array
-	 * @ru Возвращает первый элемент массива
+	 * @ru Возвращает первый (первые) элементы массива
 	 *
 	 * @param array $array
+	 * @param int $n
 	 *
 	 * @return mixed
 	 */
-	public static function first($array)
+	public static function first($array, $n = 1)
 	{
+		if ($n != 1)
+		{
+			$i = 1;
+
+			$buffer = null;
+
+			foreach ($array as $item)
+			{
+				$buffer[] = $item;
+
+				if ($i++ >= $n)
+				{
+					break;
+				}
+			}
+
+			return $buffer;
+		}
+
 		return reset($array);
 	}
 
 	/**
 	 * @en Get the last element of an array
-	 * @ru Возвращает последний элемент массива
+	 * @ru Возвращает последний (последние) элементы массива
 	 *
 	 * @param array $array
+	 * @param int $n
 	 *
 	 * @return mixed
 	 */
-	public static function last($array)
+	public static function last($array, $n = 1)
 	{
+		if ($n != 1)
+		{
+			$i = 1;
+
+			$buffer = null;
+
+			$array = array_reverse($array);
+
+			foreach ($array as $item)
+			{
+				$buffer[] = $item;
+
+				if ($i++ >= $n)
+				{
+					break;
+				}
+			}
+
+			return $buffer;
+		}
+
 		return end($array);
 	}
 

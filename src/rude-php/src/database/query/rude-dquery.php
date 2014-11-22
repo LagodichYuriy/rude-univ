@@ -115,5 +115,10 @@ class dquery
 	{
 		return $this->database->escape($var);
 	}
+
+	public function affected()
+	{
+		return $this->database->affected();
+	}
 }
 

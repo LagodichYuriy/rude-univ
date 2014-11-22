@@ -221,20 +221,25 @@ class query
 		$this->field_list[] = $this->escape($db_table) . '.*' . PHP_EOL;
 	}
 
-	public function join($table, $field, $field_equals = false)
+	public function join($table, $field, $field_equals = false, $target_table = null)
 	{
 		if ($field_equals === false)
 		{
 			$field_equals = $field;
 		}
 
+		if ($target_table === null)
+		{
+			$target_table = $this->from_table;
+		}
+
 		$this->left_join_tables[] = $table;
-		$this->left_join_list[] = $table . ' ON ' . $this->from_table . '.' . $field . ' = ' . $table . '.' . $field_equals;
+		$this->left_join_list[] = $table . ' ON ' . $target_table . '.' . $field . ' = ' . $table . '.' . $field_equals;
 	}
 
-	public function left_join($table, $field, $field_equals = false)
+	public function left_join($table, $field, $field_equals = false, $target_table = null)
 	{
-		$this->join($table, $field, $field_equals);
+		$this->join($table, $field, $field_equals, $target_table);
 	}
 
 	public function right_join($table, $field, $field_equals = false)
@@ -334,7 +339,20 @@ class query
 	{
 		$where = $this->escape($where);
 
-		if (is_string($val))
+
+		if ($val === true)
+		{
+			$this->where_list[] = $where . " != 'TRUE'";
+		}
+		else if ($val === false)
+		{
+			$this->where_list[] = $where . " != 'FALSE'";
+		}
+		else if ($val === null)
+		{
+			$this->where_list[] = $where;
+		}
+		else if (is_string($val))
 		{
 			$this->where_list[] = $where . " != '" . $this->escape($val) . "'";
 		}
@@ -587,12 +605,17 @@ class query
 	 */
 	public function sql_left_join()
 	{
+		$result = '';
+
 		if (!empty($this->left_join_list))
 		{
-			return 'LEFT JOIN' . PHP_EOL . '  ' . implode(PHP_EOL, $this->left_join_list) . PHP_EOL;
+			foreach ($this->left_join_list as $join)
+			{
+				$result .= 'LEFT JOIN' . PHP_EOL . '  ' . $join . PHP_EOL;
+			}
 		}
 
-		return '';
+		return $result;
 	}
 
 	/**

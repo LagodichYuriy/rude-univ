@@ -2,11 +2,11 @@
 
 namespace rude;
 
-class users_roles
+class disciplines
 {
 	public static function get($id = null)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_USERS_ROLES);
+		$q = new query(RUDE_DATABASE_TABLE_DISCIPLINES);
 
 		if ($id !== null)
 		{
@@ -21,12 +21,11 @@ class users_roles
 		return $q->get_object_list();
 	}
 
-
 	public static function remove($id)
 	{
 		if (static::is_exists($id))
 		{
-			$q = new dquery(RUDE_DATABASE_TABLE_USERS_ROLES);
+			$q = new dquery(RUDE_DATABASE_TABLE_DISCIPLINES);
 			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 			$q->query();
 
@@ -46,11 +45,12 @@ class users_roles
 		return false;
 	}
 
-	public static function get_by_name($name)
+	public static function add($name)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_USERS_ROLES);
-		$q->where(RUDE_DATABASE_FIELD_NAME, $name);
+		$q = new cquery(RUDE_DATABASE_TABLE_DISCIPLINES);
+		$q->add(RUDE_DATABASE_FIELD_NAME, $name);
 		$q->query();
-		return $q->get_object();
+
+		return true;
 	}
 }

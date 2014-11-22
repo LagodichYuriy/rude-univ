@@ -35,6 +35,19 @@ class uquery
 
 	public function update($key, $val)
 	{
+		if ($val === null)
+		{
+			return;
+		}
+		else if ($val === true)
+		{
+			$val = 'TRUE';
+		}
+		else if ($val === false)
+		{
+			$val = 'FALSE';
+		}
+
 		$this->update_fields[] = array($this->escape($key), $this->escape($val));
 	}
 
@@ -145,5 +158,10 @@ class uquery
 	public function escape($var)
 	{
 		return $this->database->escape($var);
+	}
+
+	public function affected()
+	{
+		return $this->database->affected();
 	}
 }

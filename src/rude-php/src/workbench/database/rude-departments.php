@@ -29,7 +29,7 @@ class departments
 			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 			$q->query();
 
-			return true;
+			return $q->affected();
 		}
 
 		return false;

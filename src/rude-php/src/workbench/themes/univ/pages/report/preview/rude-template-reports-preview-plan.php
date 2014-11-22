@@ -21,12 +21,12 @@ class template_reports_preview_plan
 				</tr>
 
 				<tr>
-					<td rowspan="3" class="<!--rotate-270-->">Экзаменов</td>
-					<td rowspan="3"></td>
-					<td rowspan="3"></td>
-					<td rowspan="3"></td>
-					<td rowspan="3"></td>
-					<td rowspan="3"></td>
+					<td rowspan="3" class="rotate-box"><div class="rotate-270">Экзаменов</div></td>
+					<td rowspan="3" class="rotate-box"><div class="rotate-270">Зачётов</div></td>
+					<td rowspan="3" class="rotate-box"><div class="rotate-270">Курсовых проектов</div></td>
+					<td rowspan="3" class="rotate-box"><div class="rotate-270">Расчётных работ</div></td>
+					<td rowspan="3" class="rotate-box"><div class="rotate-270">Типовых расчётов / контрольных</div></td>
+					<td rowspan="3" class="rotate-box"><div class="rotate-270">Всего</div></td>
 
 					<td colspan="3">Из них</td>
 
@@ -40,9 +40,9 @@ class template_reports_preview_plan
 				</tr>
 
 				<tr>
-					<td rowspan="2"></td>
-					<td rowspan="2"></td>
-					<td rowspan="2"></td>
+					<td rowspan="2" class="rotate-box medium"><div class="rotate-270">Лекции</div></td>
+					<td rowspan="2" class="rotate-box medium"><div class="rotate-270">Лабораторные</div></td>
+					<td rowspan="2" class="rotate-box medium"><div class="rotate-270">Семинары</div></td>
 
 					<td colspan="3"><div>I семестр</div><div>17 недель</div></td>
 					<td colspan="3"><div>II семестр</div><div>17 недель</div></td>
@@ -55,6 +55,7 @@ class template_reports_preview_plan
 					<td colspan="3"><div>IX семестр</div><div>16 недель</div></td>
 					<td colspan="3"><div>X семестр</div><div>7 недель</div></td>
 				</tr>
+
 				<tr>
 					<td></td>
 					<td></td>

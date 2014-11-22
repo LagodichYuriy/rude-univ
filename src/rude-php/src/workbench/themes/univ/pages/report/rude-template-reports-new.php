@@ -507,18 +507,18 @@ class template_reports_new
 			<table>
 				<tr id="calendar-hidden">
 					<?
-					for ($i = 1; $i < 53; $i++)
-					{
-						?>
-						<td>
-							<div class="ui form">
-								<div class="inline field">
-									<input class="<?= $i ?>" type="text" maxlength="2">
+						for ($i = 1; $i < 53; $i++)
+						{
+							?>
+							<td>
+								<div class="ui form">
+									<div class="inline field">
+										<input class="<?= $i ?>" type="text" maxlength="2">
+									</div>
 								</div>
-							</div>
-						</td>
-					<?
-					}
+							</td>
+							<?
+						}
 					?>
 				</tr>
 			</table>

@@ -40,6 +40,8 @@ class calendar_items
 		$q = new dquery(RUDE_DATABASE_TABLE_CALENDAR_ITEMS);
 		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
 		$q->query();
+
+		return $q->affected();
 	}
 
 	public static function is_exists($report_id)

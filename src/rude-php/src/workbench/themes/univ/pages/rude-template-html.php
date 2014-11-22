@@ -45,6 +45,9 @@ class template_html
 			<!-- jQuery [JS]-->
 			<?= html::js(RUDE_URL_SRC . '/js/jquery/jquery-1.11.1.min.js') ?>
 
+			<!-- jQuery plugins [JS]-->
+			<?= html::js(RUDE_URL_SRC . '/js/html5sortable/jquery.sortable.js') ?>
+
 			<!-- semanic-ui [CSS]-->
 			<?= html::css(RUDE_URL_SRC . '/js/semantic/packaged/css/semantic.min.css') ?>
 			<!-- semanic-ui [JS]-->
@@ -52,6 +55,8 @@ class template_html
 
 			<!-- rude [JS] -->
 			<?= html::js(RUDE_URL_SRC . '/js/rude/rude.js') ?>
+			<?= html::js(RUDE_URL_SRC . '/js/rude/rude-education.js') ?>
+			<?= html::js(RUDE_URL_SRC . '/js/rude/rude-dimmer.js') ?>
 		</head>
 		<?
 	}
@@ -63,6 +68,17 @@ class template_html
 			<a href="<?= RUDE_URL_SITE ?>">
 				<img src="<?= RUDE_URL_SRC . '/img/logo.png' ?>"/>
 			</a>
+		</div>
+		<?
+	}
+
+	public static function dimmer()
+	{
+		?>
+		<div id="dimmer" class="ui page dimmer">
+			<div class="content">
+				<div class="center"><i class="icon loading"></i></div>
+			</div>
 		</div>
 		<?
 	}
@@ -306,6 +322,7 @@ class template_html
 
 	public static function sidebar()
 	{
+		template_html::dimmer();
 		template_html::registration();
 		template_html::authorization();
 		template_html::access_violation();

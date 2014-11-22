@@ -120,19 +120,23 @@ define('RUDE_TIME_YEAR',   946080000); # 1 year   = 946080000 seconds
 #                         database section                         #
 ####################################################################
 
-define('RUDE_DATABASE_TABLE_CALENDAR_ITEMS',         RUDE_DATABASE_PREFIX . 'calendar_items');
-define('RUDE_DATABASE_TABLE_CALENDAR_ITEMS_PREVIEW', RUDE_DATABASE_PREFIX . 'calendar_items_preview');
-define('RUDE_DATABASE_TABLE_DEPARTMENTS',            RUDE_DATABASE_PREFIX . 'departments');
-define('RUDE_DATABASE_TABLE_FACULTIES',              RUDE_DATABASE_PREFIX . 'faculties');
-define('RUDE_DATABASE_TABLE_QUALIFICATIONS',         RUDE_DATABASE_PREFIX . 'qualifications');
-define('RUDE_DATABASE_TABLE_REPORTS',                RUDE_DATABASE_PREFIX . 'reports');
-define('RUDE_DATABASE_TABLE_REPORTS_PREVIEW',        RUDE_DATABASE_PREFIX . 'reports_preview');
-define('RUDE_DATABASE_TABLE_USERS_ROLES',            RUDE_DATABASE_PREFIX . 'users_roles');
-define('RUDE_DATABASE_TABLE_SPECIALTIES',            RUDE_DATABASE_PREFIX . 'specialties');
-define('RUDE_DATABASE_TABLE_TRAINING_FORM',          RUDE_DATABASE_PREFIX . 'training_forms');
-define('RUDE_DATABASE_TABLE_SPECIALIZATIONS',        RUDE_DATABASE_PREFIX . 'specializations');
-define('RUDE_DATABASE_TABLE_USERS',                  RUDE_DATABASE_PREFIX . 'users');
-define('RUDE_DATABASE_TABLE_CALENDAR_LEGEND',        RUDE_DATABASE_PREFIX . 'calendar_legend');
+define('RUDE_DATABASE_TABLE_CALENDAR_ITEMS',           RUDE_DATABASE_PREFIX . 'calendar_items');
+define('RUDE_DATABASE_TABLE_CALENDAR_ITEMS_PREVIEW',   RUDE_DATABASE_PREFIX . 'calendar_items_preview');
+define('RUDE_DATABASE_TABLE_DEPARTMENTS',              RUDE_DATABASE_PREFIX . 'departments');
+define('RUDE_DATABASE_TABLE_FACULTIES',                RUDE_DATABASE_PREFIX . 'faculties');
+define('RUDE_DATABASE_TABLE_QUALIFICATIONS',           RUDE_DATABASE_PREFIX . 'qualifications');
+define('RUDE_DATABASE_TABLE_REPORTS',                  RUDE_DATABASE_PREFIX . 'reports');
+define('RUDE_DATABASE_TABLE_REPORTS_PREVIEW',          RUDE_DATABASE_PREFIX . 'reports_preview');
+define('RUDE_DATABASE_TABLE_USERS_ROLES',              RUDE_DATABASE_PREFIX . 'users_roles');
+define('RUDE_DATABASE_TABLE_SPECIALTIES',              RUDE_DATABASE_PREFIX . 'specialties');
+define('RUDE_DATABASE_TABLE_TRAINING_FORM',            RUDE_DATABASE_PREFIX . 'training_forms');
+define('RUDE_DATABASE_TABLE_SPECIALIZATIONS',          RUDE_DATABASE_PREFIX . 'specializations');
+define('RUDE_DATABASE_TABLE_USERS',                    RUDE_DATABASE_PREFIX . 'users');
+define('RUDE_DATABASE_TABLE_CALENDAR_LEGEND',          RUDE_DATABASE_PREFIX . 'calendar_legend');
+define('RUDE_DATABASE_TABLE_DISCIPLINES',              RUDE_DATABASE_PREFIX . 'disciplines');
+define('RUDE_DATABASE_TABLE_REPORTS_CATEGORIES',       RUDE_DATABASE_PREFIX . 'reports_categories');
+define('RUDE_DATABASE_TABLE_REPORTS_CATEGORIES_ITEMS', RUDE_DATABASE_PREFIX . 'reports_categories_items');
+
 
 
 define('RUDE_DATABASE_FIELD_ID',                  'id');
@@ -156,6 +160,8 @@ define('RUDE_DATABASE_FIELD_COLUMN',              'column');
 define('RUDE_DATABASE_FIELD_REPORT_ID',           'report_id');
 define('RUDE_DATABASE_FIELD_LEGEND_LETTER',       'legend_letter');
 define('RUDE_DATABASE_FIELD_LEGEND_DESCRIPTION',  'description');
+define('RUDE_DATABASE_FIELD_ORDER',               'order');
+define('RUDE_DATABASE_FIELD_DISCIPLINE_ID',       'discipline_id');
 
 ####################################################################
 ####################################################################

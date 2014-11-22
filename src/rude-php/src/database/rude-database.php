@@ -73,6 +73,11 @@ class database
 		return $this->mysqli->real_escape_string($var);
 	}
 
+	public function affected()
+	{
+		return $this->mysqli->affected_rows;
+	}
+
 	public function insert_id()
 	{
 		return $this->mysqli->insert_id;
