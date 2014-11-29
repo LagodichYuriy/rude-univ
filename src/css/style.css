@@ -417,6 +417,34 @@ pre code.hljs.php .ui.label
 	padding-bottom: 1em;
 }
 
+#education-list .selection.dropdown
+{
+	width: 80%;
+	border-radius: 0!important;
+	padding: 0.25% 0.5%;
+}
+
+#education-list li .tip .button
+{
+	height: 23px;
+	border-radius: 0;
+	margin-top: -1px;
+	padding-top: 6px;
+	width: 18%;
+	float: right;
+}
+
+#education-list li .tip li:last-child
+{
+	margin-bottom: 1em;
+}
+
+#education-list .selection.dropdown .icon.dropdown
+{
+	right: 8px;
+	position: absolute;
+}
+
 #education ul
 {
 	padding: 3px 5px;
@@ -434,9 +462,30 @@ pre code.hljs.php .ui.label
 	cursor: pointer;
 }
 
+/*#education-list ul .icon.angle.up:first-child*/
+/*{*/
+	/*opacity: .3;*/
+
+	/*cursor: default!important;*/
+/*}*/
+
+/*#education-list ul .icon.angle.down:last-child*/
+/*{*/
+	/*opacity: .3;*/
+
+	/*cursor: default!important;*/
+/*}*/
+
 #education-list li .icon.right.delete
 {
 	float: right;
+}
+
+#education-list li .icon.angle
+{
+	float: right;
+
+	cursor: pointer!important;
 }
 
 #education-list li .icon.triangle

@@ -1,6 +1,7 @@
 var education =
 {
-	selector: '#education-list',
+	selector:    '#education-list',
+	selector_ul: '#education-ul',
 
 	disciplines:
 	{
@@ -13,34 +14,7 @@ var education =
 
 		get: function()
 		{
-			if (education.disciplines.database !== null)
-			{
-				return education.disciplines.database;
-			}
-
-			$.ajax(
-			{
-				url: '/?page=reports-edit&task=update&ajax=true',
-
-				data:
-				{
-					report_id:           report_id,
-
-					year:                report.year,
-					duration:            report.duration,
-					rector:              report.rector,
-					registration_number: report.registration_number,
-					training_form_id:    report.training_form_id,
-					qualification_id:    report.qualification_id,
-					specialty_id:        report.specialty_id,
-					specialization_id:   report.specialization_id
-				},
-
-				success: function (data)
-				{
-					console.log(data);
-				}
-			});
+			return education.disciplines.database;
 		}
 	},
 
@@ -59,24 +33,70 @@ var education =
 		subclass += '		<i class="delete icon right" onclick="$(this).closest(\'li\').fadeToggle(\'slow\', function() { $(this).closest(\'li\').remove(); buttons.update(); });"></i>';
 		subclass += '	</div>';
 
-		subclass += '   <div class="tip" style="display: none;"></div>';
+		subclass += '   <div class="tip">';
+
+
+		subclass += '		<ul></ul>';
+
+
+		subclass += '		<div class="ui selection dropdown">';
+		subclass += '			<input type="hidden" name="selected">';
+		subclass += '			<div class="default text">Выберите наименование</div>';
+		subclass += '			<i class="dropdown icon"></i>';
+
+		subclass += '			<div class="menu">';
+
+		for (var i = 0; i < education.disciplines.database.length; i++)
+		{
+			var subclass_type = education.disciplines.database[i][0];
+			var subclass_name = education.disciplines.database[i][1];
+			var subclass_id   = education.disciplines.database[i][2];
+
+			subclass += '			<div class="item" data-type="' + subclass_type + '" data-name="' + subclass_name + '" data-id="' + subclass_id + '" data-value="' + i + '">' + education.disciplines.database[i][1] + '</div>';
+		}
+
+		subclass += '			</div>';
+		subclass += '		</div>';
+
+		subclass += '		<div class="item ui button green" onclick="education.tip.add(this)">добавить</div>';
+
+		subclass += '	</div>';
 
 		subclass += '</li>';
 
 
-		$(education.selector + ' ul').append(subclass);
+		$(education.selector_ul).append(subclass);
 
 
 		education.update();
+
+		rude.semantic.init.dropdown();
 	},
 
 	update: function() // update sortable list
 	{
-		$(education.selector + ' ul').sortable();
+		$(education.selector_ul).sortable();
 	},
 
 	tip:
 	{
+		add: function(selector)
+		{
+			var selector_tip = $(selector).closest('.tip');
+
+			var selector_item = selector_tip.find('.item.active');
+
+			var type = selector_item.attr('data-type');
+			var name = selector_item.attr('data-name');
+			var id   = selector_item.attr('data-id');
+
+			console.log(type);
+			console.log(name);
+			console.log(id);
+
+			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '">' + name + '<i class="icon angle up" onclick="$(this).parent().insertBefore($(this).parent().prev());"></i> <i class="icon angle down" onclick="$(this).parent().insertAfter($(this).parent().next());"></i></li>');
+		},
+
 		toggle: function(selector)
 		{
 			if (!$(selector).find('.tip').is(':empty'))

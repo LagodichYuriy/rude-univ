@@ -233,7 +233,11 @@ class template_reports_edit
 
 
 					<div id="education-list">
-						<ul>
+						<div class="ui form">
+
+						</div>
+
+						<ul id="education-ul">
 
 						</ul>
 					</div>
@@ -241,14 +245,42 @@ class template_reports_edit
 					<script>
 						<?
 							$disciplines = disciplines::get();
+							$directions = directions::get();
 
-							debug($disciplines);
+
+							$database = null;
+
+							if ($disciplines)
+							{
+								foreach ($disciplines as $discipline)
+								{
+									$database .= '["discipline", "' . $discipline->name . '", ' . $discipline->id . '],';
+								}
+
+								$database = char::remove_last($database);
+							}
+
+
+							if ($directions)
+							{
+								if ($database)
+								{
+									$database .= ',';
+								}
+
+								foreach ($directions as $direction)
+								{
+									$database .= '["direction", "' . $direction->name . '", ' . $direction->id . '],';
+								}
+
+								$database = char::remove_last($database);
+							}
 						?>
 
-						var database = ;
+						var database = [<?= $database ?>];
 
 						$(function() {
-							education.disciplines.set();
+							education.disciplines.set(database);
 						});
 					</script>
 
@@ -261,7 +293,7 @@ class template_reports_edit
 					<div class="ui green submit button small" onclick="update();">Сохранить</div>
 					<a href="#" target="_blank" id="button-preview" class="ui blue submit button small" onclick="save(1); return false;">Предпросмотр</a>
 					<a href="#" target="_blank" id="button-popup" class="ui blue submit button small" onclick="calendar.popup(); return false;">Календарь</a>
-					<a href="#" target="_blank" id="button-education" class="ui blue submit button small" onclick="$('#education').modal('show'); return false;">Добавить цикл учебного процесса</a>
+					<a href="#" target="_blank" id="button-education" class="ui blue submit button small" onclick="$('#education').modal('show'); return false;">Добавить цикл</a>
 
 					<div id="education" class="ui modal large">
 						<div class="ui form segment">
