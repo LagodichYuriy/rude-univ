@@ -306,6 +306,8 @@ class template_reports_edit
 						</div>
 					</div>
 
+					<? static::filler() ?>
+
 					<? static::calendar() ?>
 
 				</div>
@@ -313,6 +315,21 @@ class template_reports_edit
 		</div>
 		<?
 	}
+
+	public function filler()
+	{ ?>
+		<div class="ui dimmer page hidden">
+			<div id="filler-modal" class="ui modal large transition hidden">
+				<i class="close icon"></i>
+				<div class="header">
+					Наполнение цикла
+				</div>
+				<div class="content">
+
+				</div>
+			</div>
+		</div>
+	<?}
 
 	public function calendar()
 	{

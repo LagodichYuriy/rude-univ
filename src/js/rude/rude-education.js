@@ -18,19 +18,45 @@ var education =
 		}
 	},
 
+	filler:
+	{
+		popup: function(disciplines)
+		{
+			$('.content').html('');
+			for (var i=0; i<disciplines.length; i++){
+				$('.content').append(disciplines[i]);
+			}
+			$('#filler-modal').modal('show');
+
+
+		},
+		get: function(selector)
+		{
+			var result = [];
+
+			$(selector).closest('.disciplines').find('li').each(function(){
+				result.push($(this).attr('data-name'));
+			});
+
+			return result;
+		}
+	},
+
 	add: function(name)
 	{
 		var subclass = '';
 
 
-		subclass += '<li>';
+		subclass += '<li class="disciplines">';
 
-		subclass += '	<div class="base">';
+		subclass += '<div class="actions">';
+		subclass += '	<div class="ui button red tiny" onclick="$(this).closest(\'li\').fadeToggle(\'slow\', function() { $(this).closest(\'li\').remove(); buttons.update(); });">Удалить</div><div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this));">Заполнить</div>';
+		subclass += '</div>';
+
+		subclass += '	<div class="base" onclick="$(this).parent(\'li\').find(\'.tip\').toggle(\'slow\'); $(this).find(\'i.icon.triangle\').toggleClass(\'down\').toggleClass(\'right\')">';
 		subclass += '		<i class="icon triangle down"></i>';
 
 		subclass += '		<span class="description">' + name + '</span>';
-
-		subclass += '		<i class="delete icon right" onclick="$(this).closest(\'li\').fadeToggle(\'slow\', function() { $(this).closest(\'li\').remove(); buttons.update(); });"></i>';
 		subclass += '	</div>';
 
 		subclass += '   <div class="tip">';
@@ -68,14 +94,14 @@ var education =
 		$(education.selector_ul).append(subclass);
 
 
-		education.update();
+//		education.update();
 
 		rude.semantic.init.dropdown();
 	},
 
 	update: function() // update sortable list
 	{
-		$(education.selector_ul).sortable();
+//		$(education.selector_ul).sortable();
 	},
 
 	tip:
@@ -94,7 +120,9 @@ var education =
 			console.log(name);
 			console.log(id);
 
-			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '">' + name + '<i class="icon angle up" onclick="$(this).parent().insertBefore($(this).parent().prev());"></i> <i class="icon angle down" onclick="$(this).parent().insertAfter($(this).parent().next());"></i></li>');
+			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '">' + name + '<i class="icon angle up" onclick="$(this).parent().insertBefore($(this).parent().prev());"></i> <i class="icon angle down" onclick="$(this).parent().insertAfter($(this).parent().next());"></i></li>').sortable();
+
+
 		},
 
 		toggle: function(selector)
