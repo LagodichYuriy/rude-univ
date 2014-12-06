@@ -65,6 +65,11 @@ class template_reports_edit
 				                                         get('specialization_id')));
 				break;
 
+			case 'add_education': education::add(get('report_id'),get('name'));
+				break;
+			case 'remove_education': education::remove(get('id'));
+				break;
+
 			default:
 				$status = false;
 				break;
@@ -238,11 +243,69 @@ class template_reports_edit
 						</div>
 
 						<ul id="education-ul">
+							<? $educations = education::get_by_report(get('report_id'));?>
+							<? foreach ($educations as $education)
+							{
+							?>
+								<li class="disciplines">
+									<div class="actions">
+										<div class="ui button red tiny" onclick=" remove_education(this,<?=$education->id?>);buttons.update();">Удалить</div>
+										<div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this));">Заполнить</div>
+									</div>
+									<div class="base" onclick="$(this).parent('li').find('.tip').toggle('slow'); $(this).find('i.icon.triangle').toggleClass('down').toggleClass('right')">
+										<i class="icon triangle down"></i>
+										<span class="description"><?= $education->name ?></span>
+									</div>
+									<div class="tip">
+										<ul>
 
+										</ul>
+										<div class="ui selection dropdown">
+											<input type="hidden" name="selected">
+											<div class="default text">Выберите наименование</div>
+											<i class="dropdown icon"></i>
+											<div class="menu">
+												<?
+												$disciplines = disciplines::get();
+												foreach($disciplines as $discipline)
+												{
+													?>
+													<div class="item" data-type="discipline" data-name="<?=$discipline->name?>"
+														 data-id="<?=$discipline->id?>"><?=$discipline->name?>
+													</div>
+												<?
+												}
+												?>
+
+												<?
+												$directions = directions::get();
+												foreach($directions as $direction)
+												{
+													?>
+													<div class="item" data-type="direction" data-name="<?=$direction->name?>"
+														 data-id="<?=$direction->id?>"><?=$direction->name?>
+													</div>
+												<?
+												}
+												?>
+
+											</div>
+										</div>
+										<div class="item ui button green" onclick="education.tip.add(this)">добавить</div>
+									</div>
+								</li>
+							<?
+							}
+							?>
 						</ul>
 					</div>
 
 					<script>
+						function remove_education(selector,id){
+							var report_id = <?=get('report_id')?>;
+							$.post('/?page=reports-edit&task=remove_education&report_id='+report_id+'&id='+id+'&ajax=true')
+								.done(function() { $(selector).closest('li').fadeToggle('slow', function() { $(selector).closest('li').remove();  } )});
+						}
 						<?
 							$disciplines = disciplines::get();
 							$directions = directions::get();
@@ -299,10 +362,16 @@ class template_reports_edit
 						<div class="ui form segment">
 							<div class="field">
 								<label>Наименование цикла</label>
-								<input id="education-new" type="text" placeholder="Цикл социально-гуманитарных дисциплин">
+								<input class="education-new" type="text" placeholder="Цикл социально-гуманитарных дисциплин">
 							</div>
 
-							<a href="#" class="ui blue submit button small" onclick="education.add($('#education-new').val()); $('#education').modal('hide'); $('#education-new').val(''); ">Добавить</a>
+							<a href="#" class="ui blue submit button small" onclick="education.add($('.education-new').val());
+							var name = $('.education-new').val();
+							$('.education-new').val('');
+							var report_id = <?=get('report_id')?>;
+							$.post('/?page=reports-edit&task=add_education&report_id='+report_id+'&name='+name+'&ajax=true')
+								.done(function() { $('#education').modal('hide'); rude.redirect('/?page=reports-edit&report_id='+report_id); }); return false;
+							">Добавить</a>
 						</div>
 					</div>
 

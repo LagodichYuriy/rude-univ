@@ -139,10 +139,11 @@ define('RUDE_DATABASE_TABLE_REPORTS_CATEGORIES',       RUDE_DATABASE_PREFIX . 'r
 define('RUDE_DATABASE_TABLE_REPORTS_CATEGORIES_ITEMS', RUDE_DATABASE_PREFIX . 'reports_categories_items');
 define('RUDE_DATABASE_TABLE_SETTINGS',                 RUDE_DATABASE_PREFIX . 'settings');
 define('RUDE_DATABASE_TABLE_DIRECTION',                RUDE_DATABASE_PREFIX . 'directions');
+define('RUDE_DATABASE_TABLE_EDUCATION',                RUDE_DATABASE_PREFIX . 'educations');
 
 
 define('RUDE_DATABASE_FIELD_ID',                  'id');
-define('RUDE_DATABASE_FIELD_USER_ID',                  'user_id');
+define('RUDE_DATABASE_FIELD_USER_ID',             'user_id');
 define('RUDE_DATABASE_FIELD_NAME',                'name');
 define('RUDE_DATABASE_FIELD_SHORTNAME',           'shortname');
 define('RUDE_DATABASE_FIELD_HASH',                'hash');
