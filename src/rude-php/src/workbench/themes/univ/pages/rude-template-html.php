@@ -47,6 +47,7 @@ class template_html
 
 			<!-- jQuery plugins [JS]-->
 			<?= html::js(RUDE_URL_SRC . '/js/html5sortable/jquery.sortable.js') ?>
+			<?= html::js(RUDE_URL_SRC . '/js/jqueryrotate/jQueryRotateCompressed.js') ?>
 
 			<!-- semanic-ui [CSS]-->
 			<?= html::css(RUDE_URL_SRC . '/js/semantic/packaged/css/semantic.min.css') ?>
