@@ -266,3 +266,20 @@ table
 	position: absolute;
 	left: -2.52cm;
 }
+
+#plan .names
+{
+	width: 7cm;
+}
+
+#plan .small
+{
+	width: 1cm;
+}
+
+
+
+.text-left
+{
+	text-align: left!important;
+}

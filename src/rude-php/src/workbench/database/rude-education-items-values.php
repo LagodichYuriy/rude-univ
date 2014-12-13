@@ -21,6 +21,17 @@ class education_items_values
 		return $q->get_object_list();
 	}
 
+	public static function get_by_education_item_id($education_id)
+	{
+		$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
+
+
+		$q->where('item_id', (int) $education_id);
+		$q->query();
+
+		return $q->get_object_list();
+	}
+
 	public static function get_by_order($education_id)
 	{
 		$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);

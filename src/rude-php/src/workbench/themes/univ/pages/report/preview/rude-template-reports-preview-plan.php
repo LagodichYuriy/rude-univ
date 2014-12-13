@@ -4,16 +4,16 @@ namespace rude;
 
 class template_reports_preview_plan
 {
-	public static function html()
+	public static function html($report)
 	{
 		?>
 		<table id="plan">
 			<tbody>
 				<tr>
-					<td rowspan="4">
+					<td rowspan="4" class="small">
 						№ <nobr>п/п</nobr>
 					</td>
-					<td rowspan="4">Название цикла, интегрированного модуля, учебной дисциплины, курсовой работы (проекта)</td>
+					<td rowspan="4" class="names">Название цикла, интегрированного модуля, учебной дисциплины, курсовой работы (проекта)</td>
 					<td rowspan="4">Кафедра</td>
 
 					<td rowspan="1" colspan="9"><div>Количество академических часов</div></td>
@@ -135,9 +135,55 @@ class template_reports_preview_plan
 					<td><b>43</b></td>
 				</tr>
 
-				<tr>
-					<td class="timetable-1"><b></b></td>
-				</tr>
+				<?
+					$i = 1;
+
+					$educations = education::get_by_report('2');
+
+					foreach ($educations as $education)
+					{
+						?><tr><td></td><td class="text-left"><i><?= $education->name ?></i></td><?
+
+						for ($j = 0; $j < 41; $j++)
+						{
+							?><td></td><?
+						}
+
+						?></tr><?
+
+
+						$items = education_items::get_by_order($education->id);
+
+						foreach ($items as $item)
+						{
+							?><tr><?
+							?><td><?= $i ?></td><?
+							?><td class="text-left"><?= $item->name ?></td><?
+
+
+							$vals = education_items_values::get_by_education_item_id($item->id);
+
+							for ($j = 0; $j < 41; $j++)
+							{
+								?><td><?
+
+								foreach ($vals as $val)
+								{
+									if ($val->col_num - 1 == $j)
+									{
+										echo $val->value;
+									}
+								}
+
+								?></td><?
+							}
+
+							?></tr><?
+
+							$i++;
+						}
+					}
+				?>
 			</tbody>
 		</table>
 		<?

@@ -62,7 +62,7 @@ class template_reports_preview
 	{
 		template_reports_preview_header::html($this->report);
 		template_reports_preview_calendar::html($this->report);
-		template_reports_preview_plan::html();
+		template_reports_preview_plan::html($this->report);
 
 
 	}

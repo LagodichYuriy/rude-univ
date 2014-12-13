@@ -21,6 +21,15 @@ class education
 		return $q->get_object_list();
 	}
 
+	public static function get_by_report_id($report_id)
+	{
+		$q = new query(RUDE_DATABASE_TABLE_EDUCATION);
+		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
+		$q->query();
+
+		return $q->get_object_list();
+	}
+
 	public static function get_by_report($report_id)
 	{
 		$q = new query(RUDE_DATABASE_TABLE_EDUCATION);
