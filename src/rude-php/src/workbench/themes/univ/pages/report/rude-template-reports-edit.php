@@ -65,11 +65,53 @@ class template_reports_edit
 				                                         get('specialization_id')));
 				break;
 
+			case 'save_education':
+				$data = get('data');
+
+				$item_id = get('item_id');
+
+				if (!$data or !$item_id)
+				{
+					return false;
+				}
+
+				$education_items = new education_items_values();
+				if ($education_items::is_exists($item_id))
+				{
+					$education_items::remove($item_id);
+				}
+
+
+				$y=0;
+				$id=$item_id[$y];
+
+				$col_num = 1;
+				foreach ($data as $item)
+				{
+
+					if ($item!=''){
+						$education_items::add($id, $item,$col_num);
+					}
+
+					if ($col_num==40){
+						$col_num=0;
+						$id = $item_id[$y+1];
+						$y++;
+
+					}
+					$col_num++;
+				}
+
+				//debug($data);
+
+				break;
+
 			case 'add_education': education::add(get('report_id'),get('name'));
 				break;
 			case 'remove_education': education::remove(get('id'));
 				break;
-
+			case 'add_education_item': education_items::add(get('education_id'),get('name'),get('order'));
+				break;
 			default:
 				$status = false;
 				break;
@@ -250,7 +292,7 @@ class template_reports_edit
 								<li class="disciplines">
 									<div class="actions">
 										<div class="ui button red tiny" onclick=" remove_education(this,<?=$education->id?>);buttons.update();">Удалить</div>
-										<div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this));">Заполнить</div>
+										<div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this),education.filler.getid(this),<?=get('report_id')?>);">Заполнить</div>
 									</div>
 									<div class="base" onclick="$(this).parent('li').find('.tip').toggle('slow'); $(this).find('i.icon.triangle').toggleClass('down').toggleClass('right')">
 										<i class="icon triangle down"></i>
@@ -258,7 +300,17 @@ class template_reports_edit
 									</div>
 									<div class="tip">
 										<ul>
-
+											<? $educations_items = education_items::get_by_order($education->id);?>
+											<? foreach ($educations_items as $item)
+												{
+												?>
+													<li data-type="undefined" data-name="<?=$item->name?>" data-id="<?=$item->id?>" draggable="true"><?=$item->name?>
+														<i class="icon angle up" onclick="$(this).parent().insertBefore($(this).parent().prev());"></i>
+														<i class="icon angle down" onclick="$(this).parent().insertAfter($(this).parent().next());"></i>
+													</li>
+												<?
+												}
+											?>
 										</ul>
 										<div class="ui selection dropdown">
 											<input type="hidden" name="selected">
@@ -291,7 +343,7 @@ class template_reports_edit
 
 											</div>
 										</div>
-										<div class="item ui button green" onclick="education.tip.add(this)">добавить</div>
+										<div class="item ui button green" onclick="add_education_item(<?=$education->id?>,this)">добавить</div>
 									</div>
 								</li>
 							<?
@@ -301,6 +353,14 @@ class template_reports_edit
 					</div>
 
 					<script>
+						function add_education_item(education_id,selector){
+
+							var order = $(".tip li").length+1;
+							var name = $(selector).closest('.tip').find('.item.active').attr('data-name');
+							var report_id = <?=get('report_id')?>;
+							$.post('/?page=reports-edit&task=add_education_item&report_id='+report_id+'&name='+name+'&education_id='+education_id+'&order='+order+'&ajax=true')
+								.done(function() { education.tip.add(selector)});
+						}
 						function remove_education(selector,id){
 							var report_id = <?=get('report_id')?>;
 							$.post('/?page=reports-edit&task=remove_education&report_id='+report_id+'&id='+id+'&ajax=true')

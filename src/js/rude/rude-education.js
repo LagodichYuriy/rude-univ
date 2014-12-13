@@ -21,14 +21,16 @@ var education =
 	filler:
 	{
 		database: null,
-		name: null,
+		id: null,
+		report_id: null,
 
-		popup: function(disciplines, name)
+		popup: function(disciplines, id,report_id)
 		{
 			education.filler.database = disciplines;
-			education.filler.name = name;
+			education.filler.id = id;
+			education.filler.report_id = report_id;
 
-			debug(name);
+			debug(disciplines);
 
 			education.filler.update();
 
@@ -141,16 +143,16 @@ var education =
 
 			for (var i = 0; i < education.filler.database.length; i++)
 			{
-				html += '<tr>';
+				html += '<tr id="item-'+i+'">';
 
 				html += '	<td>' + rude.romanize(i + 1) + '</td>';
 				html += '	<td>' + education.filler.database[i] + '</td>';
 
-				html += '	<td class="input department"><div class="ui form"><div class="inline field"><input class="20" type="text" maxlength="3" value=""></div></div></td>';
+				html += '	<td class="input item"><div class="ui form"><div class="inline field"><input class="20" type="text" maxlength="3" value=""></div></div></td>';
 
 				for (var j = 0; j < 39; j++)
 				{
-					html += '	<td class="input countable"><div class="ui form"><div class="inline field"><input onblur="education.filler.recount(this)" onkeyup="education.filler.recount(this)" class="20" type="text" maxlength="3" value=""></div></div></td>';
+					html += '	<td class="input item countable"><div class="ui form"><div class="inline field"><input onblur="education.filler.recount(this)" onkeyup="education.filler.recount(this)" class="20" type="text" maxlength="3" value=""></div></div></td>';
 				}
 
 				html += '</tr>';
@@ -185,11 +187,48 @@ var education =
 
 		save: function()
 		{
-			var disciplines = education.filler.database;
-			var name = education.filler.name;
 
-			var values = education.filler.recount();
+			var disciplines = education.filler.database;
+			var id = education.filler.id;
+			var report_id = education.filler.report_id;
+
+			var values = [];
+			var selector_table = $('input').closest('table');
+			selector_table.find('td.item input').each(function() {
+				values.push($(this).val());
+			});
+
+
+
+			debug(values);
+
+
+
+
+
+			$.ajax(
+				{
+					url: '/?page=reports-edit&task=save_education&ajax=true',
+
+					type: 'POST',
+
+					data:
+					{
+						data: values,
+						item_id: id,
+						report_id: report_id
+					},
+
+					success: function (data)
+					{
+						console.log(data);
+					}
+				});
+			//debug(disciplines);
+
 		},
+
+
 
 		recount: function(selector)
 		{
@@ -201,7 +240,7 @@ var education =
 					result.push($(this).val());
 			});
 
-			debug(result);
+
 
 			for (var i = 0; i < 39; i++)
 			{
@@ -243,6 +282,18 @@ var education =
 
 			$(selector).closest('.disciplines').find('li').each(function(){
 				result.push($(this).attr('data-name'));
+
+			});
+
+			return result;
+		},
+
+		getid: function(selector)
+		{
+			var result = [];
+
+			$(selector).closest('.disciplines').find('li').each(function(){
+				result.push($(this).attr('data-id'));
 			});
 
 			return result;

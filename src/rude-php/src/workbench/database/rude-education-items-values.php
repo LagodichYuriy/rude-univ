@@ -2,11 +2,11 @@
 
 namespace rude;
 
-class education
+class education_items_values
 {
 	public static function get($id = null)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_EDUCATION);
+		$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
 
 		if ($id !== null)
 		{
@@ -21,26 +21,26 @@ class education
 		return $q->get_object_list();
 	}
 
-	public static function get_by_report($report_id)
+	public static function get_by_order($education_id)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_EDUCATION);
+		$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
 
 
-		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
+		$q->where('education_id', (int) $education_id);
 
-
+		$q->order_by('order_num','ASC');
 		$q->query();
 
 		return $q->get_object_list();
 	}
 
 
-	public static function remove($id)
+	public static function remove($item_id)
 	{
-		if (static::is_exists($id))
+		if (static::is_exists($item_id))
 		{
-			$q = new dquery(RUDE_DATABASE_TABLE_EDUCATION);
-			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
+			$q = new dquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
+			$q->where('item_id', (int) $item_id);
 			$q->query();
 
 			return $q->affected();
@@ -59,11 +59,12 @@ class education
 		return false;
 	}
 
-	public static function add($report_id,$name)
+	public static function add($id, $item,$col_num)
 	{
-		$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION);
-		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
-		$q->add(RUDE_DATABASE_FIELD_REPORT_ID,$report_id);
+		$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
+		$q->add('col_num',$col_num);
+		$q->add('value',$item);
+		$q->add('item_id',$id);
 		$q->query();
 
 		return true;
@@ -71,7 +72,7 @@ class education
 
 	public static function edit($id,$name,$shortname)
 	{
-//		$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
+//		$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
 //		$q->update(RUDE_DATABASE_FIELD_NAME,$name);
 //		$q->update(RUDE_DATABASE_FIELD_SHORTNAME,$shortname);
 //		$q->where(RUDE_DATABASE_FIELD_ID,$id);
