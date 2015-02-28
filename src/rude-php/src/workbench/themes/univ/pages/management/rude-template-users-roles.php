@@ -42,7 +42,7 @@ class template_users_roles
 			<?
 				$users_roles = users_roles::get();
 
-				debug($users_roles);
+//				debug($users_roles);
 			?>
 		</div>
 		<?

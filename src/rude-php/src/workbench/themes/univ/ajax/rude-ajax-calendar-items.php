@@ -59,9 +59,6 @@ class ajax_calendar_items
 			$calendar_items::add($report_id, get(0, $item), get(1, $item), get(2, $item));
 		}
 
-		debug($data);
-
-
 		return true;
 	}
 }

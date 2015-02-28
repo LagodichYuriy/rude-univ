@@ -85,21 +85,27 @@ class template_reports_edit
 				}
 
 
-				$y=0;
-				$id=$item_id[$y];
+//				debug($data);
+//				debug($item_id);
+
+				$row = 0;
+
+				$id = $item_id[$row];
 
 				$col_num = 1;
+
 				foreach ($data as $item)
 				{
-
-					if ($item!=''){
-						$education_items::add($id, $item,$col_num);
+					if ($item != '')
+					{
+						$education_items::add($id, $item, $col_num);
 					}
 
-					if ($col_num==39){
-						$col_num=0;
-						$id = $item_id[$y+1];
-						$y++;
+					if ($col_num == 40)
+					{
+						$col_num = 0;
+						$id = $item_id[$row];
+						$row++;
 					}
 					$col_num++;
 				}

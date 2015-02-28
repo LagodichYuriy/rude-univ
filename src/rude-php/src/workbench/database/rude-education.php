@@ -36,7 +36,7 @@ class education
 
 
 		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
-		$q->where('is_tmp', (int) 1);
+		$q->where('is_tmp', (int) 2);
 
 
 		$q->query();

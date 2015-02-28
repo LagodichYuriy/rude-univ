@@ -15,7 +15,7 @@ class template_reports_preview_plan
 				<?
 					$i = 1;
 
-					$educations = education::get_by_report($report->id);
+					$educations = education::get_by_report('31');
 
 					foreach ($educations as $education)
 					{
@@ -73,7 +73,7 @@ class template_reports_preview_plan
 					<td class="text-left" colspan="2">Количество часов учебных занятий</td>
 
 					<?
-						$educations = education::get_by_report('2');
+						$educations = education::get_by_report('31');
 
 
 						$items = [];
@@ -82,6 +82,8 @@ class template_reports_preview_plan
 						{
 							$items = array_merge(education_items::get_by_order($education->id), $items);
 						}
+
+
 
 
 						$item_ids = [];

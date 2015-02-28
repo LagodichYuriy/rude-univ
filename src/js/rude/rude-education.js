@@ -336,7 +336,7 @@ var education =
 		subclass += '			</div>';
 		subclass += '		</div>';
 
-		subclass += '		<div class="item ui button green" onclick="add_education_item('+id+',this); education.tip.add(this)">добавить</div>';
+		subclass += '		<div class="item ui button green" onclick="add_education_item('+id+',this);">добавить</div>';
 
 		subclass += '	</div>';
 

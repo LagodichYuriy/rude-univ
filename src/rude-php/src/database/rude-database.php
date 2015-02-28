@@ -172,9 +172,12 @@ class database
 	{
 		$object_list = array();
 
-		while ($object = $this->result->fetch_object())
+		if ($this->result !== null and $this->result !== false)
 		{
-			$object_list[] = $object;
+			while ($object = $this->result->fetch_object())
+			{
+				$object_list[] = $object;
+			}
 		}
 
 		return $object_list;
