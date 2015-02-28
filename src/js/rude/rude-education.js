@@ -198,13 +198,7 @@ var education =
 				values.push($(this).val());
 			});
 
-
-
 			debug(values);
-
-
-
-
 
 			$.ajax(
 				{
@@ -300,12 +294,12 @@ var education =
 		}
 	},
 
-	add: function(name)
+	add: function(name,id)
 	{
 		var subclass = '';
 
 
-		subclass += '<li class="disciplines">';
+		subclass += '<li class="disciplines" data-id='+id+'>';
 
 		subclass += '<div class="actions">';
 		subclass += '	<div class="ui button red tiny" onclick="$(this).closest(\'li\').fadeToggle(\'slow\', function() { $(this).closest(\'li\').remove(); buttons.update(); });">Удалить</div><div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this), $(this).closest(\'.disciplines\').find(\'.description\').html());">Заполнить</div>';
@@ -342,7 +336,7 @@ var education =
 		subclass += '			</div>';
 		subclass += '		</div>';
 
-		subclass += '		<div class="item ui button green" onclick="education.tip.add(this)">добавить</div>';
+		subclass += '		<div class="item ui button green" onclick="add_education_item('+id+',this); education.tip.add(this)">добавить</div>';
 
 		subclass += '	</div>';
 

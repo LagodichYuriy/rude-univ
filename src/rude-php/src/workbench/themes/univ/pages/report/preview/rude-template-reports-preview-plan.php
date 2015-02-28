@@ -138,7 +138,7 @@ class template_reports_preview_plan
 				<?
 					$i = 1;
 
-					$educations = education::get_by_report('2');
+					$educations = education::get_by_report($report->id);
 
 					foreach ($educations as $education)
 					{

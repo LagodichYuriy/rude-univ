@@ -141,6 +141,10 @@ class reports
 		$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 		$q->query();
 
+		$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
+		$q->update('is_tmp', (int) 3);
+		$q->where('report_id', (int) $id);
+		$q->query();
 		return true;
 	}
 }
