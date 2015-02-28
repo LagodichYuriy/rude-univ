@@ -38,6 +38,7 @@ class template_reports_new
 				get('qualification_id'),
 				get('specialty_id'),
 				get('specialization_id')));
+
 				break;
 
 			default:

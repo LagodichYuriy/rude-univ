@@ -414,7 +414,7 @@ class template_html
 							<i class="icon"></i> Все планы
 						</a>
 
-						<a class="item subcategory <? if (get('page') == 'reports-new') { ?>active<? } ?>" href="/?page=reports-new">
+						<a class="item subcategory <? if (get('page') == 'reports-edit') { ?>active<? } ?>" href="/?page=reports-edit">
 							<i class="icon"></i> Добавить новый
 						</a>
 					</div>

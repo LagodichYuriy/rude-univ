@@ -24,7 +24,10 @@ class template_reports_edit
 
 		if (!$report_id)
 		{
-			new template_404(true);
+			$reports = new reports();
+			$report_id = $reports::add();
+			header('Location: /?page=reports-edit&report_id='.$report_id);
+			die();
 		}
 
 		if (get('is_tmp'))
@@ -93,24 +96,30 @@ class template_reports_edit
 						$education_items::add($id, $item,$col_num);
 					}
 
-					if ($col_num==40){
+					if ($col_num==39){
 						$col_num=0;
 						$id = $item_id[$y+1];
 						$y++;
-
 					}
 					$col_num++;
 				}
 
 				//debug($data);
-
+				$status = true;
 				break;
 
-			case 'add_education': education::add(get('report_id'),get('name'));
-				break;
+			case 'add_education': $tmp =  education::add(get('report_id'),get('name'));
+				die(json_encode($tmp));
+				break ;
 			case 'remove_education': education::remove(get('id'));
 				break;
 			case 'add_education_item': education_items::add(get('education_id'),get('name'),get('order'));
+				break;
+			case 'update_education':
+				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
+				$q->update('is_tmp', (int) 2);
+				$q->where('report_id', (int) get('report_id'));
+				$q->query();
 				break;
 			default:
 				$status = false;
@@ -425,12 +434,14 @@ class template_reports_edit
 								<input class="education-new" type="text" placeholder="Цикл социально-гуманитарных дисциплин">
 							</div>
 
-							<a href="#" class="ui blue submit button small" onclick="education.add($('.education-new').val());
+							<a href="#" class="ui blue submit button small" onclick="
 							var name = $('.education-new').val();
 							$('.education-new').val('');
 							var report_id = <?=get('report_id')?>;
 							$.post('/?page=reports-edit&task=add_education&report_id='+report_id+'&name='+name+'&ajax=true')
-								.done(function() { $('#education').modal('hide'); rude.redirect('/?page=reports-edit&report_id='+report_id); }); return false;
+								.done(function(data) { $('#education').modal('hide');
+								education.add(name,data);
+								/*rude.redirect('/?page=reports-edit&report_id='+report_id);*/ }); return false;
 							">Добавить</a>
 						</div>
 					</div>
@@ -1020,6 +1031,19 @@ class template_reports_edit
 
 					success: function (report_id)
 					{
+						var report_id2 = '<?= $this->report->id ?>';
+						$.ajax(
+							{
+
+								url: '/?page=reports-edit&report_id='+report_id2+'&task=update_education&ajax=true',
+
+
+
+								success: function (data)
+								{
+									console.log(data);
+								}
+							});
 						console.log(report_id);
 
 						if (report_id)
