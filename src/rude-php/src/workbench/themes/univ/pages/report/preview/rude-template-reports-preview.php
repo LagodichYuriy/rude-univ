@@ -42,11 +42,22 @@ class template_reports_preview
 				<!-- jQuery plugins [JS] -->
 				<?= html::js(RUDE_URL_SRC . '/js/jqueryrotate/jQueryRotateCompressed.js') ?>
 
+				<!-- Custom JS libs -->
+				<?= html::js(RUDE_URL_SRC . '/js/rude/rude-report.js') ?>
+
 				<!-- CSS -->
 				<?= html::css(RUDE_URL_SRC . '/css/report.css') ?>
 			</head>
-			<body contenteditable="true">
-				<? $this->main() ?>
+			<body contenteditable="true" onload="report.init();">
+				<div id="hidden"></div>
+
+				<div id="papers">
+					<div class="paper">
+						<? $this->main() ?>
+					</div>
+				</div>
+
+				<? template_reports_preview_footer::html($this->report); ?>
 			</body>
 
 			<script>
@@ -63,7 +74,5 @@ class template_reports_preview
 		template_reports_preview_header::html($this->report);
 		template_reports_preview_calendar::html($this->report);
 		template_reports_preview_plan::html($this->report);
-
-
 	}
 }

@@ -32,6 +32,14 @@ class education_items_values
 		return $q->get_object_list();
 	}
 
+	public static function get_by_education_item_ids(array $education_ids)
+	{
+		$database = new database();
+		$database->query('SELECT * FROM ' . RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES . ' WHERE item_id IN(' . implode(',', $education_ids) . ')');
+
+		return $database->get_object_list();
+	}
+
 	public static function get_by_order($education_id)
 	{
 		$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);

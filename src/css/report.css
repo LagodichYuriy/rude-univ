@@ -3,19 +3,13 @@
 
 }
 
+
+
 body
 {
-	/*height: 42cm;*/
-	/*min-height: 42cm;*/
-	/*max-height: 42cm;*/
-
-	/*width: 29.7cm;*/
-	/*min-width: 29.7cm;*/
-	/*max-width: 29.7cm;*/
-
-	height:      29.7cm;
-	min-height:  29.7cm;
-	max-height:  29.7cm;
+	/*height:      29.7cm;*/
+	/*min-height:  29.7cm;*/
+	/*max-height:  29.7cm;*/
 
 	width:       42cm;
 	min-width:   42cm;
@@ -27,6 +21,44 @@ body
 
 	padding: 0;
 	margin: 0 auto;
+}
+
+#hidden
+{
+	min-height: 25cm;
+
+	position: absolute;
+}
+
+.paper .page-break
+{
+	page-break-before: always;
+	/*page-break-before: always;*/
+}
+
+.paper .footer-small
+{
+	padding-top: 0.6cm;
+	font-size: 8pt;
+
+	text-align: center;
+}
+
+.paper .footer-small .left
+{
+	float: left;
+	width: 50%;
+}
+
+.paper .footer-small .right
+{
+	width: 50%;
+	display: inline-block;
+}
+
+.paper:last-child .footer-small
+{
+	display: none;
 }
 
 table
@@ -80,7 +112,12 @@ table
 
 #header
 {
-	padding-bottom: 1cm;
+	padding-bottom: 0.2cm;
+}
+
+#header p
+{
+	line-height: 0.37cm;
 }
 
 #header td
@@ -208,7 +245,8 @@ table
 }
 
 
-#plan
+.plan,
+.summary
 {
 	width: 100%;
 
@@ -217,17 +255,21 @@ table
 	border-collapse: collapse;
 }
 
-#plan th,
-#plan td
+.plan th,
+.plan td,
+.summary th,
+.summary td
 {
 	font-size: 8pt;
 
 	border: 1px rgb(92, 92, 92) solid;
 
 	text-align: center;
+
+	width: 0.7cm;
 }
 
-/*#plan .rotate-270*/
+/*.plan .rotate-270*/
 /*{*/
 	/*overflow: visible;*/
 
@@ -244,7 +286,8 @@ table
 /*}*/
 
 
-#plan .rotate-box
+.plan    .rotate-box,
+.summary .rotate-box
 {
 	width: 0.5cm;
 	max-width: 0.5cm;
@@ -253,33 +296,92 @@ table
 	position: relative;
 }
 
-#plan .rotate-box.medium
+.plan    .rotate-box.medium,
+.summary .rotate-box.medium
 {
 	height: 4.0cm!important;
 }
 
-#plan .rotate-box .rotate-270
+.plan    .rotate-box .rotate-270,
+.summary .rotate-box .rotate-270
 {
 	width: 5.55cm;
 	text-align: left;
 	bottom: 2.75cm;
 	position: absolute;
-	left: -2.52cm;
+	left: -2.40cm;
 }
 
-#plan .names
+.plan    .names,
+.summary .names
 {
 	width: 7cm;
 }
 
-#plan .small
+.plan    .small,
+.summary .small
 {
 	width: 1cm;
 }
 
+
+#footer .notes
+{
+	padding-top: 1cm;
+
+	font-size: 8pt;
+}
+
+#footer .notes p
+{
+	margin: 0;
+	padding: 0;
+}
+
+#footer .authors
+{
+	padding-top: 1cm;
+}
+
+#footer .authors table
+{
+	width: 50%;
+
+	font-size: 10pt;
+}
+
+#footer .authors table tr td:nth-child(1)
+{
+	text-align: justify;
+
+	padding: 0.1cm;
+	height: 1cm;
+}
+
+#footer .authors table tr td:nth-child(2)
+{
+	padding: 0 1cm;
+}
+
+#footer .authors .right
+{
+	float: right;
+}
+
+#footer .authors .left
+{
+	float: left;
+}
 
 
 .text-left
 {
 	text-align: left!important;
 }
+
+.no-wrap
+{
+	white-space: nowrap;
+}
+
+
