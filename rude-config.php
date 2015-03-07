@@ -140,8 +140,11 @@ define('RUDE_DATABASE_TABLE_REPORTS_CATEGORIES_ITEMS', RUDE_DATABASE_PREFIX . 'r
 define('RUDE_DATABASE_TABLE_SETTINGS',                 RUDE_DATABASE_PREFIX . 'settings');
 define('RUDE_DATABASE_TABLE_DIRECTION',                RUDE_DATABASE_PREFIX . 'directions');
 define('RUDE_DATABASE_TABLE_EDUCATION',                RUDE_DATABASE_PREFIX . 'educations');
+define('RUDE_DATABASE_TABLE_EDUCATION_PREVIEW',        RUDE_DATABASE_PREFIX . 'educations_preview');
 define('RUDE_DATABASE_TABLE_EDUCATION_ITEMS',          RUDE_DATABASE_PREFIX . 'educations_items');
+define('RUDE_DATABASE_TABLE_EDUCATION_ITEMS_PREVIEW',  RUDE_DATABASE_PREFIX . 'educations_items_preview');
 define('RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES',   RUDE_DATABASE_PREFIX . 'educations_items_values');
+define('RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES_PREVIEW',   RUDE_DATABASE_PREFIX . 'educations_items_values_preview');
 
 
 define('RUDE_DATABASE_FIELD_ID',                  'id');

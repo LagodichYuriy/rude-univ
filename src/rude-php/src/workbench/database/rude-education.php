@@ -36,7 +36,7 @@ class education
 
 
 		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
-		$q->where('is_tmp', (int) 1);
+		$q->where('not_save', (int) 0);
 
 
 		$q->query();
@@ -75,7 +75,7 @@ class education
 		$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION);
 		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
 		$q->add(RUDE_DATABASE_FIELD_REPORT_ID,$report_id);
-		$q->add('is_tmp',1);
+		$q->add('not_save',1);
 		$q->query();
 		return $q->get_id();
 
