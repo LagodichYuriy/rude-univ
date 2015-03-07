@@ -2,11 +2,11 @@
 
 namespace rude;
 
-class education
+class education_items_preview
 {
 	public static function get($id = null)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_EDUCATION);
+		$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_PREVIEW);
 
 		if ($id !== null)
 		{
@@ -21,28 +21,17 @@ class education
 		return $q->get_object_list();
 	}
 
-	public static function get_by_report_id($report_id)
+	public static function get_by_order($education_id)
 	{
-		$q = new query(RUDE_DATABASE_TABLE_EDUCATION);
-		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
+		$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_PREVIEW);
+
+
+		$q->where('education_id', (int) $education_id);
+
+		$q->order_by('order_num','ASC');
 		$q->query();
 
 		return $q->get_object_list();
-	}
-
-	public static function get_by_report($report_id)
-	{
-		$q = new query(RUDE_DATABASE_TABLE_EDUCATION);
-
-
-		$q->where(RUDE_DATABASE_FIELD_REPORT_ID, (int) $report_id);
-		$q->where('not_save', (int) 0);
-
-
-		$q->query();
-
-		return $q->get_object_list();
-
 	}
 
 
@@ -50,7 +39,7 @@ class education
 	{
 		if (static::is_exists($id))
 		{
-			$q = new dquery(RUDE_DATABASE_TABLE_EDUCATION);
+			$q = new dquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_PREVIEW);
 			$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 			$q->query();
 
@@ -70,20 +59,20 @@ class education
 		return false;
 	}
 
-	public static function add($report_id,$name)
+	public static function add($education_id,$name,$order)
 	{
-		$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION);
+		$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_PREVIEW);
 		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
-		$q->add(RUDE_DATABASE_FIELD_REPORT_ID,$report_id);
-		$q->add('not_save',1);
+		$q->add('order_num',$order);
+		$q->add('education_id',$education_id);
 		$q->query();
-		return $q->get_id();
 
+		return true;
 	}
 
 	public static function edit($id,$name,$shortname)
 	{
-//		$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
+//		$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_PREVIEW);
 //		$q->update(RUDE_DATABASE_FIELD_NAME,$name);
 //		$q->update(RUDE_DATABASE_FIELD_SHORTNAME,$shortname);
 //		$q->where(RUDE_DATABASE_FIELD_ID,$id);

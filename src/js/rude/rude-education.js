@@ -21,18 +21,26 @@ var education =
 	filler:
 	{
 		database: null,
+		data: [],
 		id: null,
 		report_id: null,
 
-		popup: function(disciplines, id,report_id)
+		popup: function(disciplines,data, id,report_id)
 		{
 			education.filler.database = disciplines;
 			education.filler.id = id;
 			education.filler.report_id = report_id;
 
-			debug(disciplines);
+			debug(data);
 
-			education.filler.update();
+			for (var i = 0; i < data.length; i++)
+			{
+				if (typeof (education.filler.data[i])==='undefined'){
+					education.filler.data[i]=[];
+				}
+				education.filler.data[i].push(data[i].split(','));
+			}
+			education.filler.update(education.filler.data);
 
 			$('#filler-modal').modal('show').modal('cache sizes');
 
@@ -41,7 +49,7 @@ var education =
 			}, 750);
 		},
 
-		update: function()
+		update: function(data)
 		{
 			var html = '';
 
@@ -141,6 +149,7 @@ var education =
 			html += '		<td><b>42</b></td>';
 			html += '	</tr>';
 
+
 			for (var i = 0; i < education.filler.database.length; i++)
 			{
 				html += '<tr id="item-'+i+'">';
@@ -148,11 +157,17 @@ var education =
 				html += '	<td>' + rude.romanize(i + 1) + '</td>';
 				html += '	<td>' + education.filler.database[i] + '</td>';
 
-				html += '	<td class="input item"><div class="ui form"><div class="inline field"><input class="20" type="text" maxlength="3" value=""></div></div></td>';
+				html += '	<td class="input item"><div class="ui form"><div class="inline field"><input class="20" type="text" maxlength="3" value="';
+				html += data[i][0][0];
+
+				html +='"></div></div></td>';
 
 				for (var j = 0; j < 39; j++)
 				{
-					html += '	<td class="input item countable"><div class="ui form"><div class="inline field"><input onblur="education.filler.recount(this)" onkeyup="education.filler.recount(this)" class="20" type="text" maxlength="3" value=""></div></div></td>';
+					html += '	<td class="input item countable"><div class="ui form"><div class="inline field"><input onblur="education.filler.recount(this)" onkeyup="education.filler.recount(this)" class="20" type="text" maxlength="3" value="';
+					html += data[i][0][j+1];
+
+					html +='"></div></div></td>';
 				}
 
 				html += '</tr>';
@@ -216,6 +231,7 @@ var education =
 					success: function (data)
 					{
 						console.log(data);
+						window.location.reload();
 					}
 				});
 			//debug(disciplines);
@@ -276,6 +292,17 @@ var education =
 
 			$(selector).closest('.disciplines').find('li').each(function(){
 				result.push($(this).attr('data-name'));
+
+			});
+
+			return result;
+		},
+		getdata: function(selector)
+		{
+			var result = [];
+
+			$(selector).closest('.disciplines').find('li').each(function(){
+				result.push($(this).attr('data-values'));
 
 			});
 

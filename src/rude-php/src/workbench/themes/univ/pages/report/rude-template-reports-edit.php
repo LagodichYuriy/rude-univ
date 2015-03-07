@@ -67,7 +67,12 @@ class template_reports_edit
 				                                         get('specialty_id'),
 				                                         get('specialization_id')));
 				break;
-
+			case 'update_education':
+				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
+				$q->update('not_save', (int) 0);
+				$q->where('id', (int) get('dis_id'));
+				$q->query();
+				break;
 			case 'save_education':
 				$data = get('data');
 
@@ -85,12 +90,23 @@ class template_reports_edit
 				}
 
 
-//				debug($data);
-//				debug($item_id);
-
-				$row = 0;
-
-				$id = $item_id[$row];
+//<<<<<<< HEAD
+////				debug($data);
+////				debug($item_id);
+//
+//				$row = 0;
+//
+//				$id = $item_id[$row];
+//=======
+				$y=0;
+				$id=$item_id[$y];
+				foreach($item_id as $d_id)
+				{
+					$q = new dquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
+					$q->where('item_id', $d_id);
+					$q->query();
+				}
+//>>>>>>> 341b1ed6992a60614d1d455fc96c6268c10c1b99
 
 				$col_num = 1;
 
@@ -101,11 +117,18 @@ class template_reports_edit
 						$education_items::add($id, $item, $col_num);
 					}
 
-					if ($col_num == 40)
-					{
-						$col_num = 0;
-						$id = $item_id[$row];
-						$row++;
+//<<<<<<< HEAD
+//					if ($col_num == 40)
+//					{
+//						$col_num = 0;
+//						$id = $item_id[$row];
+//						$row++;
+//=======
+					if ($col_num==40){
+						$col_num=0;
+						$id = $item_id[$y+1];
+						$y++;
+//>>>>>>> 341b1ed6992a60614d1d455fc96c6268c10c1b99
 					}
 					$col_num++;
 				}
@@ -121,11 +144,36 @@ class template_reports_edit
 				break;
 			case 'add_education_item': education_items::add(get('education_id'),get('name'),get('order'));
 				break;
-			case 'update_education':
-				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
-				$q->update('is_tmp', (int) 2);
-				$q->where('report_id', (int) get('report_id'));
+			case 'copy_education':
+				$education = education::get(get('dis_id'));
+				$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION_PREVIEW);
+				$q->add('report_id', (int) get('report_id'));
+				$q->add('name', $education->name);
 				$q->query();
+				$new_id = $q->get_id();
+				$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS);
+				$q-> where('education_id',(int) get('dis_id'));
+				$q->query();
+				$all_dis = $q->get_object_list();
+				foreach ($all_dis as $cur_dis){
+					$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_PREVIEW);
+					$q->add('name',$cur_dis->name);
+					$q->add('education_id',$new_id);
+					$q->add('order_num',$cur_dis->order_num);
+					$q->query();
+					$new_item_id = $q->get_id();
+					$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
+					$q-> where('item_id',$cur_dis->id);
+					$q->query();
+					$all_item_val = $q->get_object_list();
+					foreach ($all_item_val as $cur_item_val){
+						$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES_PREVIEW);
+						$q->add('value',$cur_item_val->value);
+						$q->add('item_id',$new_item_id);
+						$q->add('col_num',$cur_item_val->col_num);
+						$q->query();
+					}
+				}
 				break;
 			default:
 				$status = false;
@@ -304,10 +352,10 @@ class template_reports_edit
 							<? foreach ($educations as $education)
 							{
 							?>
-								<li class="disciplines">
+								<li class="disciplines" data-id="<?= $education->id; ?>">
 									<div class="actions">
 										<div class="ui button red tiny" onclick=" remove_education(this,<?=$education->id?>);buttons.update();">Удалить</div>
-										<div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this),education.filler.getid(this),<?=get('report_id')?>);">Заполнить</div>
+										<div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this),education.filler.getdata(this),education.filler.getid(this),<?=get('report_id')?>);">Заполнить</div>
 									</div>
 									<div class="base" onclick="$(this).parent('li').find('.tip').toggle('slow'); $(this).find('i.icon.triangle').toggleClass('down').toggleClass('right')">
 										<i class="icon triangle down"></i>
@@ -318,8 +366,19 @@ class template_reports_edit
 											<? $educations_items = education_items::get_by_order($education->id);?>
 											<? foreach ($educations_items as $item)
 												{
+													$values = education_items_values::get_by_education_item_id($item->id);
 												?>
-													<li data-type="undefined" data-name="<?=$item->name?>" data-id="<?=$item->id?>" draggable="true"><?=$item->name?>
+													<li data-type="undefined" data-name="<?=$item->name?>" data-id="<?=$item->id?>"
+														data-values="<? for ($i=1; $i<40; $i++)
+														{
+															foreach ($values as $value){
+																if ($value->col_num ==$i){
+																	echo $value->value;
+																}
+														}
+															echo ',';
+														}?>"
+														draggable="true"><?=$item->name?>
 														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
 														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
 													</li>
@@ -369,7 +428,6 @@ class template_reports_edit
 
 					<script>
 						function add_education_item(education_id,selector){
-
 							var order = $(".tip li").length+1;
 							var name = $(selector).closest('.tip').find('.item.active').attr('data-name');
 							var report_id = <?=get('report_id')?>;
@@ -1037,19 +1095,18 @@ class template_reports_edit
 
 					success: function (report_id)
 					{
-						var report_id2 = '<?= $this->report->id ?>';
+						$('.disciplines').each(function(){
+							var dis_id= $(this).data('id');
 						$.ajax(
 							{
-
-								url: '/?page=reports-edit&report_id='+report_id2+'&task=update_education&ajax=true',
-
-
+								url: '/?page=reports-edit&is_tmp=1&dis_id='+dis_id+'&report_id='+report_id+'&task=copy_education&ajax=true',
 
 								success: function (data)
 								{
 									console.log(data);
 								}
 							});
+						});
 						console.log(report_id);
 
 						if (report_id)
@@ -1077,7 +1134,18 @@ class template_reports_edit
 			var report_id = '<?= $this->report->id ?>';
 
 			var report = new Report();
+			$('.disciplines').each(function(){
+				var dis_id= $(this).data('id');
+				$.ajax(
+					{
+						url: '/?page=reports-edit&dis_id='+dis_id+'&report_id='+report_id+'&task=update_education&ajax=true',
 
+						success: function (data)
+						{
+							console.log(data);
+						}
+					});
+			});
 			$.ajax(
 				{
 					url: '/?page=reports-edit&task=update&ajax=true',

@@ -15,7 +15,8 @@ class template_reports_preview_plan
 				<?
 					$i = 1;
 
-					$educations = education::get_by_report('31');
+					$educations = education_preview::get_by_report(get('report_id'));
+
 
 					foreach ($educations as $education)
 					{
@@ -29,7 +30,8 @@ class template_reports_preview_plan
 						?></tr><?
 
 
-						$items = education_items::get_by_order($education->id);
+						$items = education_items_preview::get_by_order($education->id);
+
 
 						foreach ($items as $item)
 						{
@@ -38,7 +40,8 @@ class template_reports_preview_plan
 							?><td class="text-left"><?= $item->name ?></td><?
 
 
-							$vals = education_items_values::get_by_education_item_id($item->id);
+							$vals = education_items_values_preview::get_by_education_item_id($item->id);
+
 
 							for ($j = 0; $j < 41; $j++)
 							{
@@ -73,14 +76,14 @@ class template_reports_preview_plan
 					<td class="text-left" colspan="2">Количество часов учебных занятий</td>
 
 					<?
-						$educations = education::get_by_report('31');
+						$educations = education_preview::get_by_report(get('report_id'));
 
 
 						$items = [];
 
 						foreach ($educations as $education)
 						{
-							$items = array_merge(education_items::get_by_order($education->id), $items);
+							$items = array_merge(education_items_preview::get_by_order($education->id), $items);
 						}
 
 
@@ -94,7 +97,7 @@ class template_reports_preview_plan
 						}
 
 
-						$edication_items = education_items_values::get_by_education_item_ids($item_ids);
+						$edication_items = education_items_values_preview::get_by_education_item_ids($item_ids);
 
 
 						$summary = [];
