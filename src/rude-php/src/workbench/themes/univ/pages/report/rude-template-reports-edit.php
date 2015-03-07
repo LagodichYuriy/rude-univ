@@ -320,8 +320,8 @@ class template_reports_edit
 												{
 												?>
 													<li data-type="undefined" data-name="<?=$item->name?>" data-id="<?=$item->id?>" draggable="true"><?=$item->name?>
-														<i class="icon angle up" onclick="$(this).parent().insertBefore($(this).parent().prev());"></i>
-														<i class="icon angle down" onclick="$(this).parent().insertAfter($(this).parent().next());"></i>
+														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
+														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
 													</li>
 												<?
 												}

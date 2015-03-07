@@ -394,14 +394,17 @@ class template_html
 							<i class="icon"></i> Условные обозначения
 						</a>
 
-						<a class="item subcategory <? if (get('page') == 'settings') { ?>active<? } ?>" href="/?page=settings">
-							<i class="icon"></i> Настройки
-						</a>
-
 						<a class="item subcategory <? if (get('page') == 'directions') { ?>active<? } ?>" href="/?page=directions">
 							<i class="icon"></i> Направления
 						</a>
 
+						<a class="item subcategory <? if (get('page') == 'settings') { ?>active<? } ?>" href="/?page=settings">
+							<i class="icon"></i> Настройки
+						</a>
+
+						<a class="item subcategory <? if (get('page') == 'stats') { ?>active<? } ?>" href="/?page=stats">
+							<i class="icon"></i> База данных
+						</a>
 					</div>
 
 
@@ -428,19 +431,7 @@ class template_html
 	{
 		?>
 		<div id="comments" class="ui raised segment square-corners">
-			<div id="disqus_thread"></div>
-			<script type="text/javascript">
-				/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-				var disqus_shortname = 'rude-php'; // required: replace example with your forum shortname
 
-				/* * * DON'T EDIT BELOW THIS LINE * * */
-				(function() {
-					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-					dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-					(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-				})();
-			</script>
-			<noscript>Please enable JavaScript to view the comments.</a></noscript>
 		</div>
 		<?
 	}

@@ -143,4 +143,13 @@ class reports_preview
 
 		return true;
 	}
+
+	public static function count()
+	{
+		$database = new database();
+
+		$database->query('SELECT COUNT(*) as count FROM ' . RUDE_DATABASE_TABLE_REPORTS_PREVIEW . ' WHERE 1 = 1');
+
+		return $database->get_object()->count;
+	}
 }

@@ -370,9 +370,7 @@ var education =
 			console.log(name);
 			console.log(id);
 
-			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '">' + name + '<i class="icon angle up" onclick="$(this).parent().insertBefore($(this).parent().prev());"></i> <i class="icon angle down" onclick="$(this).parent().insertAfter($(this).parent().next());"></i></li>').sortable();
-
-
+			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '">' + name + '<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i></li>').sortable();
 		},
 
 		toggle: function(selector)
@@ -382,6 +380,49 @@ var education =
 				$(selector).find('i.triangle').toggleClass('down').toggleClass('right');
 
 				$(selector).find('.tip').slideToggle('slow');
+			}
+		},
+
+		move:
+		{
+			up: function(selector)
+			{
+				var a = $.Deferred();
+				var b = $.Deferred();
+
+				var one = $(selector).parent();
+				var two = $(selector).parent().prev();
+
+				one.fadeOut('slow', function() { a.resolve(); });
+				two.fadeOut('slow', function() { b.resolve(); });
+
+				$.when(a, b).done(function()
+				{
+					one.insertBefore(two);
+
+					one.fadeIn('slow');
+					two.fadeIn('slow');
+				});
+			},
+
+			down: function(selector)
+			{
+				var a = $.Deferred();
+				var b = $.Deferred();
+
+				var one = $(selector).parent();
+				var two = $(selector).parent().next();
+
+				one.fadeOut('slow', function() { a.resolve(); });
+				two.fadeOut('slow', function() { b.resolve(); });
+
+				$.when(a, b).done(function()
+				{
+					one.insertAfter(two);
+
+					one.fadeIn('slow');
+					two.fadeIn('slow');
+				});
 			}
 		}
 	}

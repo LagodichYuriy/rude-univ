@@ -147,4 +147,13 @@ class reports
 		$q->query();
 		return true;
 	}
+
+	public static function count()
+	{
+		$database = new database();
+
+		$database->query('SELECT COUNT(*) as count FROM ' . RUDE_DATABASE_TABLE_REPORTS . ' WHERE 1 = 1');
+
+		return $database->get_object()->count;
+	}
 }
