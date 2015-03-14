@@ -66,8 +66,7 @@ class education_items
 		$q->add('order_num',$order);
 		$q->add('education_id',$education_id);
 		$q->query();
-
-		return true;
+		return $q->get_id();
 	}
 
 	public static function edit($id,$name,$shortname)
