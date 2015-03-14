@@ -421,6 +421,11 @@ var education =
 				var one = $(selector).parent();
 				var two = $(selector).parent().prev();
 
+				if (!one.length || !two.length)
+				{
+					return;
+				}
+
 				one.fadeOut('slow', function() { a.resolve(); });
 				two.fadeOut('slow', function() { b.resolve(); });
 
@@ -440,6 +445,11 @@ var education =
 
 				var one = $(selector).parent();
 				var two = $(selector).parent().next();
+
+				if (!one.length || !two.length)
+				{
+					return;
+				}
 
 				one.fadeOut('slow', function() { a.resolve(); });
 				two.fadeOut('slow', function() { b.resolve(); });

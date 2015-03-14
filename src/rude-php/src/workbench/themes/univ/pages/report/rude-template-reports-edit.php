@@ -429,6 +429,15 @@ class template_reports_edit
 
 					<script>
 						function add_education_item(education_id,selector){
+
+							if ($(selector).parent('div').find('.text').hasClass('default'))
+							{
+								alert('Выберите название предмета из выпадающего списка.');
+
+								return false;
+							}
+
+
 							var order = $(".tip li").length+1;
 							var name = $(selector).closest('.tip').find('.item.active').attr('data-name');
 							var report_id = <?=get('report_id')?>;
@@ -843,22 +852,22 @@ class template_reports_edit
 
 		<br />
 
-		<div class="ui icon buttons constructor">
+		<div id="calendar-buttons-tools" class="ui icon buttons constructor">
 			<?
 			if ($legend)
 			{
 				foreach ($legend as $item)
 				{
 					?>
-					<div class="ui button constructor" title="<?= $item->description ?>" onclick="calendar_char = '<?= $item->legend_letter ?>'"><?= $item->legend_letter ?></div>
+					<div class="ui button constructor" title="<?= $item->description ?>" onclick="calendar_char = '<?= $item->legend_letter ?>'; $('#calendar-buttons-eraser .button').removeClass('active')"><?= $item->legend_letter ?></div>
 				<?
 				}
 			}
 			?>
 		</div>
 
-		<div class="ui icon buttons constructor">
-			<div class="ui button" onclick="calendar_char = ''"><i class="align icon eraser"></i></div>
+		<div id="calendar-buttons-eraser" class="ui icon buttons constructor">
+			<div class="ui button" onclick="calendar_char = ''; $('#calendar-buttons-tools .button.constructor').removeClass('active');"><i class="align icon eraser"></i></div>
 		</div>
 
 		<script>

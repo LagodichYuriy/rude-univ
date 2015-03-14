@@ -488,6 +488,11 @@ pre code.hljs.php .ui.label
 	cursor: pointer!important;
 }
 
+#education-list li .icon.angle:hover
+{
+	color: sandybrown;
+}
+
 #education-list li .icon.triangle
 {
 	margin: 0 -4px 0 0;
