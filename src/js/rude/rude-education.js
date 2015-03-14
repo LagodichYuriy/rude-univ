@@ -47,6 +47,7 @@ var education =
 			setTimeout(function() {
 				$('#filler-modal').modal('refresh');
 			}, 750);
+			education.filler.recount('input');
 		},
 
 		update: function(data)
@@ -383,7 +384,7 @@ var education =
 
 	tip:
 	{
-		add: function(selector)
+		add: function(selector,id)
 		{
 			var selector_tip = $(selector).closest('.tip');
 
@@ -391,13 +392,13 @@ var education =
 
 			var type = selector_item.attr('data-type');
 			var name = selector_item.attr('data-name');
-			var id   = selector_item.attr('data-id');
+			//var id   = selector_item.attr('data-id');
 
 			console.log(type);
 			console.log(name);
 			console.log(id);
 
-			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '">' + name + '<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i></li>').sortable();
+			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i></li>').sortable();
 		},
 
 		toggle: function(selector)

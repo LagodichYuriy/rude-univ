@@ -142,7 +142,8 @@ class template_reports_edit
 				break ;
 			case 'remove_education': education::remove(get('id'));
 				break;
-			case 'add_education_item': education_items::add(get('education_id'),get('name'),get('order'));
+			case 'add_education_item': $tmp = education_items::add(get('education_id'),get('name'),get('order'));
+				die(json_encode($tmp));
 				break;
 			case 'copy_education':
 				$education = education::get(get('dis_id'));
@@ -432,7 +433,7 @@ class template_reports_edit
 							var name = $(selector).closest('.tip').find('.item.active').attr('data-name');
 							var report_id = <?=get('report_id')?>;
 							$.post('/?page=reports-edit&task=add_education_item&report_id='+report_id+'&name='+name+'&education_id='+education_id+'&order='+order+'&ajax=true')
-								.done(function() { education.tip.add(selector)});
+								.done(function(id) { education.tip.add(selector,id)});
 						}
 						function remove_education(selector,id){
 							var report_id = <?=get('report_id')?>;
