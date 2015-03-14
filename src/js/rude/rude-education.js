@@ -426,6 +426,11 @@ var education =
 					return;
 				}
 
+
+				one.attr('data-order', parseInt(one.attr('data-order')) - 1);
+				two.attr('data-order', parseInt(two.attr('data-order')) + 1);
+
+
 				one.fadeOut('slow', function() { a.resolve(); });
 				two.fadeOut('slow', function() { b.resolve(); });
 
@@ -450,6 +455,11 @@ var education =
 				{
 					return;
 				}
+
+
+				one.attr('data-order', parseInt(one.attr('data-order')) + 1);
+				two.attr('data-order', parseInt(two.attr('data-order')) - 1);
+
 
 				one.fadeOut('slow', function() { a.resolve(); });
 				two.fadeOut('slow', function() { b.resolve(); });
