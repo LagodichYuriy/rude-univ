@@ -387,7 +387,7 @@ class template_reports_edit
 												}
 											?>
 										</ul>
-										<div class="ui selection dropdown">
+										<div class="ui search selection dropdown">
 											<input type="hidden" name="selected">
 											<div class="default text">Выберите наименование</div>
 											<i class="dropdown icon"></i>
@@ -418,6 +418,7 @@ class template_reports_edit
 
 											</div>
 										</div>
+
 										<div class="item ui button green" onclick="add_education_item(<?=$education->id?>,this)">добавить</div>
 									</div>
 								</li>
@@ -434,7 +435,7 @@ class template_reports_edit
 							{
 								alert('Выберите название предмета из выпадающего списка.');
 
-								return false;
+								return;
 							}
 
 
@@ -1255,6 +1256,13 @@ class template_reports_edit
 
 			popup: function()
 			{
+				if ($('#duration').val() == 0)
+				{
+					alert('Пожалуйста, укажите вначале срок обучения');
+
+					return;
+				}
+
 				if (calendar.duration === null)
 				{
 					calendar.update();
