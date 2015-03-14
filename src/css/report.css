@@ -153,6 +153,11 @@ table
 }
 
 
+#calendar
+{
+	padding: 0.1cm;
+}
+
 #calendar .left
 {
 	border-collapse: collapse;
