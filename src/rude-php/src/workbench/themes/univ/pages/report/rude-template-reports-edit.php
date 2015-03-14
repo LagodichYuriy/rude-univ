@@ -369,7 +369,7 @@ class template_reports_edit
 												{
 													$values = education_items_values::get_by_education_item_id($item->id);
 												?>
-													<li data-type="undefined" data-name="<?=$item->name?>" data-id="<?=$item->id?>"
+													<li data-order="<?=$item->order_num?>" data-type="undefined" data-name="<?=$item->name?>" data-id="<?=$item->id?>"
 														data-values="<? for ($i=1; $i<40; $i++)
 														{
 															foreach ($values as $value){

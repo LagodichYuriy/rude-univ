@@ -398,7 +398,7 @@ var education =
 			console.log(name);
 			console.log(id);
 
-			selector_tip.find('ul').append('<li data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i></li>').sortable();
+			selector_tip.find('ul').append('<li data-order="'+($('li').last().data('order')+1)+'" data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i></li>').sortable();
 		},
 
 		toggle: function(selector)
