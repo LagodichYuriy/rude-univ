@@ -57,7 +57,7 @@ class template_reports_edit
 
 		switch (get('task'))
 		{
-			case 'update': exit((string) $reports::update(get('report_id'),
+			case 'update': $status = true; exit((string) $reports::update(get('report_id'),
 			                                             get('year'),
 				                                         get('duration'),
 				                                         get('rector'),
@@ -72,6 +72,14 @@ class template_reports_edit
 				$q->update('not_save', (int) 0);
 				$q->where('id', (int) get('dis_id'));
 				$q->query();
+				$status = true;
+				break;
+			case 'update_education_item':
+				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS);
+				$q->update('order_num', (int) get('item_order'));
+				$q->where('id', (int) get('item_id'));
+				$q->query();
+				$status = true;
 				break;
 			case 'save_education':
 				$data = get('data');
@@ -138,11 +146,13 @@ class template_reports_edit
 				break;
 
 			case 'add_education': $tmp =  education::add(get('report_id'),get('name'));
+				$status = true;
 				die(json_encode($tmp));
 				break ;
 			case 'remove_education': education::remove(get('id'));
 				break;
 			case 'add_education_item': $tmp = education_items::add(get('education_id'),get('name'),get('order'));
+				$status = true;
 				die(json_encode($tmp));
 				break;
 			case 'copy_education':
@@ -175,6 +185,7 @@ class template_reports_edit
 						$q->query();
 					}
 				}
+				$status = true;
 				break;
 			default:
 				$status = false;
@@ -356,7 +367,7 @@ class template_reports_edit
 								<li class="disciplines" data-id="<?= $education->id; ?>">
 									<div class="actions">
 										<div class="ui button red tiny" onclick=" remove_education(this,<?=$education->id?>);buttons.update();">Удалить</div>
-										<div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this),education.filler.getdata(this),education.filler.getid(this),<?=get('report_id')?>);">Заполнить</div>
+										<div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this),education.filler.getdata(this),education.filler.getid(this),<?=get('report_id')?>,<?= $education->id; ?>);">Заполнить</div>
 									</div>
 									<div class="base" onclick="$(this).parent('li').find('.tip').toggle('slow'); $(this).find('i.icon.triangle').toggleClass('down').toggleClass('right')">
 										<i class="icon triangle down"></i>
@@ -514,7 +525,7 @@ class template_reports_edit
 							var report_id = <?=get('report_id')?>;
 							$.post('/?page=reports-edit&task=add_education&report_id='+report_id+'&name='+name+'&ajax=true')
 								.done(function(data) { $('#education').modal('hide');
-								education.add(name,data);
+								education.add(name,data,report_id);
 								/*rude.redirect('/?page=reports-edit&report_id='+report_id);*/ }); return false;
 							">Добавить</a>
 						</div>
@@ -1105,6 +1116,19 @@ class template_reports_edit
 
 					success: function (report_id)
 					{
+						$('.tip li').each(function(){
+							var item_id= $(this).data('id');
+							var item_order= $(this).data('order');
+							$.ajax(
+								{
+									url: '/?page=reports-edit&is_tmp=1&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
+
+									success: function (data)
+									{
+										console.log(data);
+									}
+								});
+						});
 						$('.disciplines').each(function(){
 							var dis_id= $(this).data('id');
 						$.ajax(
@@ -1114,9 +1138,11 @@ class template_reports_edit
 								success: function (data)
 								{
 									console.log(data);
+
 								}
 							});
 						});
+
 						console.log(report_id);
 
 						if (report_id)
@@ -1149,6 +1175,19 @@ class template_reports_edit
 				$.ajax(
 					{
 						url: '/?page=reports-edit&dis_id='+dis_id+'&report_id='+report_id+'&task=update_education&ajax=true',
+
+						success: function (data)
+						{
+							console.log(data);
+						}
+					});
+			});
+			$('.tip li').each(function(){
+				var item_id= $(this).data('id');
+				var item_order= $(this).data('order');
+				$.ajax(
+					{
+						url: '/?page=reports-edit&tmp=0&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
 
 						success: function (data)
 						{

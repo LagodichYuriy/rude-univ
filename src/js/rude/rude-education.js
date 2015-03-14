@@ -25,13 +25,13 @@ var education =
 		id: null,
 		report_id: null,
 
-		popup: function(disciplines,data, id,report_id)
+		popup: function(disciplines,data, id,report_id,dis_id)
 		{
 			education.filler.database = disciplines;
 			education.filler.id = id;
 			education.filler.report_id = report_id;
 
-			debug(data);
+			debug(dis_id);
 
 			for (var i = 0; i < data.length; i++)
 			{
@@ -40,7 +40,7 @@ var education =
 				}
 				education.filler.data[i].push(data[i].split(','));
 			}
-			education.filler.update(education.filler.data);
+			education.filler.update(education.filler.data,dis_id);
 
 			$('#filler-modal').modal('show').modal('cache sizes');
 
@@ -50,7 +50,7 @@ var education =
 			education.filler.recount('input');
 		},
 
-		update: function(data)
+		update: function(data,dis_id)
 		{
 			var html = '';
 
@@ -159,7 +159,12 @@ var education =
 				html += '	<td>' + education.filler.database[i] + '</td>';
 
 				html += '	<td class="input item"><div class="ui form"><div class="inline field"><input class="20" type="text" maxlength="3" value="';
-				html += data[i][0][0];
+				if (typeof data[i][0][0])
+				{
+					html += data[i][0][0];
+				}else{
+					html += '';
+				}
 
 				html +='"></div></div></td>';
 
@@ -193,7 +198,7 @@ var education =
 			html += '</tbody>';
 			html += '</table>';
 
-			html += '<div class="ui divider"></div><div class="ui green submit button small" onclick="education.filler.save();">Сохранить</div>';
+			html += '<div class="ui divider"></div><div class="ui green submit button small" onclick="education.filler.save('+dis_id+');">Сохранить</div>';
 
 
 			$('#filler-modal .content').html(html);
@@ -201,7 +206,7 @@ var education =
 			$('.rotate-270').rotate(270);
 		},
 
-		save: function()
+		save: function(dis_id)
 		{
 
 			var disciplines = education.filler.database;
@@ -231,7 +236,19 @@ var education =
 
 					success: function (data)
 					{
-						console.log(data);
+
+
+
+						    $.ajax(
+								{
+									url: '/?page=reports-edit&dis_id='+dis_id+'&report_id='+report_id+'&task=update_education&ajax=true',
+
+									success: function (data)
+									{
+										console.log(data);
+									}
+								});
+
 						window.location.reload();
 					}
 				});
@@ -322,7 +339,7 @@ var education =
 		}
 	},
 
-	add: function(name,id)
+	add: function(name,id,report_id)
 	{
 		var subclass = '';
 
@@ -330,7 +347,7 @@ var education =
 		subclass += '<li class="disciplines" data-id='+id+'>';
 
 		subclass += '<div class="actions">';
-		subclass += '	<div class="ui button red tiny" onclick="$(this).closest(\'li\').fadeToggle(\'slow\', function() { $(this).closest(\'li\').remove(); buttons.update(); });">Удалить</div><div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this), $(this).closest(\'.disciplines\').find(\'.description\').html());">Заполнить</div>';
+		subclass += '	<div class="ui button red tiny" onclick="$(this).closest(\'li\').fadeToggle(\'slow\', function() { $(this).closest(\'li\').remove(); buttons.update(); });">Удалить</div><div class="ui button blue tiny" onclick="education.filler.popup(education.filler.get(this),education.filler.getdata(this),education.filler.getid(this),'+report_id+','+id+');">Заполнить</div>';
 		subclass += '</div>';
 
 		subclass += '	<div class="base" onclick="$(this).parent(\'li\').find(\'.tip\').toggle(\'slow\'); $(this).find(\'i.icon.triangle\').toggleClass(\'down\').toggleClass(\'right\')">';
@@ -398,7 +415,7 @@ var education =
 			console.log(name);
 			console.log(id);
 
-			selector_tip.find('ul').append('<li data-order="'+($('li').last().data('order')+1)+'" data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i></li>').sortable();
+			selector_tip.find('ul').append('<li data-order="'+($(".tip li").length+1)+'" data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i></li>').sortable();
 		},
 
 		toggle: function(selector)
