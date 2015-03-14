@@ -415,9 +415,6 @@ var education =
 		{
 			up: function(selector)
 			{
-				var a = $.Deferred();
-				var b = $.Deferred();
-
 				var one = $(selector).parent();
 				var two = $(selector).parent().prev();
 
@@ -430,6 +427,9 @@ var education =
 				one.attr('data-order', parseInt(one.attr('data-order')) - 1);
 				two.attr('data-order', parseInt(two.attr('data-order')) + 1);
 
+
+				var a = $.Deferred();
+				var b = $.Deferred();
 
 				one.fadeOut('slow', function() { a.resolve(); });
 				two.fadeOut('slow', function() { b.resolve(); });
@@ -445,9 +445,6 @@ var education =
 
 			down: function(selector)
 			{
-				var a = $.Deferred();
-				var b = $.Deferred();
-
 				var one = $(selector).parent();
 				var two = $(selector).parent().next();
 
@@ -460,6 +457,9 @@ var education =
 				one.attr('data-order', parseInt(one.attr('data-order')) + 1);
 				two.attr('data-order', parseInt(two.attr('data-order')) - 1);
 
+
+				var a = $.Deferred();
+				var b = $.Deferred();
 
 				one.fadeOut('slow', function() { a.resolve(); });
 				two.fadeOut('slow', function() { b.resolve(); });

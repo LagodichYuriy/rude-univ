@@ -460,7 +460,7 @@ class template_reports_edit
 							{
 								foreach ($disciplines as $discipline)
 								{
-									$database .= '["discipline", "' . $discipline->name . '", ' . $discipline->id . '],';
+									$database .= '["discipline", "' . html::escape($discipline->name) . '", ' . $discipline->id . '],';
 								}
 
 								$database = char::remove_last($database);
