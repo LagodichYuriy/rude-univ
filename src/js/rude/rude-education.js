@@ -27,6 +27,19 @@ var education =
 
 		popup: function(disciplines,data, id,report_id,dis_id)
 		{
+			$('.tip li').each(function(){
+				var item_id= $(this).data('id');
+				var item_order= $(this).data('order');
+				$.ajax(
+					{
+						url: '/?page=reports-edit&tmp=0&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
+
+						success: function (data)
+						{
+							console.log(data);
+						}
+					});
+			});
 			education.filler.database = disciplines;
 			education.filler.id = id;
 			education.filler.report_id = report_id;
