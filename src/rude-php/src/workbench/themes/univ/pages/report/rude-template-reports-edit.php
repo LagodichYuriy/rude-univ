@@ -77,6 +77,7 @@ class template_reports_edit
 			case 'update_education_item':
 				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS);
 				$q->update('order_num', (int) get('item_order'));
+				$q->update('is_optional', (int) get('optional'));
 				$q->where('id', (int) get('item_id'));
 				$q->query();
 				$status = true;
@@ -171,6 +172,7 @@ class template_reports_edit
 					$q->add('name',$cur_dis->name);
 					$q->add('education_id',$new_id);
 					$q->add('order_num',$cur_dis->order_num);
+					$q->add('is_optional',$cur_dis->is_optional);
 					$q->query();
 					$new_item_id = $q->get_id();
 					$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
@@ -216,6 +218,7 @@ class template_reports_edit
 		<script>
 			rude.semantic.init.menu();
 			rude.semantic.init.dropdown();
+			rude.semantic.init.checkboxes();
 		</script>
 
 
@@ -393,7 +396,11 @@ class template_reports_edit
 														draggable="true"><?=$item->name?>
 														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
 														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
-													</li>
+														<div class="ui checkbox" style="float: right">
+															<input type="checkbox" class="popup" <? if ($item->is_optional=='1') echo "checked='checked'"?>>
+															<label>Факультатив</label>
+														</div>
+														</li>
 												<?
 												}
 											?>
@@ -1120,9 +1127,14 @@ class template_reports_edit
 						$('.tip li').each(function(){
 							var item_id= $(this).data('id');
 							var item_order= $(this).data('order');
+
+							var optional = 0;
+							if($(this).find('.checkbox').find('input').prop('checked')){
+								optional = 1;
+							}
 							$.ajax(
 								{
-									url: '/?page=reports-edit&is_tmp=1&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
+									url: '/?page=reports-edit&is_tmp=1&optional='+optional+'&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
 
 									success: function (data)
 									{
@@ -1186,9 +1198,13 @@ class template_reports_edit
 			$('.tip li').each(function(){
 				var item_id= $(this).data('id');
 				var item_order= $(this).data('order');
+				var optional = 0;
+				if($(this).find('.checkbox').find('input').prop('checked')){
+					optional = 1;
+				}
 				$.ajax(
 					{
-						url: '/?page=reports-edit&tmp=0&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
+						url: '/?page=reports-edit&tmp=0&optional='+optional+'&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
 
 						success: function (data)
 						{
