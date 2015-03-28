@@ -98,14 +98,6 @@ class template_reports_edit
 				}
 
 
-//<<<<<<< HEAD
-////				debug($data);
-////				debug($item_id);
-//
-//				$row = 0;
-//
-//				$id = $item_id[$row];
-//=======
 				$y=0;
 				$id=$item_id[$y];
 				foreach($item_id as $d_id)
@@ -114,7 +106,6 @@ class template_reports_edit
 					$q->where('item_id', $d_id);
 					$q->query();
 				}
-//>>>>>>> 341b1ed6992a60614d1d455fc96c6268c10c1b99
 
 				$col_num = 1;
 
@@ -125,18 +116,10 @@ class template_reports_edit
 						$education_items::add($id, $item, $col_num);
 					}
 
-//<<<<<<< HEAD
-//					if ($col_num == 40)
-//					{
-//						$col_num = 0;
-//						$id = $item_id[$row];
-//						$row++;
-//=======
 					if ($col_num==40){
 						$col_num=0;
 						$id = $item_id[$y+1];
 						$y++;
-//>>>>>>> 341b1ed6992a60614d1d455fc96c6268c10c1b99
 					}
 					$col_num++;
 				}
@@ -222,7 +205,7 @@ class template_reports_edit
 		<div id="container">
 			<? template_html::sidebar() ?>
 
-			<div id="content" class="ui segment raised square-corners">
+			<div id="content" class="ui segment raised square-corners content-reports">
 				<? $this->main() ?>
 			</div>
 		</div>
@@ -398,9 +381,9 @@ class template_reports_edit
 												}
 											?>
 										</ul>
-										<div class="ui search selection dropdown">
+										<div class="ui search selection dropdown" onclick="">
 											<input type="hidden" name="selected">
-											<div class="default text">Выберите наименование</div>
+											<div class="default text" onclick="$(this).html('')" onkeyup="education.hint.init(this)" contenteditable="true">Выберите наименование</div>
 											<i class="dropdown icon"></i>
 											<div class="menu">
 												<?

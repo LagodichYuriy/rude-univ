@@ -212,9 +212,14 @@ h2
 }
 
 
-/* #################### */
-/* # comments section # */
-/* #################### */
+/* ################### */
+/* # reports section # */
+/* ################### */
+
+.content-reports
+{
+	margin-bottom: 170px!important;
+}
 
 #reports-new
 {
@@ -229,6 +234,7 @@ h2
 #reports-new .ui.menu
 {
 	width: 100%;
+	max-height: 213px;
 }
 
 #reports-new .ui.menu .item
@@ -238,8 +244,9 @@ h2
 
 #reports-new .text
 {
-	display: inline!important;
+	/*display: inline!important;*/
 	font-size: 12px;
+	width: 100%;
 }
 
 
@@ -442,6 +449,7 @@ pre code.hljs.php .ui.label
 #education-list .selection.dropdown .icon.dropdown
 {
 	right: 8px;
+	top: 2px;
 	position: absolute;
 }
 

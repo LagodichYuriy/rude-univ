@@ -158,7 +158,7 @@ var education =
 				html += '	<td>' + rude.romanize(i + 1) + '</td>';
 				html += '	<td>' + education.filler.database[i] + '</td>';
 
-				html += '	<td class="input item"><div class="ui form"><div class="inline field"><input class="20" type="text" maxlength="3" value="';
+				html += '	<td class="input item"><div class="ui form"><div class="inline field"><input class="20" type="text" maxlength="6" value="';
 				if (typeof data[i][0][0])
 				{
 					html += data[i][0][0];
@@ -170,7 +170,7 @@ var education =
 
 				for (var j = 0; j < 39; j++)
 				{
-					html += '	<td class="input item countable"><div class="ui form"><div class="inline field"><input onblur="education.filler.recount(this)" onkeyup="education.filler.recount(this)" class="20" type="text" maxlength="3" value="';
+					html += '	<td class="input item countable"><div class="ui form"><div class="inline field"><input onblur="education.filler.recount(this)" onkeyup="education.filler.recount(this)" class="20" type="text" maxlength="6" value="';
 					html += data[i][0][j+1];
 
 					html +='"></div></div></td>';
@@ -490,17 +490,54 @@ var education =
 				});
 			}
 		}
-	}
+	},
 
-//	buttons:
-//	{
-//		update: function()
-//		{
-//			$(function()
-//			{
-//				     if (list.get().length > 0) { $('#button-save').removeClass('disabled'); }
-//				else                            { $('#button-save').addClass('disabled');    }
-//			});
-//		}
-//	}
+	hint:
+	{
+		database_hints: [],
+		database_selectors: [],
+
+		cache: function(selector)
+		{
+			$.each($(selector).parent().find('.menu .item'), function()
+			{
+				education.hint.database_hints.push($(this).html().toLowerCase().trim());
+				education.hint.database_selectors.push(this);
+			});
+		},
+
+		init: function(selector)
+		{
+			if (education.hint.database_hints.length < 1)
+			{
+				education.hint.cache(selector);
+			}
+
+
+			var substring = $(selector).html().toLowerCase().trim();
+
+			if (!substring)
+			{
+				for (var i = 0; i < education.hint.database_hints.length; i++)
+				{
+					education.hint.database_selectors[i].style.display = '';
+				}
+
+				return;
+			}
+
+
+			for (var i = 0; i < education.hint.database_hints.length; i++)
+			{
+				if (education.hint.database_hints[i].indexOf(substring) === 0)
+				{
+					education.hint.database_selectors[i].style.display = '';
+				}
+				else
+				{
+					education.hint.database_selectors[i].style.display = 'none';
+				}
+			}
+		}
+	}
 };

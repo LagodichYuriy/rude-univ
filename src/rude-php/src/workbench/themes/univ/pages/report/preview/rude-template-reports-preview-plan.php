@@ -20,18 +20,13 @@ class template_reports_preview_plan
 
 					foreach ($educations as $education)
 					{
-						?><tr><td></td><td class="text-left"><i><?= $education->name ?></i></td><?
-
-						for ($j = 0; $j < 41; $j++)
-						{
-							?><td></td><?
-						}
-
-						?></tr><?
-
+						ob_start();
 
 						$items = education_items_preview::get_by_order($education->id);
 
+
+
+						$summ = [];
 
 						foreach ($items as $item)
 						{
@@ -52,6 +47,15 @@ class template_reports_preview_plan
 									if ($val->col_num - 1 == $j)
 									{
 										echo $val->value;
+
+										if (!isset($summ[$j]))
+										{
+											$summ[$j] = 0;
+										}
+
+										$summ[$j] += $val->value;
+
+										break;
 									}
 								}
 
@@ -62,18 +66,38 @@ class template_reports_preview_plan
 
 							$i++;
 						}
+
+						$buffer = ob_get_clean();
+
+
+						?>
+						<tr class="borders">
+							<td></td>
+							<td class="text-left bold">
+								<?= $education->name ?>
+							</td>
+							<?
+							for ($j = 0; $j < 41; $j++)
+							{
+								?><td><b><?= get($j, $summ) ?></b></td><?
+							}
+							?>
+						</tr>
+						<?
+
+						echo $buffer;
 					}
 				?>
 			</tbody>
 		</table>
 
 		<table class="summary">
-			<? static::html_head() ?>
+			<? static::html_head(true) ?>
 
 			<tbody>
 				<tr>
 					<td>1</td>
-					<td class="text-left" colspan="2">Количество часов учебных занятий</td>
+					<td class="text-left bold">Количество часов учебных занятий</td>
 
 					<?
 						$educations = education_preview::get_by_report(get('report_id'));
@@ -121,14 +145,138 @@ class template_reports_preview_plan
 						}
 					?>
 				</tr>
+
+				<tr>
+					<td>2</td>
+					<td class="text-left bold">Количество курсовых проектов</td>
+
+					<?
+						for ($i = 0; $i < 40; $i++) { ?><td></td><? }
+					?>
+				</tr>
+
+				<tr>
+					<td>3</td>
+					<td class="text-left bold">Количество курсовых работ</td>
+
+					<?
+						for ($i = 0; $i < 40; $i++) { ?><td></td><? }
+					?>
+				</tr>
+
+				<tr>
+					<td>4</td>
+					<td class="text-left bold">Количество расчётных работ</td>
+
+					<?
+						for ($i = 0; $i < 40; $i++) { ?><td></td><? }
+					?>
+				</tr>
+
+				<tr>
+					<td>5</td>
+					<td class="text-left bold">Количество типовых расчётов</td>
+
+					<?
+						for ($i = 0; $i < 40; $i++) { ?><td></td><? }
+					?>
+				</tr>
+
+				<tr>
+					<td>6</td>
+					<td class="text-left bold">Количество экзаменов</td>
+
+					<?
+						for ($i = 0; $i < 40; $i++) { ?><td></td><? }
+					?>
+				</tr>
+
+				<tr>
+					<td>7</td>
+					<td class="text-left bold">Количество зачётов</td>
+
+					<?
+						for ($i = 0; $i < 40; $i++) { ?><td></td><? }
+					?>
+				</tr>
 			</tbody>
 		</table>
+
+		<div class="optionals">
+			<table class="optional width-40">
+				<tbody>
+					<tr>
+						<td class="bold" colspan="4">IV. Факультативные дисциплины</td>
+					</tr>
+
+					<tr>
+						<td class="bold">№ п/п</td>
+						<td class="bold">Название дисциплины</td>
+						<td class="bold">Семестр</td>
+						<td class="bold">Часов</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="optional width-20">
+				<tbody>
+					<tr>
+						<td class="bold width-20" colspan="4">V. Учебная практика</td>
+					</tr>
+
+					<tr>
+						<td class="bold">№ п/п</td>
+						<td class="bold">Название практики</td>
+						<td class="bold">Семестр</td>
+						<td class="bold">Недель</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="optional width-20">
+				<tbody>
+					<tr>
+						<td class="bold width-20" colspan="3">VI. Производственная практика</td>
+					</tr>
+
+					<tr>
+						<td class="bold">Название практики</td>
+						<td class="bold">Семестр</td>
+						<td class="bold">Недель</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="optional width-10">
+				<tbody>
+					<tr>
+						<td class="bold width-10">VII. Дипломные проекты или дипломные работы</td>
+					</tr>
+
+					<tr>
+						<td>Защита дипломного проекта (работы) в ГЭК</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class="optional width-10">
+				<tbody>
+					<tr>
+						<td class="bold width-10">VIII. Государственный экзамен</td>
+					</tr>
+
+					<tr>
+						<td>По специальности и специализации</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
 		<div class="page-break"></div>
 		<?
 	}
 
-	public static function html_head()
+	public static function html_head($summary = false)
 	{
 		?>
 		<thead>
@@ -136,8 +284,15 @@ class template_reports_preview_plan
 			<td rowspan="4" class="small">
 				№ <nobr>п/п</nobr>
 			</td>
+
 			<td rowspan="4" class="names">Название цикла, интегрированного модуля, учебной дисциплины, курсовой работы (проекта)</td>
-			<td rowspan="4">Кафедра</td>
+
+			<?
+				if (!$summary)
+				{
+					?><td rowspan="4">Кафедра</td><?
+				}
+			?>
 
 			<td rowspan="1" colspan="9"><div><nobr>Количество академических часов</nobr></div></td>
 			<td rowspan="1" colspan="31"><div>Распределение по курсам и семестрам</div></td>
@@ -226,7 +381,13 @@ class template_reports_preview_plan
 			<td><b>40</b></td>
 			<td><b>41</b></td>
 			<td><b>42</b></td>
-			<td><b>43</b></td>
+
+			<?
+				if (!$summary)
+				{
+					?><td><b>43</b></td><?
+				}
+			?>
 		</tr>
 		</thead>
 		<?
