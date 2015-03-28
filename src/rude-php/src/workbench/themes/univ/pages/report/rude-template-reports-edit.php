@@ -65,7 +65,11 @@ class template_reports_edit
 				                                         get('training_form_id'),
 				                                         get('qualification_id'),
 				                                         get('specialty_id'),
-				                                         get('specialization_id')));
+														 get('specialization_id'),
+														 get('study_practice'),
+														 get('manufact_practice'),
+														 get('grad_work'),
+														 get('gos_exam')));
 				break;
 			case 'update_education':
 				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
@@ -77,6 +81,7 @@ class template_reports_edit
 			case 'update_education_item':
 				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS);
 				$q->update('order_num', (int) get('item_order'));
+				$q->update('is_optional', (int) get('optional'));
 				$q->where('id', (int) get('item_id'));
 				$q->query();
 				$status = true;
@@ -154,6 +159,7 @@ class template_reports_edit
 					$q->add('name',$cur_dis->name);
 					$q->add('education_id',$new_id);
 					$q->add('order_num',$cur_dis->order_num);
+					$q->add('is_optional',$cur_dis->is_optional);
 					$q->query();
 					$new_item_id = $q->get_id();
 					$q = new query(RUDE_DATABASE_TABLE_EDUCATION_ITEMS_VALUES);
@@ -199,6 +205,7 @@ class template_reports_edit
 		<script>
 			rude.semantic.init.menu();
 			rude.semantic.init.dropdown();
+			rude.semantic.init.checkboxes();
 		</script>
 
 
@@ -336,6 +343,25 @@ class template_reports_edit
 						</div>
 					</div>
 
+					<div class="field width50">
+						<label>Учебная практика</label>
+						<textarea id="study_practice" name="study_practice"><?= $this->report->study_practice ?></textarea>
+					</div>
+
+					<div class="field width50">
+						<label>Производственная практика</label>
+						<textarea id="manufact_practice" name="manufact_practice"><?= $this->report->manufact_practice ?></textarea>
+					</div>
+
+					<div class="field width50">
+						<label>Дипломные проекты или дипломные работы</label>
+						<input id="grad_work" name="grad_work" type="text" value="<?= $this->report->grad_work ?>">
+					</div>
+
+					<div class="field width50">
+						<label>Государственный экзамен</label>
+						<input id="gos_exam" name="gos_exam" type="text" value="<?= $this->report->gos_exam ?>">
+					</div>
 
 					<div id="education-list">
 						<div class="ui form">
@@ -376,7 +402,11 @@ class template_reports_edit
 														draggable="true"><?=$item->name?>
 														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
 														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
-													</li>
+														<div class="ui checkbox" style="float: right">
+															<input type="checkbox" class="popup" <? if ($item->is_optional=='1') echo "checked='checked'"?>>
+															<label>Факультатив</label>
+														</div>
+														</li>
 												<?
 												}
 											?>
@@ -1095,7 +1125,11 @@ class template_reports_edit
 						training_form_id:    report.training_form_id,
 						qualification_id:    report.qualification_id,
 						specialty_id:        report.specialty_id,
-						specialization_id:   report.specialization_id
+						specialization_id:   report.specialization_id,
+						study_practice:      report.study_practice,
+						manufact_practice:   report.manufact_practice,
+						grad_work:           report.grad_work,
+						gos_exam:            report.gos_exam
 					},
 
 					success: function (report_id)
@@ -1103,9 +1137,14 @@ class template_reports_edit
 						$('.tip li').each(function(){
 							var item_id= $(this).data('id');
 							var item_order= $(this).data('order');
+
+							var optional = 0;
+							if($(this).find('.checkbox').find('input').prop('checked')){
+								optional = 1;
+							}
 							$.ajax(
 								{
-									url: '/?page=reports-edit&is_tmp=1&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
+									url: '/?page=reports-edit&is_tmp=1&optional='+optional+'&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
 
 									success: function (data)
 									{
@@ -1169,9 +1208,13 @@ class template_reports_edit
 			$('.tip li').each(function(){
 				var item_id= $(this).data('id');
 				var item_order= $(this).data('order');
+				var optional = 0;
+				if($(this).find('.checkbox').find('input').prop('checked')){
+					optional = 1;
+				}
 				$.ajax(
 					{
-						url: '/?page=reports-edit&tmp=0&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
+						url: '/?page=reports-edit&tmp=0&optional='+optional+'&item_id='+item_id+'&item_order='+item_order+'&report_id='+report_id+'&task=update_education_item&ajax=true',
 
 						success: function (data)
 						{
@@ -1194,7 +1237,11 @@ class template_reports_edit
 						training_form_id:    report.training_form_id,
 						qualification_id:    report.qualification_id,
 						specialty_id:        report.specialty_id,
-						specialization_id:   report.specialization_id
+						specialization_id:   report.specialization_id,
+						study_practice:      report.study_practice,
+						manufact_practice:   report.manufact_practice,
+						grad_work:           report.grad_work,
+						gos_exam:            report.gos_exam
 					},
 
 					success: function (data)
@@ -1214,6 +1261,10 @@ class template_reports_edit
 			this.qualification_id    = $('#qualification_id').val();
 			this.specialty_id        = $('#specialty_id').val();
 			this.specialization_id   = $('#specialization_id').val();
+			this.study_practice      = $('#study_practice').val();
+			this.manufact_practice   = $('#manufact_practice').val();
+			this.grad_work           = $('#grad_work').val();
+			this.gos_exam            = $('#gos_exam').val();
 		}
 
 		var calendar =

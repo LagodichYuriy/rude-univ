@@ -37,7 +37,11 @@ class template_reports_new
 				get('training_form_id'),
 				get('qualification_id'),
 				get('specialty_id'),
-				get('specialization_id')));
+				get('specialization_id'),
+				get('study_practice'),
+				get('manufact_practice'),
+				get('grad_work'),
+				get('gos_exam')));
 
 				break;
 

@@ -100,7 +100,11 @@ class reports_preview
 							   $training_form_id    = null,
 							   $qualification_id    = null,
 							   $specialty_id        = null,
-							   $specialization_id   = null)
+							   $specialization_id   = null,
+							   $study_practice      = null,
+							   $manufact_practice   = null,
+							   $grad_work           = null,
+							   $gos_exam            = null)
 	{
 		$q = new cquery(RUDE_DATABASE_TABLE_REPORTS_PREVIEW);
 		$q->add(RUDE_DATABASE_FIELD_YEAR,                (int) $year);
@@ -111,6 +115,10 @@ class reports_preview
 		$q->add(RUDE_DATABASE_FIELD_QUALIFICATION_ID,    (int) $qualification_id);
 		$q->add(RUDE_DATABASE_FIELD_SPECIALTY_ID,        (int) $specialty_id);
 		$q->add(RUDE_DATABASE_FIELD_SPECIALIZATION_ID,   (int) $specialization_id);
+		$q->add('study_practice',                              $study_practice);
+		$q->add('manufact_practice',                           $manufact_practice);
+		$q->add('grad_work',                                   $grad_work);
+		$q->add('gos_exam',                                    $gos_exam);
 
 		$q->query();
 
@@ -125,7 +133,11 @@ class reports_preview
 	                              $training_form_id    = null,
 	                              $qualification_id    = null,
 	                              $specialty_id        = null,
-	                              $specialization_id   = null)
+	                              $specialization_id   = null,
+								  $study_practice      = null,
+								  $manufact_practice   = null,
+								  $grad_work           = null,
+								  $gos_exam            = null)
 	{
 		$q = new uquery(RUDE_DATABASE_TABLE_REPORTS_PREVIEW);
 
@@ -137,6 +149,10 @@ class reports_preview
 		if ($qualification_id    !== null) { $q->update(RUDE_DATABASE_FIELD_QUALIFICATION_ID,    (int) $qualification_id);    }
 		if ($specialty_id        !== null) { $q->update(RUDE_DATABASE_FIELD_SPECIALTY_ID,        (int) $specialty_id);        }
 		if ($specialization_id   !== null) { $q->update(RUDE_DATABASE_FIELD_SPECIALIZATION_ID,   (int) $specialization_id);   }
+		if ($study_practice      !== null) { $q->update('study_practice',                              $study_practice);      }
+		if ($manufact_practice   !== null) { $q->update('manufact_practice',                           $manufact_practice);   }
+		if ($grad_work           !== null) { $q->update('grad_work',                                   $grad_work);           }
+		if ($gos_exam            !== null) { $q->update('gos_exam',                                    $gos_exam);            }
 
 		$q->where(RUDE_DATABASE_FIELD_ID, (int) $id);
 		$q->query();

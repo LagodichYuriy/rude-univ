@@ -59,12 +59,13 @@ class education_items
 		return false;
 	}
 
-	public static function add($education_id,$name,$order)
+	public static function add($education_id,$name,$order,$is_optional=0)
 	{
 		$q = new cquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS);
 		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
 		$q->add('order_num',$order);
 		$q->add('education_id',$education_id);
+		$q->add('is_optional',$is_optional);
 		$q->query();
 		return $q->get_id();
 	}
