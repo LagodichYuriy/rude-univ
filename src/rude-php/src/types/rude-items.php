@@ -7,6 +7,11 @@ namespace rude;
  */
 class items
 {
+	public static function get($array, $n, $default = null)
+	{
+		return get($n - 1, $array, $default);
+	}
+
 	/**
 	 * @en Get the first element of an array
 	 * @ru Возвращает первый (первые) элементы массива

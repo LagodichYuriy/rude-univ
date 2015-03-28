@@ -264,6 +264,22 @@ table
 	height: 4.0cm!important;
 }
 
+/*.plan .rotate-270*/
+/*{*/
+	/*overflow: visible;*/
+
+	/*transform:         rotate(270deg);*/
+	/*-ms-transform:     rotate(270deg);*/
+	/*-moz-transform:    rotate(270deg);*/
+	/*-o-transform:      rotate(270deg);*/
+	/*-webkit-transform: rotate(270deg);*/
+
+	/*-moz-rotation-point:    0 0;*/
+	/*-webkit-rotation-point: 0 0;*/
+
+	/*-ms-writing-mode: tb-lr;*/
+/*}*/
+
 .plan    .rotate-box .rotate-270,
 .summary .rotate-box .rotate-270
 {

@@ -402,9 +402,9 @@ class template_reports_edit
 														draggable="true"><?=$item->name?>
 														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
 														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
-														<div class="ui checkbox" style="float: right">
+														<div class="ui checkbox" style="float: right" data-content="Дисциплина по выбору">
 															<input type="checkbox" class="popup" <? if ($item->is_optional=='1') echo "checked='checked'"?>>
-															<label>Факультатив</label>
+															<label></label>
 														</div>
 														</li>
 												<?
@@ -453,6 +453,9 @@ class template_reports_edit
 					</div>
 
 					<script>
+						$('.ui.checkbox').popup({ on: 'hover' });
+
+
 						function add_education_item(education_id,selector){
 
 							if ($(selector).parent('div').find('.text').hasClass('default'))

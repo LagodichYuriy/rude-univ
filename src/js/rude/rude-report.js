@@ -119,6 +119,19 @@ var report =
 				{
 					$(report.selectors.paper + ':eq(' + (index - 1) + ') table.' + report.classes.table + ' tbody').prepend(html);
 				}
+			},
+
+			optional:
+			{
+				format: function()
+				{
+					var max_height = Math.max.apply(null, $('.optionals .optional').map(function ()
+					{
+						return $(this).height();
+					}).get());
+
+					$('.optionals .optional').height(max_height + 10);
+				}
 			}
 		},
 

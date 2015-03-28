@@ -18,6 +18,8 @@ class template_reports_preview_plan
 					$educations = education_preview::get_by_report(get('report_id'));
 
 
+					$optional = [];
+
 					foreach ($educations as $education)
 					{
 						ob_start();
@@ -30,6 +32,13 @@ class template_reports_preview_plan
 
 						foreach ($items as $item)
 						{
+							if ($item->is_optional)
+							{
+								$optional[] = $item;
+
+								continue;
+							}
+
 							?><tr><?
 							?><td><?= $i ?></td><?
 							?><td class="text-left"><?= $item->name ?></td><?
@@ -215,6 +224,20 @@ class template_reports_preview_plan
 						<td class="bold">Семестр</td>
 						<td class="bold">Часов</td>
 					</tr>
+
+					<?
+						foreach ($optional as $key => $item)
+						{
+							?>
+							<tr>
+								<td><?= $key + 1 ?></td>
+								<td><?= $item->name ?></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<?
+						}
+					?>
 				</tbody>
 			</table>
 
@@ -230,6 +253,28 @@ class template_reports_preview_plan
 						<td class="bold">Семестр</td>
 						<td class="bold">Недель</td>
 					</tr>
+
+					<?
+						$lines = $report->study_practice;
+						$lines = string::lines($lines);
+
+						if ($lines)
+						{
+							foreach ($lines as $key => $line)
+							{
+								$vals = explode(' ', $line);
+
+								?>
+								<tr>
+									<td><?= $key + 1 ?></td>
+									<td><?= items::get($vals, 1) ?></td>
+									<td><?= items::get($vals, 2) ?></td>
+									<td><?= items::get($vals, 3) ?></td>
+								</tr>
+								<?
+							}
+						}
+					?>
 				</tbody>
 			</table>
 
@@ -244,6 +289,27 @@ class template_reports_preview_plan
 						<td class="bold">Семестр</td>
 						<td class="bold">Недель</td>
 					</tr>
+
+					<?
+						$lines = $report->manufact_practice;
+						$lines = string::lines($lines);
+
+						if ($lines)
+						{
+							foreach ($lines as $key => $line)
+							{
+								$vals = explode(' ', $line);
+
+								?>
+								<tr>
+									<td><?= items::get($vals, 1) ?></td>
+									<td><?= items::get($vals, 2) ?></td>
+									<td><?= items::get($vals, 3) ?></td>
+								</tr>
+								<?
+							}
+						}
+					?>
 				</tbody>
 			</table>
 
@@ -254,7 +320,7 @@ class template_reports_preview_plan
 					</tr>
 
 					<tr>
-						<td>Защита дипломного проекта (работы) в ГЭК</td>
+						<td><?= $report->grad_work ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -266,11 +332,18 @@ class template_reports_preview_plan
 					</tr>
 
 					<tr>
-						<td>По специальности и специализации</td>
+						<td><?= $report->gos_exam ?></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+
+		<script>
+			$(function()
+			{
+				report.paper.table.optional.format();
+			});
+		</script>
 
 		<div class="page-break"></div>
 		<?
