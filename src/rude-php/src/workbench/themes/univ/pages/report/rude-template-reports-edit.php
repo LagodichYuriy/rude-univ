@@ -65,7 +65,11 @@ class template_reports_edit
 				                                         get('training_form_id'),
 				                                         get('qualification_id'),
 				                                         get('specialty_id'),
-				                                         get('specialization_id')));
+														 get('specialization_id'),
+														 get('study_practice'),
+														 get('manufact_practice'),
+														 get('grad_work'),
+														 get('gos_exam')));
 				break;
 			case 'update_education':
 				$q = new uquery(RUDE_DATABASE_TABLE_EDUCATION);
@@ -356,6 +360,25 @@ class template_reports_edit
 						</div>
 					</div>
 
+					<div class="field width50">
+						<label>Учебная практика</label>
+						<textarea id="study_practice" name="study_practice"><?= $this->report->study_practice ?></textarea>
+					</div>
+
+					<div class="field width50">
+						<label>Производственная практика</label>
+						<textarea id="manufact_practice" name="manufact_practice"><?= $this->report->manufact_practice ?></textarea>
+					</div>
+
+					<div class="field width50">
+						<label>Дипломные проекты или дипломные работы</label>
+						<input id="grad_work" name="grad_work" type="text" value="<?= $this->report->grad_work ?>">
+					</div>
+
+					<div class="field width50">
+						<label>Государственный экзамен</label>
+						<input id="gos_exam" name="gos_exam" type="text" value="<?= $this->report->gos_exam ?>">
+					</div>
 
 					<div id="education-list">
 						<div class="ui form">
@@ -1119,7 +1142,11 @@ class template_reports_edit
 						training_form_id:    report.training_form_id,
 						qualification_id:    report.qualification_id,
 						specialty_id:        report.specialty_id,
-						specialization_id:   report.specialization_id
+						specialization_id:   report.specialization_id,
+						study_practice:      report.study_practice,
+						manufact_practice:   report.manufact_practice,
+						grad_work:           report.grad_work,
+						gos_exam:            report.gos_exam
 					},
 
 					success: function (report_id)
@@ -1227,7 +1254,11 @@ class template_reports_edit
 						training_form_id:    report.training_form_id,
 						qualification_id:    report.qualification_id,
 						specialty_id:        report.specialty_id,
-						specialization_id:   report.specialization_id
+						specialization_id:   report.specialization_id,
+						study_practice:      report.study_practice,
+						manufact_practice:   report.manufact_practice,
+						grad_work:           report.grad_work,
+						gos_exam:            report.gos_exam
 					},
 
 					success: function (data)
@@ -1247,6 +1278,10 @@ class template_reports_edit
 			this.qualification_id    = $('#qualification_id').val();
 			this.specialty_id        = $('#specialty_id').val();
 			this.specialization_id   = $('#specialization_id').val();
+			this.study_practice      = $('#study_practice').val();
+			this.manufact_practice   = $('#manufact_practice').val();
+			this.grad_work           = $('#grad_work').val();
+			this.gos_exam            = $('#gos_exam').val();
 		}
 
 		var calendar =

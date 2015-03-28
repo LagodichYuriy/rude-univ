@@ -767,3 +767,11 @@ pre code.hljs.php .ui.label
 {
 	font-size: 11px!important;
 }
+
+.width50{
+	width: 49%;
+	display: inline-block;
+}
+.width50:nth-child(2n-1){
+	margin-right: 13px!important;
+}
