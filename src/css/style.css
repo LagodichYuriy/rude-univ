@@ -577,7 +577,7 @@ pre code.hljs.php .ui.label
 	border: none!important;
 	width: 100%;
 	min-width: 25px;
-	background: rgba(108, 161, 102, 0.16);
+	background: transparent;
 }
 
 #filler-modal tr.result td.empty
@@ -782,4 +782,9 @@ pre code.hljs.php .ui.label
 }
 .width50:nth-child(2n-1){
 	margin-right: 13px!important;
+}
+
+td.input.item
+{
+background: rgba(108, 161, 102, 0.16)
 }
