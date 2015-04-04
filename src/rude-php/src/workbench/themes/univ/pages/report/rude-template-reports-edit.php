@@ -86,6 +86,13 @@ class template_reports_edit
 				$q->query();
 				$status = true;
 				break;
+			case 'delete_item_discipline':
+				$q = new dquery(RUDE_DATABASE_TABLE_EDUCATION_ITEMS);
+				$q->where('id', (int) get('id'));
+				$q->query();
+				$status = true;
+				break;
+
 			case 'save_education':
 				$data = get('data');
 
@@ -400,6 +407,7 @@ class template_reports_edit
 															echo ',';
 														}?>"
 														draggable="true"><?=$item->name?>
+														<i class="icon remove circle" style="float: right" onclick="delete_item_discipline(this,<?=$item->id?>)" title="Удалить"></i>
 														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
 														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
 														<div class="ui checkbox" style="float: right" data-content="Дисциплина по выбору">
@@ -471,6 +479,11 @@ class template_reports_edit
 							var report_id = <?=get('report_id')?>;
 							$.post('/?page=reports-edit&task=add_education_item&report_id='+report_id+'&name='+name+'&education_id='+education_id+'&order='+order+'&ajax=true')
 								.done(function(id) { education.tip.add(selector,id)});
+						}
+						function delete_item_discipline(selector,id){
+							var report_id = <?=get('report_id')?>;
+							$.post('/?page=reports-edit&task=delete_item_discipline&report_id='+report_id+'&id='+id+'&ajax=true')
+								.done(function() { $(selector).parent().remove();});
 						}
 						function remove_education(selector,id){
 							var report_id = <?=get('report_id')?>;
