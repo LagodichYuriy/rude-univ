@@ -16,6 +16,7 @@ class specializations
 			return $q->get_object();
 		}
 
+		$q->order_by(RUDE_DATABASE_FIELD_NAME);
 		$q->query();
 
 		return $q->get_object_list();
@@ -48,7 +49,7 @@ class specializations
 	public static function add($name,$code)
 	{
 		$q = new cquery(RUDE_DATABASE_TABLE_SPECIALIZATIONS);
-		$q->add(RUDE_DATABASE_FIELD_NAME,$name);
+		$q->add(RUDE_DATABASE_FIELD_NAME, $name);
 		$q->add('code',$code);
 		$q->query();
 

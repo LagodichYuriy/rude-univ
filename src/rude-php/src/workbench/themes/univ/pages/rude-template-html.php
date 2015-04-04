@@ -398,13 +398,13 @@ class template_html
 							<i class="icon"></i> Направления
 						</a>
 
-						<a class="item subcategory <? if (get('page') == 'settings') { ?>active<? } ?>" href="/?page=settings">
-							<i class="icon"></i> Настройки
-						</a>
-
-						<a class="item subcategory <? if (get('page') == 'stats') { ?>active<? } ?>" href="/?page=stats">
-							<i class="icon"></i> База данных
-						</a>
+<!--						<a class="item subcategory --><?// if (get('page') == 'settings') { ?><!--active--><?// } ?><!--" href="/?page=settings">-->
+<!--							<i class="icon"></i> Настройки-->
+<!--						</a>-->
+<!---->
+<!--						<a class="item subcategory --><?// if (get('page') == 'stats') { ?><!--active--><?// } ?><!--" href="/?page=stats">-->
+<!--							<i class="icon"></i> База данных-->
+<!--						</a>-->
 					</div>
 
 

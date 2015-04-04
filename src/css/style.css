@@ -221,6 +221,13 @@ h2
 	margin-bottom: 170px!important;
 }
 
+.content-reports i.dropdown.icon
+{
+	top: 8px;
+	position: absolute;
+	right: 13px;
+}
+
 #reports-new
 {
 
@@ -643,6 +650,7 @@ pre code.hljs.php .ui.label
 /* ########################## */
 /* # global classes section # */
 /* ########################## */
+
 
 .clear
 {
