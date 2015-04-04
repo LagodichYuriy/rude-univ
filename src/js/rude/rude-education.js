@@ -377,7 +377,7 @@ var education =
 
 		subclass += '		<div class="ui selection dropdown">';
 		subclass += '			<input type="hidden" name="selected">';
-		subclass += '			<div class="default text">Выберите наименование</div>';
+		subclass += '			<div class="default text" onclick="$(this).html(\'\')" onkeyup="education.hint.init(this)" contenteditable="true">Выберите наименование</div>';
 		subclass += '			<i class="dropdown icon"></i>';
 
 		subclass += '			<div class="menu">';
@@ -430,9 +430,10 @@ var education =
 
 			selector_tip.find('ul').append('<li data-order="'+($(".tip li").length+1)+'" data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '' +
 			'<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i>'+
-			'<div class="ui checkbox" style="float: right">'+
-				'<input type="checkbox" class="popup">'+
-				'<label>Факультатив</label>'+
+			'<div class="ui checkbox visible" style="float: right" data-content="Дисциплина по выбору">' +
+				'<input type="checkbox" class="popup">' +
+					'<label></label>' +
+				'</div>' +
 			'</div></li>').sortable();
 			rude.semantic.init.checkboxes();
 		},
@@ -514,6 +515,7 @@ var education =
 	hint:
 	{
 		database_hints: [],
+		database_selector: null,
 		database_selectors: [],
 
 		cache: function(selector)
@@ -527,6 +529,18 @@ var education =
 
 		init: function(selector)
 		{
+			if (education.hint.database_selector === null)
+			{
+				education.hint.database_selector = selector;
+			}
+			else if (education.hint.database_selector != selector)
+			{
+				education.hint.database_hints = [];
+				education.hint.database_selectors = [];
+				education.hint.database_selector = selector;
+			}
+
+
 			if (education.hint.database_hints.length < 1)
 			{
 				education.hint.cache(selector);
