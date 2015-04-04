@@ -166,7 +166,7 @@ var education =
 
 			for (var i = 0; i < education.filler.database.length; i++)
 			{
-				html += '<tr id="item-'+i+'">';
+				html += '<tr class="item-row" id="item-'+i+'">';
 
 				html += '	<td>' + rude.romanize(i + 1) + '</td>';
 				html += '	<td>' + education.filler.database[i] + '</td>';
@@ -429,10 +429,10 @@ var education =
 			console.log(id);
 
 			selector_tip.find('ul').append('<li data-order="'+($(".tip li").length+1)+'" data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '' +
-			'<i class="icon remove circle" style="float: right" onclick="delete_item_discipline(this,'+id+
+			'<i class="icon remove" style="float: right" onclick="delete_item_discipline(this,'+id+
 			')" title="Удалить"></i>' +
 			'<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i>'+
-			'<div class="ui checkbox visible" style="float: right" data-content="Дисциплина по выбору">' +
+			'<div class="ui checkbox visible" style="float: right" data-content="Факультативная дисциплина">' +
 				'<input type="checkbox" class="popup">' +
 					'<label></label>' +
 				'</div>' +

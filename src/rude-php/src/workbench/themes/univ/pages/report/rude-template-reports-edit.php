@@ -407,10 +407,10 @@ class template_reports_edit
 															echo ',';
 														}?>"
 														draggable="true"><?=$item->name?>
-														<i class="icon remove circle" style="float: right" onclick="delete_item_discipline(this,<?=$item->id?>)" title="Удалить"></i>
+														<i class="icon remove" style="float: right" onclick="delete_item_discipline(this,<?=$item->id?>)" title="Удалить"></i>
 														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
 														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
-														<div class="ui checkbox" style="float: right" data-content="Дисциплина по выбору">
+														<div class="ui checkbox" style="float: right" data-content="Факультативная дисциплина">
 															<input type="checkbox" class="popup" <? if ($item->is_optional=='1') echo "checked='checked'"?>>
 															<label></label>
 														</div>
