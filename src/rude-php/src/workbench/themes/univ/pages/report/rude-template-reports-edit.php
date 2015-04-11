@@ -406,8 +406,10 @@ class template_reports_edit
 														}
 															echo ',';
 														}?>"
-														draggable="true"><?=$item->name?>
+
+														draggable="true"><? mb_strlen($item->name)>96 ? $tmp = mb_substr($item->name,0,96,'utf-8').'...': $tmp = $item->name; echo $tmp?>
 														<i class="icon remove" style="float: right" onclick="delete_item_discipline(this,<?=$item->id?>)" title="Удалить"></i>
+
 														<i class="icon angle up" onclick="education.tip.move.up(this);"></i>
 														<i class="icon angle down" onclick="education.tip.move.down(this);"></i>
 														<div class="ui checkbox" style="float: right" data-content="Факультативная дисциплина">

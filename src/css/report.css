@@ -25,7 +25,7 @@ body
 
 #hidden
 {
-	min-height: 25cm;
+	min-height: 24cm;
 
 	position: absolute;
 }
@@ -160,6 +160,7 @@ table
 	text-align: center;
 
 	width: 0.4cm;
+	min-width: 0.4cm;
 	height: 0.5cm;
 }
 

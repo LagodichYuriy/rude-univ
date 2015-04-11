@@ -49,6 +49,8 @@ class template_reports_preview
 				<?= html::css(RUDE_URL_SRC . '/css/report.css') ?>
 			</head>
 			<body contenteditable="true" onload="report.init();">
+				<input type="hidden" id="is_constructed" value="false">
+
 				<div id="hidden"></div>
 
 				<div id="papers">

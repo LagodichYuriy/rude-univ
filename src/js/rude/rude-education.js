@@ -425,10 +425,16 @@ var education =
 			//var id   = selector_item.attr('data-id');
 
 			console.log(type);
-			console.log(name);
+			console.log(name.length);
 			console.log(id);
+			var name_short = name;
 
-			selector_tip.find('ul').append('<li data-order="'+($(".tip li").length+1)+'" data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name + '' +
+
+			if (name_short.length>96){
+				name_short= name_short.substr(0,96) + '...';
+			}
+
+			selector_tip.find('ul').append('<li data-order="'+($(".tip li").length+1)+'" data-type="' + type + '" data-name="' + name + '" data-id="' + id + '" data-values=",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,">' + name_short + '' +
 			'<i class="icon remove" style="float: right" onclick="delete_item_discipline(this,'+id+
 			')" title="Удалить"></i>' +
 			'<i class="icon angle up" onclick="education.tip.move.up(this);"></i> <i class="icon angle down" onclick="education.tip.move.down(this);"></i>'+

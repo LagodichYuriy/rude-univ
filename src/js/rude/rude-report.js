@@ -20,6 +20,12 @@ var report =
 
 	init: function()
 	{
+		if ($('#is_constructed').val() == 'true')
+		{
+			return;
+		}
+
+
 		for (var i = 1; i < 99; i++)
 		{
 			if (report.paper.get.height(i) > report.paper.get.max_height())
@@ -38,6 +44,9 @@ var report =
 		}
 
 		$(report.selectors.page_break).last().remove();
+
+
+		$('#is_constructed').val('true');
 	},
 
 
